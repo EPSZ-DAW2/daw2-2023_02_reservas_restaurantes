@@ -155,18 +155,16 @@ CREATE TABLE IF NOT EXISTS `restaurantes` (
   `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.', 
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.', 
   `precio_medio_comensal` float(6) COMMENT 'Precio por persona medio.',
-  `id_categoria` int(12) NOT NULL COMMENT 'Identificador de la categoria a la que pertenece el restaurante.',
   `notas` text COMMENT 'Notas internas para el restaurante.', 
-  PRIMARY KEY (`id_restaurante`),
-  KEY `id_categoria` (`id_categoria`)
+  PRIMARY KEY (`id_restaurante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- ---------------------------------------------------------------------------
 -- Estructura de la tabla "categoria-restaurante".
 -- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `categoria-restaurante`;
-CREATE TABLE IF NOT EXISTS `categoria-restaurante` (
+DROP TABLE IF EXISTS `categoria_restaurante`;
+CREATE TABLE IF NOT EXISTS `categoria_restaurante` (
   `id_categoria` int(12) NOT NULL COMMENT 'Identificador de la categoria.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
   `notas` text COMMENT 'Notas internas para la relacion.', 
@@ -178,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `categoria-restaurante` (
 -- ---------------------------------------------------------------------------
 -- Estructura de la tabla "tipo-restaurante".
 -- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `tipo-restaurante`;
-CREATE TABLE IF NOT EXISTS `tipo-restaurante` (
+DROP TABLE IF EXISTS `tipo_restaurante`;
+CREATE TABLE IF NOT EXISTS `tipo_restaurante` (
   `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador del tipo de comida.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
   `notas` text COMMENT 'Notas internas para la relacion.', 
