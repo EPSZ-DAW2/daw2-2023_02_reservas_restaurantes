@@ -1,0 +1,451 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Proyecto en Grupo - Analisis Inicial de Funciones y Tareas</title>
+</head>
+<body class="papel" style="background-color:#ddedeb;">
+<style>
+
+table.tabla tbody td { text-align:center;}
+table.tabla tbody td:first-child { text-align:justify}
+</style>
+<div class="bloque" style="font-family:arial;font-size:1.25em;text-align:justify;border:1.5mm solid #1dbfc4;margin:0.25em;padding:1em;">
+
+<div class="titulo titulo0" style="margin:5mm;font-size:4.0em;font-weight:bold;color:#7ba7a8">La Cuchara</div>
+<div class="titulo titulo1" style="margin:5mm;font-size:2.0em;font-weight:bold">Proyecto en Grupo</div>
+<div class="titulo titulo2" style="margin:5mm;font-size:1.5em;font-weight:bold">Analisis Inicial de Funciones y Tareas</div>
+
+<br>
+&nbsp;&nbsp;&nbsp;De los requisitos iniciales planteados, se extraen una
+serie de funciones básicas a implementar, además de una serie de tareas
+adicionales a desarrollar dentro del sistema.
+<br>
+<br>
+
+<hr>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#6ff5f7">Roles / Perfiles:</div>
+<div style="text-align:justify;margin:0em">
+<ul>
+<li>
+<strong>Usuarios Administradores del sitio/aplicación (administrador): </strong>Actúan como gestores del sitio y la aplicación en general.
+</li>
+<li>
+<strong>Usuarios Moderadores de eventos/noticias y opiniones/comentarios del sitio (moderador): </strong>
+Actúan como revisores y controladores según las comunidades autónomas, o ciudades de los restaurantes, tienen acceso a las páginas de gestión para reseñas, respuestas y eventos.
+
+</li>
+<li>
+<strong>Usuarios Gestores de restaurante/es en el sitio (gestor): </strong>Actúan en nombre de uno o varios restaurantes como sus gestores.
+
+</li>
+<li>
+<strong>Usuarios Restaurantes del sitio (propietario): </strong>Actúan como propietarios o representantes de la empresa propietaria, tienen acceso a toda la funcionalidad de los gestores más la gestión de gestores y alta o baja de restaurantes.
+</li>
+<li>
+<strong>Usuarios Clientes del sitio (Cliente): </strong>Actúan como clientes o usuarios normales del sitio.
+</li>
+
+<li>
+  <strong>Usuarios invitados (invitado): </strong>Pueden navegar por las partes públicas sin necesidad de iniciar sesión
+</li>
+<li>
+<strong>Administrador del Sistema (sysadmin): </strong>Pensado para 
+los programadores de la aplicación y/o administradores generales del 
+sistema donde se instale, tendrá acceso a todas las funciones de la 
+aplicación sin restricciones, y opcionalmente deberá poder activar el 
+rol que desee para trabajar como un usuario de ese tipo.
+</li>
+</ul>
+</div>
+
+<hr>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#60B0D0">Funcionalidades de Gestión Interna:</div>
+<div style="text-align:justify;margin:0em">
+
+<table class="tabla" border="1" style="background-color:#C0E0F0;border:4px ridge #70D0F0;border-collapse:collapse;font-size:1.0em;">
+<thead style="background-color:#60B0D0">
+<tr>
+<th style="width:73em;padding-left:2.5em;">Páginas y Partes Privadas</th>
+<th style="width:3em;">G1</th>
+<th style="width:3em;">G2</th>
+<th style="width:3em;">G3</th>
+<th style="width:3em;">G4</th>
+<th style="width:3em;">G5</th>
+<th style="width:3em;">G6</th>
+<th style="width:3em;">G7</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><td style="padding-left:2em;">Plantilla principal de gestión</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Panel de administrador</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Panel de moderador</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Usuarios.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de roles</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Asignación de Roles a los usuarios (sistema RBAC)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Gestión de registro de nuevos usuarios</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Gestión de moderadores y administradores</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de usuarios bloqueados</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Clientes.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de clientes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de reseñas por clientes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de reservas de clientes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de favoritos de clientes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Restaurantes.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado de restaurantes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Información y contenido (imágenes)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Relación con categorías, reservas, reseñas y eventos</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de la relación de los restaurantes y sus horarios y fechas de apertura</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de reseñas/respuestas.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado de reseñas y respuestas</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de la relación hilos de respuestas</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Reservas.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado de reservas</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de relación cliente y restaurante</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Categorías.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de categorías</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Creación y modificación de categorías</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de FAQ.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de FAQ</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Creación de nuevos FAQ a partir de consultas de usuarios</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de avisos/incidencias.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Incidencias de reseña/respuesta</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Incidencias de eventos</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Incidencias de comentarios</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de las relación de las incidencias con los usuarios/restaurantes</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de registros/log.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de tipos de log</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Limpieza de registros antiguos</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de configuraciones.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de copias de seguridad.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de copias realizadas</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Realización de copias</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Limpieza de copias</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#60C060">Funcionalidades del Portal Web:</div>
+<div style="text-align:justify;margin:0em">
+
+<table class="tabla" border="1" style="background-color:#C0F0B0;border:4px ridge #70F070;border-collapse:collapse;font-size:1.0em;">
+<thead style="background-color:#60C060">
+<tr>
+<th style="width:73em;padding-left:2.5em;">Páginas y Partes Públicas</th>
+<th style="width:3em;">W1</th>
+<th style="width:3em;">W2</th>
+<th style="width:3em;">W3</th>
+<th style="width:3em;">W4</th>
+<th style="width:3em;">W5</th>
+<th style="width:3em;">W6</th>
+<th style="width:3em;">W7</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><td style="padding-left:2em;">Plantilla Principal:</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Composición de la plantilla pública del portal contemplando las piezas que se mostrarán en la misma.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Encabezado con el logo y funcionalidades.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Buscador por palabras clave.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Carrusel con restaurantes por categoría {Ficha restaurante}.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Zona con enlace a registro de propietarios.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Pie de página.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Ficha Restaurante</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Restaurante (público)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Presentación del restaurante (Título, portada e información).</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: Caja de Acciones (Carta, Reservar, Reseñas).</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Carrusel de imágenes del restaurante.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Sección con eventos próximos {Ficha evento}.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Reseñas {Ficha reseña}.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: Ficha evento.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: Ficha reseña *implementación de hilos de respuesta</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Restaurante (privado)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: gestores (incorporación de gestores).</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: eventos. {ficha evento} (formulario para creación, edición y eliminación de evento)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: reservas. {ficha reserva}</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: Ficha Reserva.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Gestionar Restaurantes</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Formulario para registrar un restaurante.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de restaurantes gestionados. {Ficha restaurante}</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: paginación.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Editar perfil restaurante</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar información del restaurante.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar fotos del restaurante</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar horario y días de servicio del restaurante</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Explorar</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Búsqueda filtrada</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Búsqueda con filtros.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Registro Usuarios</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Clientes.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Propietarios.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Gestores.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Inicio de Sesión</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Control de intentos fallidos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Reservas</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Verificación inicial.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Realización de reserva.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Calendario de disponibilidad.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: Ficha de reserva.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Perfil de usuario</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Perfil de cliente</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/Vista: caja de opciones.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Mis Reservas.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Mis Favoritos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Mis Reseñas.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: FAQ</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Contacto</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>✓</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<div style="text-align:justify;margin:0em;background-color:#F0F080">
+<hr>
+
+<div style="padding:0 0.5em;">
+<span style="padding-left:2em;">*** Los grupos que se formen deberán  
+diseñar, implementar y documentar al menos dos de los bloques trabajo, 
+uno de tareas privadas o "Funcionalidades de Gestión Interna" de código 
+"Gx" y otro de tareas públicas o "Funcionalidades del Portal Web" de 
+código "Wx", de entre las indicadas anteriormente.</span>
+<br>
+<span style="padding-left:2em;">*** Una combinación de bloques de trabajo más o menos apropiada para esta aplicación es:</span>
+<br>
+<span style="padding-left:4em;">(G1,W7), (G2,W3), (G3, W6), (G4,W4), (G5,W2), (G6,W5), (G7, W1)</span>
+<br>
+</div>
+
+<hr>
+</div>
+
+</div></body></html>

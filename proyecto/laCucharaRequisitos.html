@@ -1,0 +1,593 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Proyecto en Grupo - Requisitos Iniciales</title>
+</head>
+<body class="papel" style="background-color:#ddedeb;">
+<div class="bloque" style="font-family:arial;font-size:1.25em;text-align:justify;border:1.5mm solid #1dbfc4;margin:0.25em;padding:1em;">
+
+<div class="titulo titulo0" style="margin:5mm;font-size:4.0em;font-weight:bold;color:#7ba7a8">La Cuchara</div>
+<div class="titulo titulo1" style="margin:5mm;font-size:2.0em;font-weight:bold">Proyecto en Grupo</div>
+<div class="titulo titulo2" style="margin:5mm;font-size:1.5em;font-weight:bold">Requisitos Iniciales.</div>
+
+<br>
+&nbsp;&nbsp;&nbsp;Se desea diseñar una aplicación web para la <strong>Reserva de Restaurantes</strong>.
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Esta aplicación será un portal web, en la cual se podrá explorar 
+restaurantes y buscar información sobre estos, con el objetivo de poder ver qué servicios ofrece cada uno de ellos, dónde están ubicados, información sobre sus menús, reseñas junto 
+con experiencias de usuarios, con la opción de subir fotos y vídeos, disponibilidad y ofertas; entre otras. 
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Se podrán realizar búsquedas según el nombre del restaurante, su tipo (comida rápida, italiano, con estrellas Michelin…), 
+distancia, su precio medio de menú, etc. Estos resultados se mostrarán según la valoración que hayan dejado los usuarios de estos, o según 
+su disponibilidad. 
+<br>
+La búsqueda se llevará a cabo mediante un formulario en el cual se podrán introducir los parámetros nombrados 
+anteriormente, con diversas opciones de búsqueda. 
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Se podrá visualizar la puntuación (de 1 a 5 cucharas) de ese restaurante, así como las distintas 
+reseñas aportadas por los usuarios y eventos publicados por el restaurante. 
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Además, si el usuario está registrado, se podrá reservar un día y una hora para los 
+comensales que se desee, siempre y cuando haya disponibilidad en el restaurante; dejar reseñas, subir fotos de 
+la experiencia, ver su historial de reservas, o cancelar una reserva.
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Los comentarios, fotos y reseñas serán supervisadas por los administradores y moderadores de la web. 
+Además, un usuario cliente, gestor o propietario podrá denunciar comentarios inapropiados, o ponerse en contacto con alguno de 
+los moderadores o administradores.
+<br>
+<br>
+
+<hr>
+<div class="titulo titulo3" style="margin:5mm;font-size:1.0em;font-weight:bold">Requerimientos para el Público en general:</div>
+<div style="text-align:justify;margin:0em">
+<ul>
+
+<li><strong>Portada:</strong> Una página inicial con la presentación del portal 
+en la que se mostrará una barra de navegación con el logotipo del sitio, un 
+botón de “Explorar” y una zona de usuario en el extremo 
+derecho (Login / Registro / Cerrar Sesión), en caso de que haya una sesión de usuario 
+iniciada se agregan las siguientes opciones a la barra de navegación:
+<ul>
+<li>En caso de ser usuario registrado de cualquier tipo se muestra: Mi Perfil</li>
+<li>En caso de ser usuario administrador se muestra: acceso a página de administrador.</li>
+<li>En caso de ser usuario moderador se muestra: acceso a página de moderador.</li>
+<li>En caso de ser usuario gestor o propietario se muestra: gestionar restaurantes.</li>
+</ul>
+En el cuerpo de la página se muestra una versión reducida de lo que se puede ver en la 
+página de exploración. Habrá una zona con una barra de búsqueda central que permite buscar 
+por palabras clave como ciudad, tipo de restaurante o por el nombre del restaurante, al 
+realizar la búsqueda se llevará a la página de búsqueda filtrada con los resultados obtenidos. 
+Se mostrarán al menos dos carruseles con la ficha resumida de restaurantes por 
+categoría (que el administrador podrá cambiar a su elección), por ejemplo los N restaurantes 
+mejor valorados de España, N ofertas actuales y los N restaurantes mejor valorados de 
+Castilla y León (estos podrían mostrarse dependiendo de la ubicación aproximada del dispositivo), 
+una zona con un enlace para registro de propietarios y una zona inferior (pie de página) con 
+enlaces de acceso a información sobre la página web, FAQ, páginas de contacto y 
+utilidades (ej. registrarse como gestor o propietario).
+<br>
+*** La barra de navegación y el pie de página se mantendrán visibles en todas las 
+páginas del sitio web.
+<br>
+*** Se podría cambiar los elementos a presentar en la portada a criterio de los administradores
+<br>
+</li>
+
+<br>
+
+<li><strong>Ficha de Restaurante:</strong> La ficha de restaurante será un componente/pieza/vista 
+compuesta por el nombre del restaurante, el tipo de comida, su puntuación (en cucharas), 
+el precio aproximado por comensal (en caso de tenerlo) , y la ciudad y barrio en que se encuentra.
+</li>
+
+<br>
+
+<li><strong>Página de Restaurante (pública)</strong> Una página de restaurante a la que se 
+podrá acceder desde su ficha. Al hacer clic en la ficha la página de restaurante se abrirá en 
+una nueva pestaña. Se mostrará el nombre del restaurante, logotipo o imágen principal y su 
+puntuación ( de 1 a 5 cucharas) con el número de valoraciones entre paréntesis, un ícono 
+para agregar el restaurante a mis favoritos, una zona de información con lo siguiente: 
+<ul>
+<li>Ubicación</li>
+<li>Tipo de Comida</li>
+<li>Precio por comensal</li>
+<li>Horario y días de servicio</li>
+</ul>
+A la derecha de la zona de información habrá una caja con los siguientes botones:
+<ul>
+<li>Carta: Un enlace a una imágen/serie de imágenes de la carta/menú del restaurante.</li>
+<li>Reservar: Un enlace a la página de reservas. (Se abrirá en una nueva pestaña) 
+(Si el restaurante no permite reservas se indicará en esta zona con un mensaje)</li>
+<li>Reseñas: Un enlace que llevará a la parte inferior de la misma página en la sección de reseñas.</li>
+</ul>
+Habrá una zona con un carrusel de imágenes del restaurante, una zona con próximos eventos 
+mostrando N fichas de eventos con opción a mostrar más y debajo habrá una sección de opiniones. 
+En caso de que el usuario sea de tipo cliente se mostrará un formulario para dejar una reseña, de 
+lo contrario habrá un mensaje indicando que se permite dejar reseñas siendo un cliente y un 
+botón que redirigirá a la página de registro. Se mostrarán las 5 primeras fichas de reseña, las 
+reseñas serán ordenadas por fecha, en la parte inferior de la página se podrá hacer clic 
+en un botón “mostrar más reseñas” que cargará la página con 5 fichas más y así sucesivamente. 
+Hacer clic en una ficha de reseña abrirá su hilo de respuestas.
+<ul><li><strong>Ficha de Evento: </strong>La ficha de eventos consistirá en 
+un componente/pieza/vista con toda la información relevante a un 
+evento (título, descripción, imágen, fecha y nombre del restaurante), igualmente 
+tendrá un ícono para reportar una incidencia o para ocultar el evento de la vista.
+<br>*** Se puede contemplar realizar una ficha de evento resumida expandible.</li></ul>
+<br>
+
+<li>
+<strong>Gestionar Restaurantes: </strong>Habrá una página en la que los gestores y propietarios podrán 
+visualizar la ficha resumida de los restaurantes que pueden gestionar, en caso de ser 
+usuario propietario se habilitará un enlace para “agregar nuevo restaurante” que llevará 
+abrirá un formulario de registro para ello. Al hacer clic en cualquiera de las fichas 
+disponibles se llevará a la página de restaurante privada. 
+* La presentación de las fichas de restaurante estará correctamente paginada.
+<ul>
+<li><strong>Página de Restaurante (privada): </strong>Habrá una página de gestión para los propietarios y gestores 
+podrán acceder seleccionando una ficha desde la página de “gestionar restaurantes”, en 
+está página de gestión se mostrará un enlace para “vista pública del restaurante” y un botón 
+para “Editar perfil de restaurante”,  posteriormente habrá tres 
+secciones (gestores, eventos y reservas), en la sección de reservas se mostrarán ordenadas 
+por fecha N fichas de reserva realizadas para dicho restaurante, el gestor o propietario del 
+restaurante podrá gestionar las reservas. En caso de que se haya iniciado sesión como el 
+propietario se mostrará la zona de gestores, donde se podrá agregar nuevos 
+gestores (por nombre de usuario o correo electrónico) o eliminar los ya asignados.
+Se mostrará una sección de eventos mostrando un botón “crear nuevo evento” que abrirá un 
+formulario para crear un nuevo evento, y posteriormente las últimas N fichas de eventos del 
+restaurante ordenadas por fecha.
+<br>
+*** Todas las secciones mostrando fichas mostrarán una cantidad de fichas prudente para 
+permitir la navegación por la página en general e implementarán una forma de mostrar más.
+</li>
+<li><strong>Editar perfil restaurante: </strong> página para que el propietario o gestor de un restaurante 
+modifique la información que se presenta en la página del mismo, será igual que la página de 
+restaurante pública exceptuando la caja de acciones y la sección de reseñas y agregando 
+botones de edición para cualquiera de los campos de información, incluyendo las imágenes de 
+presentación, horario, días de servicio, tipo de comida, etc. Hacer click en cualquiera de los 
+botones de edición deberá mostrar el formulario correspondiente para modificarlo y deberá haber 
+un botón en la parte inferior de la página para guardar los cambios.</li>
+</ul>
+
+<br>
+
+<li><strong>Ficha de reseña: </strong>En una ficha de reseña se podrá ver el nombre y foto de perfil 
+del usuario que la publique, título de la reseña, valoración en cucharas, precio por 
+persona (aproximado), fecha de la visita, vídeos o imágenes aportadas, un ícono para 
+denunciar la reseña (para usuarios registrados, se registrará una incidencia), un ícono para 
+ocultarla y un mensaje indicando el número de respuestas del mismo en caso de haber. Cada una 
+de las respuestas mostrará un mensaje para “abrir” el hilo correspondiente en caso de tener 
+más respuestas. Los usuarios de tipo cliente, administrador, moderador (asignado a la ciudad 
+correspondiente), gestor o propietario (del restaurante correspondiente) podrán responder a 
+cualquiera de las opiniones en el hilo a través de un botón de “responder” que abrirá un 
+formulario de respuesta, agregandola al hilo correspondiente o formando uno nuevo. En cada 
+respuesta se mostrará el nombre y foto de perfil del usuario, tipo de usuario, fecha de 
+publicación y la respuesta en sí, además de los íconos para denunciar, ocultar y responder.
+<br>
+*** En caso de que un hilo haya sido cerrado por un moderador o administrador se ocultará el ícono 
+de responder y habrá un mensaje indicando que el hilo se encuentra cerrado.
+<br>
+*** Se podría contemplar mostrar una reseña resumida expandible
+<br>
+*** Una reseña o respuesta se considera un hilo cuando tiene respuestas, 
+la primera respuesta a una opinión crea un nuevo hilo para dicha opinión.
+<br>
+*** El tipo de usuario en el caso de moderador, gestor y propietario de 
+mostrará de la siguiente manera:
+<ul>
+<li>Moderador de [Ciudad o Comunidad Autónoma]</li>
+<li>Gestor de [Nombre del restaurante] (refiriéndose al restaurante del hilo actual)</li>
+<li>Propietario de [Nombre del restaurante] (refiriéndose al restaurante del hilo actual)</li>
+</ul>
+</li>
+
+<br>
+
+<li><strong>Explorar: </strong>La página de explorar muestra un enlace para búsqueda 
+filtrada en la parte superior derecha, una zona con el mismo buscador por palabras 
+clave de la portada y posteriormente muestra N carruseles con fichas de restaurantes 
+separados por categorías (ofertas, mejor valorados de España, mejor valorados comida 
+china, mejor valorados vegetarianos, etc.) En caso de que existan más categorías a mostrar 
+de las que se presentan en la página en la parte inferior se muestra un botón para mostrar 
+más que actualiza la página con más categorías. 
+</li>
+
+<br>
+
+<li><strong>Búsqueda filtrada: </strong>En la página de búsqueda filtrada se mostrará 
+la ficha resumida de N restaurantes en orden alfabético, con paginación en 
+la zona inferior. En la zona superior de la página habrá un formulario para 
+búsqueda filtrada con opciones para filtrar por tipo de comida, puntuación (cucharas),
+precio (ej. -15, -25, -50, -100, -150), ubicación (Comunidad Autónoma, Provincia, Ciudad, Barrio),
+servicio en X fecha, reserva disponible para X fecha y N personas, categorías (vegano, vegetariano, 
+gluten free, cucharas, etc.)
+<br>
+Al hacer clic en un botón de búsqueda o aplicar filtro se recargará la página 
+aplicando los filtros especificados también con paginación.
+</li>
+
+<br>
+
+<li><strong>Registro: </strong>Deberá existir una página de registro para que los invitados 
+en el portal web puedan crearse una cuenta (cliente, propietario o gestor), al 
+llegar a la página de registro se mostrará un título para registrarse como cliente 
+y las indicaciones necesarias con el formulario de registro, en la parte inferior 
+del formulario aparte del botón para completar el registro, habrá un enlace para 
+iniciar sesión y un enlace con el mensaje “Eres propietario? Registra tu restaurante” 
+que redirigirá a una nueva página parecida a la de registro de cliente pero con un 
+formulario específico para el registro de propietarios. Una vez completado el registro 
+de propietario se habilitará una opción para ir a la página para registrar 
+restaurantes. (un propietario podrá acceder a esta función posteriormente desde la 
+barra de navegación (gestionar restaurantes)). Igualmente habrá un enlace para 
+registrarse como gestor (cuenta necesaria para que un propietario pueda otorgar 
+permisos de gestión).
+<br>*** La creación de cuentas de moderador o administrador se realizará desde la gestión 
+privada por otro administrador.
+<br> *** En caso de que el usuario introduzca un valor erróneo se le indicará 
+manteniendo los campos válidos que ya haya introducido al formulario.
+<ul><li><strong>Inicio de Sesión: </strong>Habrá una página para iniciar sesión con el formulario 
+correspondiente, habrá un enlace para “recuperar contraseña” que registrará una 
+incidencia para que el administrador responda enviando un correo electrónico con la 
+contraseña, habrá un enlace para “registrarse” que llevará a la página de registro. El 
+inicio de sesión tendrá un contador de intentos fallidos que se registrará en 
+la bbdd, en el caso de que se superen 5 intentos fallidos no se permitirán nuevos 
+intentos de inicio de sesión para esa cuenta por un tiempo determinado indicando al 
+usuario con un mensaje adecuado.</li></ul>
+</li>
+
+<br>
+
+<li><strong>Reservas: </strong>Habrá una página dedicada a la realización de reservas, a ésta se puede 
+acceder desde la página de restaurante con lo cual se debe guardar la información del 
+restaurante desde el que se haya comenzado a realizar la reserva. 
+Al acceder se verificará si el usuario está registrado, de no estarlo se preguntará si 
+desea iniciar sesión, registrarse o realizar la reserva como invitado.
+Los enlaces de iniciar sesión y registro llevarán a las páginas correspondientes guardando 
+los datos necesarios para redireccionarlo una vez completado el registro a la página de la reserva nuevamente con sus sesión iniciada. 
+En caso de ser un usuario registrado se mostrará 
+el formulario para realizar la reserva al restaurante seleccionado y se rellenarán los datos 
+del formulario de reserva con los datos del usuario automáticamente dejando vacíos los campos 
+específicos a dicha reserva, en caso de ser invitado se mostrará el formulario vacío.
+Habrá un calendario para mostrar las fechas con disponibilidad de reserva, en caso de estar 
+el aforo completo para una fecha indicada se indicará visualmente.
+Una vez realizada la reserva se realiza el importe señal, y en caso de éxito se muestra 
+el resumen de la misma (ficha de reserva), se guarda en las reservas del usuario y en 
+el registro de reservas del restaurante, contemplando que las reservas disponibles de 
+dicho restaurante en la fecha seleccionada deben ser actualizadas. En caso de fallo se 
+indica correctamente.
+<ul><li><strong>Ficha de reserva: </strong>Una ficha de reserva contendrá toda la información 
+relevante a la realización de una reserva, incluído el método de pago (para el importe señal) 
+ya que será mostrada tanto a los usuarios propietario y gestor en la vista privada de 
+restaurante como a los usuarios cliente en la vista de mis reservas.</li></ul>
+</li>
+
+<br>
+
+<li><strong>Perfil de usuario: </strong>El usuario invitado no tendrá acceso a esta página, pero 
+los usuarios registrados de tipo cliente, gestor y propietario podrán acceder a una 
+vista de su perfil que mostrará su nombre, foto de perfil, correo 
+electrónico, contraseña (censurada) con un ícono para mostrarla y en el caso de 
+los usuarios cliente método de pago (en caso de que el usuario tenga una tarjeta registrada para el importe 
+señal de reserva). En la parte superior habrá un botón de “Editar perfil” que mostrará 
+la misma página pero con campos para su modificación y un botón en la parte inferior 
+para guardarlos. Al enviar el formulario se actualizarán los datos que el usuario 
+haya cambiado, realizando la verificación de los mismos y mostrando un mensaje de 
+éxito o error correspondiente.
+<br>*** Si el usuario es de tipo cliente en la parte derecha habrá una caja con las siguientes opciones:
+<ul>
+<li><strong>Mis favoritos: </strong>Habrá una sección en la página de usuarios de tipo cliente en 
+la que podrán ver la ficha de restaurante de sus restaurantes favoritos y una forma 
+de eliminarlos de la lista de favoritos, tendrá una correcta presentación y 
+paginación. La página será muy parecida a la de “mis restaurantes” de los propietarios 
+y gestores pero orientada a los restaurantes que un cliente haya agregado a favoritos.</li>
+<li><strong>Mis reservas: </strong>Habrá una sección en la página de usuarios de tipo cliente en 
+la que habrá una sección mostrando la ficha de reserva de sus reservas 
+activas/actuales y una sección para mostrar el histórico de reservas. El histórico 
+de reservas tendrá correcta paginación y presentación de las fichas de reserva.</li>
+<li><strong>Mis reseñas: </strong>Habrá una sección en la página de usuarios de tipo cliente 
+en la que se mostrará el histórico de reseñas realizadas por el usuario ordenadas 
+por fecha de publicación. Se tendrá correcta paginación.</li>
+</ul>
+</li>
+<li><strong>FAQ: </strong>Habrá una página con preguntas frecuentes cuya respuesta los administradores consideren 
+oportuno publicar en dicha sección. Igualmente habrá un cajón de texto en la parte 
+inferior para enviar un mensaje a los administradores del sitio.</li>
+
+<br>
+
+<li><strong>Contacto: </strong>Habrá una página de contacto en la que se mostrarán los 
+medios de comunicación disponibles para que los usuarios se comuniquen con 
+administradores del sitio. Igualmente se incluirán los medios necesarios para 
+que un usuario solicite ser moderador de una zona o se reporten incidentes 
+mediante una descripción.
+</li>
+
+</li>
+</li>
+
+<br>
+
+</div>
+
+<hr>
+<div class="titulo titulo3" style="margin:5mm;font-size:1.0em;font-weight:bold">Requerimientos 
+para las partes privadas (Usuarios Normales, Usuarios Moderadores, Usuarios Propietarios, 
+Usuarios Clientes, Usuarios Administradores del Portal, Usuario administrador del Sistema):</div>
+<div style="text-align:justify;margin:0em">
+*** Únicamente los usuarios administradores tendrán acceso a 
+las funciones de administración privadas, los moderadores tendrán acceso limitado a las 
+funciones de administración relacionadas con reportes de incidentes (en reseñas y respuestas), 
+usuarios bloqueados y eventos.
+<br><br>
+*** En general se tendrán funciones básicas de Alta, Modificación, Baja, Consulta, Búsquedas/Filtrado.
+
+<ul>
+<li><strong>Mantenimiento de Usuarios: </strong><br>Gestionar los usuarios de la aplicación.<br>
+Acciones:<ul>
+<li>CRUD de usuarios Administradores del Portal y Moderadores bajo demanda por parte de otro 
+Usuario Administrador del Portal, es decir para la creación/edición/borrado de otros 
+Administradores del Portal y Moderadores. Se mostrará una ficha con los datos a rellenar 
+necesarios para la creación,y en su defecto la ficha ya rellenada con los datos actuales, para 
+su modificación o borrado.</li>
+<li>El resto de usuarios se podrán registrar ellos mismos mediante el uso de la plantilla 
+pública de registro.</li>
+<li>Los moderadores (y administradores) podrán acceder a la lista de usuarios completa y bloquear 
+usuarios por ejemplo por realizar valoraciones dañinas (ya sea con palabras 
+malsonantes u otro tipo) de forma repetida, y desbloquear usuarios.</li>
+<li>Dependiendo del rol, algunos usuarios clientes podrán acceder a opciones 
+CRUD con otros,y las opciones serán similares a las mencionadas anteriormente 
+para los administradores.</li>
+</ul>
+<br>*** Los roles disponibles estarán predefinidos de entre los indicados anteriormente.
+</li>
+
+<br>
+
+<li><strong>Mantenimiento de restaurantes:</strong><br>Gestionar los restaurantes de la aplicación.</br>
+Acciones:<ul> 
+<li>Los administradores del sitio tendrán acceso a herramientas CRUD para gestionar 
+los restaurantes registrados en la aplicación.
+<br>*** Los propietarios y gestores cuentan con sus respectivas opciones de gestión en 
+el portal web.</li>
+<li>El mantenimiento incluirá la información básica del restaurante, los eventos asociados 
+al restaurante, las categorías a las que pertenece, las valoraciones de los clientes, el 
+mantenimiento de las imágenes y posibles URLs proporcionadas por el restaurante, así como 
+la relación con otros elementos como sus gestores y reservas correspondientes.</li>
+<li>Se tendrá un sistema sencillo para modificar el horario y fechas de 
+servicio del restaurante.</li>
+</ul>
+</li>
+
+<li><strong>Mantenimiento de Reseñas/respuestas: </strong><br>Gestionar las reseñas de los clientes en los restaurantes.
+<br>Acciones:<ul>
+<li>Los moderadores y administradores tendrán un acceso en el que se podrán ver y 
+gestionar todas las reseñas y respuestas existentes. </li>
+<li>En cada ficha de comentario se podrán ver/mantener todos sus detalles y las acciones que podrán 
+realizarse CRUD.</li>
+<li>Habrá un posible filtrado de reseñas y respuestas en función de distintos 
+parámetros, como para el restaurante X, o del usuario X, así como por  
+incidencias reportadas en relación con reseñas y respuestas.
+<br>*** El mantenimiento de una reseña y respuesta incluirá la posible vinculación 
+con el restaurante al que se refiere, a la respuesta o reseña "padre" al que se 
+responde (si es una respuesta), a los comentarios "hijo" que 
+tiene como respuesta, las posibles alertas del comentario, denuncias, etc
+</li>
+</ul>
+</li>
+
+<br>
+
+<li>
+<strong>Mantenimiento de Eventos:</strong><br>Gestionar los eventos de los restaurantes.<br>
+Acciones:<ul>
+<li>Opciones CRUD para los administradores en una lista con todos los eventos, en el cual se relaciona el evento con el restaurante al que pertenece el evento.
+<br>***Los propietarios del restaurante del evento tendrán opciones similares pero en su apartado personal.
+<br>Cada evento se presentará en forma de ficha con los datos necesarios como puede ser su fecha, temática etc.
+</li>
+<li>Los eventos tendrán varios estados, previsto, pospuesto, 
+cancelado, finalizado… los cuales tendrán que ser marcados en la ficha de este.</li>
+<li>Habrá un posible búsqueda/filtrado dependiendo de factores como 
+eventos del restaurante X o eventos con estado X.</li>
+</ul>
+</li>
+
+<br>
+
+<li>
+<strong>Mantenimiento de Reservas: </strong><br>Gestionar las reservas de los clientes en los restaurantes.<br>
+Acciones:
+<ul>
+<li>Opciones CRUD para los administradores, en el cual se dará la relación del cliente que ha hecho la reserva junto con el restaurante y la posibilidad de crear o modificar y eliminar esta bajo petición.
+<br>***Los gestores y propietarios podrán acceder de una forma similar a un apartado de CRUD en sus respectivas zonas de trabajo.
+</li>
+<li>Los administradores tendrán la lista completa de las reservas juntos con diferentes opciones de búsqueda/filtrado.
+<br>***Los gestores y propietarios sólo podrán interactuar con las reservas de su/s restaurante/s.
+</li>
+</ul>
+</li>
+
+<br>
+
+<li>
+<strong>Mantenimiento de Avisos / Incidencias: </strong><br>Gestionar avisos e incidencias a nivel administrador<br>
+Acciones:
+<ul>
+<li>Se podrán ver y gestionar todos los avisos existentes, incluso dar de alta o baja según se 
+considere oportuno. En cada ficha de aviso se podrán ver los datos del mismo y algunas 
+acciones adicionales para permitir revisar y dar respuesta al aviso desde el punto de vista 
+de un moderador/administrador.</li>
+<li>Se debe poder gestionar incidencias de tipo comentario, reseña o evento y tener una forma de 
+acceder a la gestión de usuarios relacionados con dichas incidencias.</li>
+</ul>
+</li>
+
+<br>
+
+<li>
+<strong>Mantenimiento de Categorías</strong><br>Gestionar las categorías existentes y los 
+restaurantes pertenecientes a ellas.<br>Acciones:
+<ul><li>Los usuarios de tipo administrador tendrán acceso a las herramientas CRUD necesarias para 
+gestionar categorías, así como los restaurantes pertenecientes a ellas.</li></ul>
+</li>
+
+<br>
+
+<li>
+<strong>Mantenimiento de Registros (LOG)</strong><br>Gestionar los LOG de la aplicación<br>
+Acciones:
+<ul>
+<li>Mantenimiento y visualización de los registro de LOG que se generen en el 
+sistema, con posibilidad de poder exportar los registros en archivo de texto o 
+de eliminar los registros que cumplan un filtro establecido. Además se deberá 
+tener un proceso que permita eliminar automáticamente los registros "anticuados".</li>
+</ul>
+</li>
+
+<br>
+
+<li>
+<strong>Utilidades:</strong><br>Gestión y mantenimiento del servicio<br>
+Acciones:
+<ul>
+<li>Limpieza de datos antiguos.</li>
+<li>Configuración de parámetros del sistema</li>
+<li>Copias de seguridad de datos y archivos</li>
+</ul>
+</li>
+
+</div>
+
+<hr>
+<div class="titulo titulo3" style="margin:5mm;font-size:1.0em;font-weight:bold">Requisitos de Información / Datos:</div>
+<div style="text-align:justify;margin:0em">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*** Información y Datos que debe almacenar
+y manejar el sistema para proporcionar las funcionalidades indicadas en
+los requisitos.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*** Los atributos con &reg; representan una relación con otro elemento
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*** Los atributos con (opt) con opcionales (pueden ser nulos)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*** Estos requisitos no son una representaión exacta de la base de 
+datos, incluso hay elementos que podrían calcularse en tiempo de respuesta, la implementación 
+podría variar en el desarrollo. (Se utilizarán índices incrementales como clave de identificación)
+
+<ul>
+<li><strong>Restaurante: </strong>
+Elemento con → Nombre, foto de presentación, fotos (opt), carta (ruta a una imágen o pdf), 
+ubicación (Comunidad Autónoma, Ciudad, Barrio, Dirección) *Es necesario separar los 
+campos para facilitar el filtrado, días y horario de servicio, tipo de comida, 
+aforo máximo, puntuación (calculado con las reseñas), categorías &reg; (opt), reseñas &reg; (opt), 
+reservas &reg; (opt), eventos &reg; (opt), propietario &reg; , gestores &reg; (opt), precio por 
+comensal (opt) (calculado por el precio en las reseñas)
+*** Se puede contemplar que el propio restaurante asigne un precio por comensal aproximado
+</li>
+<br>
+
+<li><strong>Categoría: </strong>
+Elemento con → Nombre de categoría, Restaurantes pertenecientes 
+</li>
+<br>
+
+<li><strong>Reseña:</strong>
+Elemento con → Puntuación, Título (opt), 
+Cuerpo (opt), Autor, Respuestas (opt), imágenes y videos (opt), precio por persona (opt)
+</li>
+<br>
+
+<li><strong>Reserva:</strong>
+Es un elemento con → Cliente &reg;, Restaurante &reg;, fecha, comensales, método de pago (para la señal). 
+</li>
+<br>
+
+<li><strong>Respuesta: </strong>
+Es un elemento con → Reseña y respuesta (a la que responde)
+</li>
+<br>
+
+<li><strong>Evento: </strong>
+Es un elemento con → Título, imágen, descripción, fecha del evento, restaurante &reg; 
+</li>
+<br>
+
+<li><strong>Usuario: </strong>
+Es un elemento con → Foto de perfil (opt), Nombre de usuario, correo electrónico, contraseña.
+</li>
+<br>
+
+<li><strong>Cliente: </strong>
+Es un elemento que hereda de Usuario con → Reseñas &reg;, Reservas &reg;, Favoritos &reg; , método de pago (para la señal)
+</li>
+<br>
+
+<li><strong>Gestor: </strong>
+Es un elemento que hereda de Usuario con → Restaurantes &reg;
+</li>
+<br>
+
+<li><strong>Propietario: </strong>
+Es un elemento que hereda de Usuario con → Restaurantes &reg;
+</li>
+<br>
+
+<li><strong>Moderador: </strong>
+Es un elemento que hereda de Usuario con → Comunidad Autónoma, Ciudad (opt)
+</li>
+<br>
+
+<li><strong>Administrador: </strong>
+Es un elemento que hereda de Usuario
+</li>
+<br>
+
+<li><strong>Indicencias de reseña: </strong>
+Es un elemento con → Elemento con -> Usuario &reg;, Reseña &reg;
+</li>
+<br>
+
+<li><strong>Incidencias de respuesta: </strong>
+Es un elemento con → Elemento con -> Usuario &reg;, Reseña &reg;, Respuesta Recipiente &reg; (opt), 
+Respuesta Incidente &reg; 
+<br>
+*** Se relaciona con la reseña inicial del hilo en que se encuentre dicha respuesta, el campo 
+respuesta recipiente se refiere a la respuesta a la que se responde, en caso de ser nulo se 
+asume que la respuesta es a la reseña original.
+</li>
+<br>
+
+<li><strong>Incidencias de evento: </strong>
+Es un elemento con → Elemento con-> Restaurante &reg;, Evento &reg;
+</li>
+<br>
+
+<li><strong>Comentarios: </strong>
+Es un elemento con → Usuario &reg; (Son los mensajes que envían los usuarios mediante contacto o FAQ)
+</li>
+<br>
+
+<li><strong>Respuesta FAQ: </strong>
+Es un elemento con → pregunta, respuesta
+</li>
+<br>
+
+<li><strong>Log: </strong>
+Es un elemento con → fecha/hora, tipo de LOG y texto
+</li>
+<br>
+
+<li><strong>Configuración: </strong>
+Es un elemento con → variable, valor. <br>*Se utilizará para establecer variables que no suelen 
+cambiar y se utilizan en distintas áreas de la aplicación.<br>
+Ejemplo: maxIntentosPermitidos (El número máximo de intentos de inicio de sesión 
+fallidos permitidos antes de restringir acceso.)
+</li>
+<br>
+
+
+</ul>
+</div>
+
+</div>
+
+
+</body></html>
