@@ -1,5 +1,12 @@
 <?php
 
+/*
+Pendiente:
+    - Cambiar el controlador de los enlaces de la barra de navegación "site" a los utilizados
+    - Darle mejor estilo al pie de página
+    - Asegurarse de que el nombre de los roles coincida con el del sistema de roles utilizado
+*/
+
 /** @var yii\web\View $this */
 /** @var string $content */
 
@@ -20,18 +27,21 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
 
-<header id="header">
+<body class="d-flex flex-column h-100">
+    <?php $this->beginBody() ?>
+
+    <header id="header">
         <?php
         NavBar::begin([
             'brandLabel' => Yii::$app->name,
@@ -106,7 +116,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </footer>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

@@ -11,7 +11,7 @@ $this->title = 'La Cuchara - Inicio';
         <?= \app\widgets\BarraBusqueda::widget() ?>
 
         <!-- Carruseles -->
-        
+        <?= \app\widgets\FichaRestaurante::widget(['id' => 1]) ?>
 
         <!-- Registra tu restaurante -->
 
