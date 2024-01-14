@@ -214,7 +214,7 @@ def generar_datos(fichero='data.sql'):
             barrio_restaurante = "NULL"
             ciudad_restaurante = fake.city()
             comunidad_autonoma_restaurante = fake.state()
-            precio_medio_comensal = round(fake.random.uniform(10, 100), 2) if i % 2 == 0 else "NULL"
+            precio_medio_comensal = round(fake.random.uniform(10, 100), 2)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
