@@ -319,23 +319,23 @@ def generar_datos(fichero='data.sql'):
         
         
         file.write("-- --------------------------------------------------------\n")
-        file.write("-- Volcado de datos para la tabla `reseñas`\n")
+        file.write("-- Volcado de datos para la tabla `resenas`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `reseñas` (`id_reseña`, `titulo_reseña`, `cuerpo_reseña`, `puntuacion`, `precio_x_persona`, `incidencia_reseña`, `fecha_reseña`, `ref_cliente`, `id_restaurante`, `notas`) VALUES\n")
+        file.write("INSERT INTO `resenas` (`id_resena`, `titulo_resena`, `cuerpo_resena`, `puntuacion`, `precio_x_persona`, `incidencia_resena`, `fecha_resena`, `ref_cliente`, `id_restaurante`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
-            titulo_reseña = f"Reseña {i}"
-            cuerpo_reseña = fake.text(max_nb_chars=500)
+            titulo_resena = f"resena {i}"
+            cuerpo_resena = fake.text(max_nb_chars=500)
             puntuacion = fake.random_int(min=0, max=5)
             precio_x_persona = round(fake.random.uniform(10, 100), 2) if i % 2 == 0 else "NULL"
-            incidencia_reseña = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
-            fecha_reseña = fake.date_between(start_date='-30d', end_date='today') 
+            incidencia_resena = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
+            fecha_resena = fake.date_between(start_date='-30d', end_date='today') 
             ref_cliente = f"CLI{i:07d}"
             id_restaurante = fake.random_int(min=1, max=10)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{titulo_reseña}', '{cuerpo_reseña}', {puntuacion}, {precio_x_persona}, {incidencia_reseña}, '{fecha_reseña}', '{ref_cliente}', {id_restaurante}, {notas})"
+            insert_query = f"({i}, '{titulo_resena}', '{cuerpo_resena}', {puntuacion}, {precio_x_persona}, {incidencia_resena}, '{fecha_resena}', '{ref_cliente}', {id_restaurante}, {notas})"
             
             file.write(insert_query)
             
@@ -347,17 +347,17 @@ def generar_datos(fichero='data.sql'):
         
         
         file.write("-- --------------------------------------------------------\n")
-        file.write("-- Volcado de datos para la tabla `imagenes_reseñas`\n")
+        file.write("-- Volcado de datos para la tabla `imagenes_resenas`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `imagenes_reseñas` (`id_imagen_reseña`, `ruta_imagen_reseña`, `id_reseña`, `notas`) VALUES\n")
+        file.write("INSERT INTO `imagenes_resenas` (`id_imagen_resena`, `ruta_imagen_resena`, `id_resena`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
-            ruta_imagen_reseña = f"ruta_imagen_{i}.jpg"
-            id_reseña = fake.random_int(min=1, max=10) 
+            ruta_imagen_resena = f"ruta_imagen_{i}.jpg"
+            id_resena = fake.random_int(min=1, max=10) 
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{ruta_imagen_reseña}', {id_reseña}, {notas})"
+            insert_query = f"({i}, '{ruta_imagen_resena}', {id_resena}, {notas})"
            
             file.write(insert_query)
             
@@ -371,16 +371,16 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `respuestas`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `respuestas` (`id_respuesta`, `texto_respuesta`, `incidencia_respuesta`, `id_reseña`, `notas`) VALUES\n")
+        file.write("INSERT INTO `respuestas` (`id_respuesta`, `texto_respuesta`, `incidencia_respuesta`, `id_resena`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
             texto_respuesta = fake.text(max_nb_chars=200)
             incidencia_respuesta = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
-            id_reseña = fake.random_int(min=1, max=10)
+            id_resena = fake.random_int(min=1, max=10)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{texto_respuesta}', {incidencia_respuesta}, {id_reseña}, {notas})"
+            insert_query = f"({i}, '{texto_respuesta}', {incidencia_respuesta}, {id_resena}, {notas})"
             
             file.write(insert_query)
             

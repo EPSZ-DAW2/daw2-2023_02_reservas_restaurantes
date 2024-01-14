@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   `descripcion_evento` varchar(500) NOT NULL COMMENT 'Descripción del evento organizado.',
   `fecha_evento` date NOT NULL COMMENT 'Fecha de celebración del evento.', 
   `imagen_promocional` varchar(500) NOT NULL COMMENT 'Imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).', 
-  `incidencia_evento` tinyint(1) COMMENT 'Marca de incidencia en una reseña: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada',
+  `incidencia_evento` tinyint(1) COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante asociada a la imagen.', 
   `notas` text COMMENT 'Notas internas para el evento.', 
   PRIMARY KEY (`id_evento`),
@@ -219,37 +219,37 @@ CREATE TABLE IF NOT EXISTS `eventos` (
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "reseñas".
+-- Estructura de la tabla "resenas".
 -- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `reseñas`;
-CREATE TABLE IF NOT EXISTS `reseñas` (
-  `id_reseña` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada reseña.',
-  `titulo_reseña` varchar(100) COMMENT 'Título de la reseña.',
-  `cuerpo_reseña` varchar(500) COMMENT 'Cuerpo de la reseña.',
+DROP TABLE IF EXISTS `resenas`;
+CREATE TABLE IF NOT EXISTS `resenas` (
+  `id_resena` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada resena.',
+  `titulo_resena` varchar(100) COMMENT 'Título de la resena.',
+  `cuerpo_resena` varchar(500) COMMENT 'Cuerpo de la resena.',
   `puntuacion` tinyint(1) NOT NULL COMMENT 'Puntuación de 0-5.',
   `precio_x_persona` float(6) COMMENT 'Precio por persona gastado.',
-  `incidencia_reseña` tinyint(1) COMMENT 'Marca de incidencia en una reseña: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
-  `fecha_reseña` date NOT NULL COMMENT 'Fecha de la reseña.',
-  `ref_cliente` varchar(10) NOT NULL COMMENT 'Referencia del cliente asociado a la reseña.',
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la reseña.',
-  `notas` text COMMENT 'Notas internas para la reseña.', 
-  PRIMARY KEY (`id_reseña`),
+  `incidencia_resena` tinyint(1) COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
+  `fecha_resena` date NOT NULL COMMENT 'Fecha de la resena.',
+  `ref_cliente` varchar(10) NOT NULL COMMENT 'Referencia del cliente asociado a la resena.',
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la resena.',
+  `notas` text COMMENT 'Notas internas para la resena.', 
+  PRIMARY KEY (`id_resena`),
   CONSTRAINT FOREIGN KEY (`ref_cliente`) REFERENCES clientes (`ref_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "imagenes_reseñas".
+-- Estructura de la tabla "imagenes_resenas".
 -- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `imagenes_reseñas`;
-CREATE TABLE IF NOT EXISTS `imagenes_reseñas` (
-  `id_imagen_reseña` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada imagen de reseña.',
-  `ruta_imagen_reseña` varchar(500) NOT NULL COMMENT 'Imagen aportada en la reseña por el usuario (Será la ruta+nombreArchivo de la imagen).', 
-  `id_reseña` int(12) NOT NULL COMMENT 'Identificador de cada reseña asociada a la imagen.', 
-  `notas` text COMMENT 'Notas internas para la imagen de reseña.', 
-  PRIMARY KEY (`id_imagen_reseña`),
-  CONSTRAINT FOREIGN KEY (`id_reseña`) REFERENCES reseñas (`id_reseña`) ON DELETE CASCADE ON UPDATE CASCADE
+DROP TABLE IF EXISTS `imagenes_resenas`;
+CREATE TABLE IF NOT EXISTS `imagenes_resenas` (
+  `id_imagen_resena` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada imagen de resena.',
+  `ruta_imagen_resena` varchar(500) NOT NULL COMMENT 'Imagen aportada en la resena por el usuario (Será la ruta+nombreArchivo de la imagen).', 
+  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la imagen.', 
+  `notas` text COMMENT 'Notas internas para la imagen de resena.', 
+  PRIMARY KEY (`id_imagen_resena`),
+  CONSTRAINT FOREIGN KEY (`id_resena`) REFERENCES resenas (`id_resena`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -258,13 +258,13 @@ CREATE TABLE IF NOT EXISTS `imagenes_reseñas` (
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `respuestas`;
 CREATE TABLE IF NOT EXISTS `respuestas` (
-  `id_respuesta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada respuesta de reseña.',
+  `id_respuesta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada respuesta de resena.',
   `texto_respuesta` varchar(200) NOT NULL COMMENT 'Texto de la respuesta.', 
   `incidencia_respuesta` tinyint(1) COMMENT 'Marca de incidencia en una respuesta: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
-  `id_reseña` int(12) NOT NULL COMMENT 'Identificador de cada reseña asociada a la respuesta.', 
-  `notas` text COMMENT 'Notas internas para la respuesta de reseña.', 
+  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la respuesta.', 
+  `notas` text COMMENT 'Notas internas para la respuesta de resena.', 
   PRIMARY KEY (`id_respuesta`),
-  CONSTRAINT FOREIGN KEY (`id_reseña`) REFERENCES reseñas (`id_reseña`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT FOREIGN KEY (`id_resena`) REFERENCES resenas (`id_resena`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `subrespuestas`;
 CREATE TABLE IF NOT EXISTS `subrespuestas` (
   `id_subrespuesta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada respuesta dada a otra respuesta.',
   `id_respuesta` int(12) NOT NULL COMMENT 'Identificador de la respuesta padre.',
-  `notas` text COMMENT 'Notas internas para la subrespuesta de reseña.', 
+  `notas` text COMMENT 'Notas internas para la subrespuesta de resena.', 
   PRIMARY KEY (`id_subrespuesta`),
   CONSTRAINT FOREIGN KEY (`id_respuesta`) REFERENCES respuestas (`id_respuesta`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
