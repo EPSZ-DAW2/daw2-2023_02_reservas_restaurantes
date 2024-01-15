@@ -4,6 +4,8 @@ daw2-2023_02_reservas_restaurantes
 G2,W3 -Grupo4 - Pablo Cid Castro
 
 ---------G2-----------------------
+
+
 Paginas: Mantenimiento de Usuarios.		 	 
   Lista de roles	 	 	 	 
   Asignación de Roles a los usuarios (sistema RBAC)	 	 	 	 
@@ -12,6 +14,8 @@ Paginas: Mantenimiento de Usuarios.
   Mantenimiento de usuarios bloqueados
 
 ---------W3-----------------------
+
+
 Página: Restaurante (privado)	 	 		 	 
   Parte: gestores (incorporación de gestores).	 	 	
   Parte: eventos. {ficha evento} (formulario para creación, edición y eliminación de evento)	 	  	 	 
