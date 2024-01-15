@@ -69,7 +69,4 @@ class CategoriaRestaurante extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Restaurante::class, ['id_restaurante' => 'id_restaurante']);
     }
-
-    
-
 }

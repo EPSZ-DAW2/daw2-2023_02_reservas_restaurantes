@@ -14,13 +14,13 @@ use Yii;
  * @property float|null $precio_x_persona Precio por persona gastado.
  * @property int|null $incidencia_resena Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.
  * @property string $fecha_resena Fecha de la resena.
- * @property string $ref_cliente Referencia del cliente asociado a la resena.
+ * @property int $id_cliente Referencia del cliente asociado a la resena.
  * @property int $id_restaurante Identificador del restaurante asociado a la resena.
  * @property string|null $notas Notas internas para la resena.
  *
- * @property ImagenesResenas[] $imagenesResenas
- * @property Clientes $refCliente
- * @property Respuestas[] $respuestas
+ * @property Cliente $cliente
+ * @property ImagenesResena[] $imagenesResenas
+ * @property Respuesta[] $respuestas
  * @property Restaurante $restaurante
  */
 class Resena extends \yii\db\ActiveRecord
@@ -39,15 +39,14 @@ class Resena extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['puntuacion', 'fecha_resena', 'ref_cliente', 'id_restaurante'], 'required'],
-            [['puntuacion', 'incidencia_resena', 'id_restaurante'], 'integer'],
+            [['puntuacion', 'fecha_resena', 'id_cliente', 'id_restaurante'], 'required'],
+            [['puntuacion', 'incidencia_resena', 'id_cliente', 'id_restaurante'], 'integer'],
             [['precio_x_persona'], 'number'],
             [['fecha_resena'], 'safe'],
             [['notas'], 'string'],
             [['titulo_resena'], 'string', 'max' => 100],
             [['cuerpo_resena'], 'string', 'max' => 500],
-            [['ref_cliente'], 'string', 'max' => 10],
-            [['ref_cliente'], 'exist', 'skipOnError' => true, 'targetClass' => Clientes::class, 'targetAttribute' => ['ref_cliente' => 'ref_cliente']],
+            [['id_cliente'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::class, 'targetAttribute' => ['id_cliente' => 'id_cliente']],
             [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
         ];
     }
@@ -65,10 +64,20 @@ class Resena extends \yii\db\ActiveRecord
             'precio_x_persona' => 'Precio X Persona',
             'incidencia_resena' => 'Incidencia Resena',
             'fecha_resena' => 'Fecha Resena',
-            'ref_cliente' => 'Ref Cliente',
+            'id_cliente' => 'Id Cliente',
             'id_restaurante' => 'Id Restaurante',
             'notas' => 'Notas',
         ];
+    }
+
+    /**
+     * Gets query for [[Cliente]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCliente()
+    {
+        return $this->hasOne(Cliente::class, ['id_cliente' => 'id_cliente']);
     }
 
     /**
@@ -78,17 +87,7 @@ class Resena extends \yii\db\ActiveRecord
      */
     public function getImagenesResenas()
     {
-        return $this->hasMany(ImagenesResenas::class, ['id_resena' => 'id_resena']);
-    }
-
-    /**
-     * Gets query for [[RefCliente]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRefCliente()
-    {
-        return $this->hasOne(Clientes::class, ['ref_cliente' => 'ref_cliente']);
+        return $this->hasMany(ImagenesResena::class, ['id_resena' => 'id_resena']);
     }
 
     /**
@@ -98,7 +97,7 @@ class Resena extends \yii\db\ActiveRecord
      */
     public function getRespuestas()
     {
-        return $this->hasMany(Respuestas::class, ['id_resena' => 'id_resena']);
+        return $this->hasMany(Respuesta::class, ['id_resena' => 'id_resena']);
     }
 
     /**
