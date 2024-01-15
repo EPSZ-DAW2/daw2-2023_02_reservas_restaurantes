@@ -7,6 +7,10 @@ use \app\models\Categoria;
 use app\models\CategoriaRestaurante;
 use Yii;
 
+/*
+  Versión de carrusel de restaurantes que utiliza el carousel de bootstrap5,
+  pendiente implementar una versión dinámica con JS
+*/
 class CarruselRestaurante extends Widget
 {
   public $nombreCategoria;
