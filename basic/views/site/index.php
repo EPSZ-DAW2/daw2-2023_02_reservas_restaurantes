@@ -1,6 +1,8 @@
 <?php
 
 /** @var yii\web\View $this */
+use \app\widgets\CarruselRestaurante;
+use \app\widgets\BarraBusqueda;
 
 $this->title = 'La Cuchara - Inicio';
 ?>
@@ -8,11 +10,20 @@ $this->title = 'La Cuchara - Inicio';
 
     <div class="body-content">
         <!-- Barra de búsqueda -->
-        <?= \app\widgets\BarraBusqueda::widget() ?>
+        <?= BarraBusqueda::widget() ?>
 
+        <hr>
         <!-- Carruseles -->
-        <?= \app\widgets\FichaRestaurante::widget(['id' => 1]) ?>
+        
+        <?= CarruselRestaurante::widget([
+            'nombreCategoria' => 'Categoria1',
+        ]); ?>
 
+        <?= CarruselRestaurante::widget([
+            'nombreCategoria' => 'Categoria2',
+        ]); ?>
+
+        <hr>
         <!-- Registra tu restaurante -->
 
     </div>
