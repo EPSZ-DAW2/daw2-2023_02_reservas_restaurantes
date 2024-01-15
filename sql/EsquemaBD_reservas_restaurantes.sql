@@ -22,6 +22,18 @@ USE `daw2_2023_02_reservas_restaurantes`;
 
 
 -- ---------------------------------------------------------------------------
+-- Estructura de la tabla "imagenes".
+-- ---------------------------------------------------------------------------
+DROP TABLE IF EXISTS `imagenes`;
+CREATE TABLE IF NOT EXISTS `imagenes` (
+  `id_imagen` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de imagen.',
+  `descripcion` varchar(500) COMMENT 'Texto que describe la imagen y se muestra como pié de foto (opcional).',
+  `notas` text COMMENT 'Notas internas para la imagen.',
+  PRIMARY KEY (`id_imagen`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
+
+
+-- ---------------------------------------------------------------------------
 -- Estructura de la tabla "usuarios".
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `usuarios`;
@@ -30,9 +42,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nombre_usuario` varchar(50) NOT NULL COMMENT 'Nombre del usuario.',
   `email` varchar(32) NOT NULL COMMENT 'Email de regitro del usuario.',
   `password` varchar(32) NOT NULL COMMENT 'Contraseña de registro del usuario.',
-  `foto_perfil_usuario` varchar(500) COMMENT 'Foto de perfil del usuario (Será la ruta+nombreArchivo de la foto).',  
+  `id_foto_usuario` int(12) COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',  
   `notas` text COMMENT 'Notas internas para el usuario.', 
-  PRIMARY KEY (`id_usuario`)
+  PRIMARY KEY (`id_usuario`),
+  CONSTRAINT FOREIGN KEY (`id_foto_usuario`) REFERENCES imagenes (`id_imagen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -41,12 +54,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `administradores`;
 CREATE TABLE IF NOT EXISTS `administradores` (
-  `ref_administrador` varchar(10) NOT NULL COMMENT 'Identificador de cada administrador compuesta por ADM+id (Ejemplo: ADM0000001).',
+  `id_administrador` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada administrador.',
   `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
   `notas` text COMMENT 'Notas internas para el Administrador',
-  PRIMARY KEY (`ref_administrador`),
+  PRIMARY KEY (`id_administrador`),
   CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- --------------------------------------------------------
@@ -54,13 +67,13 @@ CREATE TABLE IF NOT EXISTS `administradores` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `gestores`;
 CREATE TABLE IF NOT EXISTS `gestores` (
-  `ref_gestor` varchar(10) NOT NULL COMMENT 'Identificador de cada gestor compuesta por GES+id (Ejemplo: GES0000001).',
+  `id_gestor` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada gestor.',
   `es_propietario` tinyint(1) NOT NULL COMMENT 'Si el gestor es propietario o solo gestor, 0 solo gestor 1 propietario.',
   `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
   `notas` text COMMENT 'Notas internas para el Gestor',
-  PRIMARY KEY (`ref_gestor`),
+  PRIMARY KEY (`id_gestor`),
   CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- --------------------------------------------------------
@@ -68,14 +81,14 @@ CREATE TABLE IF NOT EXISTS `gestores` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `moderadores`;
 CREATE TABLE IF NOT EXISTS `moderadores` (
-  `ref_moderador` varchar(10) NOT NULL COMMENT 'Identificador de cada moderador compuesta por MOD+id (Ejemplo: MOD0000001).',
+  `id_moderador` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada moderador.',
   `ciudad_moderador` varchar(100) COMMENT 'Ciudad de residencia del moderador.',
   `comunidad_autonoma_moderador` varchar(100) NOT NULL COMMENT 'Comunidad autónoma de residencia del moderador.',
   `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
   `notas` text COMMENT 'Notas internas para el Moderador',
-  PRIMARY KEY (`ref_moderador`),
+  PRIMARY KEY (`id_moderador`),
   CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- --------------------------------------------------------
@@ -83,12 +96,12 @@ CREATE TABLE IF NOT EXISTS `moderadores` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
-  `ref_cliente` varchar(10) NOT NULL COMMENT 'Identificador de cada moderador compuesta por CLI+id (Ejemplo: CLI0000001).',
+  `id_cliente` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada cliente.',
   `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
   `notas` text COMMENT 'Notas internas para el Cliente',
-  PRIMARY KEY (`ref_cliente`),
+  PRIMARY KEY (`id_cliente`),
   CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- ---------------------------------------------------------------------------
@@ -97,22 +110,10 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 DROP TABLE IF EXISTS `categorias`;
 CREATE TABLE IF NOT EXISTS `categorias` (
   `id_categoria` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada categoria de restaurante.',
+  `id_categoria_padre` int(12) COMMENT 'Identificador de la categoría padre NULL si no tiene',
   `nombre_categoria` varchar(200) NOT NULL COMMENT 'Nombre de la categoria.',
   `notas` text COMMENT 'Notas internas para la categoria.', 
   PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- ---------------------------------------------------------------------------
--- Estructura de la tabla "subcategorias".
--- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `subcategorias`;
-CREATE TABLE IF NOT EXISTS `subcategorias` (
-  `id_subcategoria` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada subcategoria.',
-  `id_categoria` int(12) NOT NULL COMMENT 'Identificador de la categoria padre.',
-  `notas` text COMMENT 'Notas internas para la subcategoria.', 
-  PRIMARY KEY (`id_subcategoria`),
-  KEY `id_categoria` (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -122,22 +123,10 @@ CREATE TABLE IF NOT EXISTS `subcategorias` (
 DROP TABLE IF EXISTS `tipos_comida`;
 CREATE TABLE IF NOT EXISTS `tipos_comida` (
   `id_tipo_comida` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada tipo de comida de restaurante.',
+  `id_tipo_padre` int(12) COMMENT 'Identificador del tipo de comida padre NULL si no tiene',
   `nombre_tipo` varchar(200) NOT NULL COMMENT 'Nombre del tipo de comida.',
   `notas` text COMMENT 'Notas internas para el tipo.', 
   PRIMARY KEY (`id_tipo_comida`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- ---------------------------------------------------------------------------
--- Estructura de la tabla "subtipos_comida".
--- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `subtipos_comida`;
-CREATE TABLE IF NOT EXISTS `subtipos_comida` (
-  `id_subtipo_comida` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada subtipo.',
-  `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador del tipo padre.',
-  `notas` text COMMENT 'Notas internas para el subtipo.', 
-  PRIMARY KEY (`id_subtipo_comida`),
-  KEY `id_tipo_comida` (`id_tipo_comida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -148,20 +137,22 @@ DROP TABLE IF EXISTS `restaurantes`;
 CREATE TABLE IF NOT EXISTS `restaurantes` (
   `id_restaurante` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada restaurante.',
   `nombre_restaurante` varchar(100) NOT NULL COMMENT 'Nombre del restaurante.',
-  `foto_perfil_restaurante` varchar(500) NOT NULL COMMENT 'Foto de perfil del restaurante (Será la ruta+nombreArchivo de la foto).',
-  `carta` varchar(500) NOT NULL COMMENT 'Foto de la carta del restaurante (Será la ruta+nombreArchivo de la foto).',
+  `id_foto_restaurante` int(12) NOT NULL COMMENT 'ID de la foto de perfil del restaurante.',
+  `id_carta` int(12) NOT NULL COMMENT 'ID de la foto de la carta.',
   `calle_restaurante` varchar(100) NOT NULL COMMENT 'Calle del restaurante.', 
   `barrio_restaurante` varchar(100) COMMENT 'Barrio del restaurante.', 
   `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.', 
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.', 
   `precio_medio_comensal` float(6) COMMENT 'Precio por persona medio.',
   `notas` text COMMENT 'Notas internas para el restaurante.', 
-  PRIMARY KEY (`id_restaurante`)
+  PRIMARY KEY (`id_restaurante`),
+  CONSTRAINT FOREIGN KEY (`id_foto_restaurante`) REFERENCES imagenes (`id_imagen`),
+  CONSTRAINT FOREIGN KEY (`id_carta`) REFERENCES imagenes (`id_imagen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "categoria-restaurante".
+-- Estructura de la tabla "categoria_restaurante".
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `categoria_restaurante`;
 CREATE TABLE IF NOT EXISTS `categoria_restaurante` (
@@ -174,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `categoria_restaurante` (
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "tipo-restaurante".
+-- Estructura de la tabla "tipo_restaurante".
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `tipo_restaurante`;
 CREATE TABLE IF NOT EXISTS `tipo_restaurante` (
@@ -187,20 +178,6 @@ CREATE TABLE IF NOT EXISTS `tipo_restaurante` (
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "imagenes_restaurantes".
--- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `imagenes_restaurantes`;
-CREATE TABLE IF NOT EXISTS `imagenes_restaurantes` (
-  `id_imagen_restaurante` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada imagen de restaurante.',
-  `ruta_imagen_restaurante` varchar(500) NOT NULL COMMENT 'Imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).', 
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante asociada a la imagen.', 
-  `notas` text COMMENT 'Notas internas para la imagen del restaurante.', 
-  PRIMARY KEY (`id_imagen_restaurante`),
-  CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- ---------------------------------------------------------------------------
 -- Estructura de la tabla "eventos".
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `eventos`;
@@ -209,12 +186,13 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   `titulo_evento` varchar(100) NOT NULL COMMENT 'Título del evento organizado.',
   `descripcion_evento` varchar(500) NOT NULL COMMENT 'Descripción del evento organizado.',
   `fecha_evento` date NOT NULL COMMENT 'Fecha de celebración del evento.', 
-  `imagen_promocional` varchar(500) NOT NULL COMMENT 'Imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).', 
+  `id_imagen_promocional` int(12) NOT NULL COMMENT 'ID del la imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).', 
   `incidencia_evento` tinyint(1) COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante asociada a la imagen.', 
   `notas` text COMMENT 'Notas internas para el evento.', 
   PRIMARY KEY (`id_evento`),
-  CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_imagen_promocional`) REFERENCES imagenes (`id_imagen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -230,26 +208,12 @@ CREATE TABLE IF NOT EXISTS `resenas` (
   `precio_x_persona` float(6) COMMENT 'Precio por persona gastado.',
   `incidencia_resena` tinyint(1) COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
   `fecha_resena` date NOT NULL COMMENT 'Fecha de la resena.',
-  `ref_cliente` varchar(10) NOT NULL COMMENT 'Referencia del cliente asociado a la resena.',
+  `id_cliente` int(12) NOT NULL COMMENT 'Referencia del cliente asociado a la resena.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la resena.',
   `notas` text COMMENT 'Notas internas para la resena.', 
   PRIMARY KEY (`id_resena`),
-  CONSTRAINT FOREIGN KEY (`ref_cliente`) REFERENCES clientes (`ref_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- ---------------------------------------------------------------------------
--- Estructura de la tabla "imagenes_resenas".
--- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `imagenes_resenas`;
-CREATE TABLE IF NOT EXISTS `imagenes_resenas` (
-  `id_imagen_resena` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada imagen de resena.',
-  `ruta_imagen_resena` varchar(500) NOT NULL COMMENT 'Imagen aportada en la resena por el usuario (Será la ruta+nombreArchivo de la imagen).', 
-  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la imagen.', 
-  `notas` text COMMENT 'Notas internas para la imagen de resena.', 
-  PRIMARY KEY (`id_imagen_resena`),
-  CONSTRAINT FOREIGN KEY (`id_resena`) REFERENCES resenas (`id_resena`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -259,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `imagenes_resenas` (
 DROP TABLE IF EXISTS `respuestas`;
 CREATE TABLE IF NOT EXISTS `respuestas` (
   `id_respuesta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada respuesta de resena.',
+  `id_respuesta_padre` int(12) COMMENT 'Identificador de la respuesta padre NULL si no tiene',
   `texto_respuesta` varchar(200) NOT NULL COMMENT 'Texto de la respuesta.', 
   `incidencia_respuesta` tinyint(1) COMMENT 'Marca de incidencia en una respuesta: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
   `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la respuesta.', 
@@ -269,27 +234,14 @@ CREATE TABLE IF NOT EXISTS `respuestas` (
 
 
 -- ---------------------------------------------------------------------------
--- Estructura de la tabla "subrespuestas".
--- ---------------------------------------------------------------------------
-DROP TABLE IF EXISTS `subrespuestas`;
-CREATE TABLE IF NOT EXISTS `subrespuestas` (
-  `id_subrespuesta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada respuesta dada a otra respuesta.',
-  `id_respuesta` int(12) NOT NULL COMMENT 'Identificador de la respuesta padre.',
-  `notas` text COMMENT 'Notas internas para la subrespuesta de resena.', 
-  PRIMARY KEY (`id_subrespuesta`),
-  CONSTRAINT FOREIGN KEY (`id_respuesta`) REFERENCES respuestas (`id_respuesta`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- ---------------------------------------------------------------------------
 -- Estructura de la tabla "favoritos".
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `favoritos`;
 CREATE TABLE IF NOT EXISTS `favoritos` (
-  `ref_cliente` varchar(10) NOT NULL COMMENT 'Identificador del cliente.',
+  `id_cliente` int(12) NOT NULL COMMENT 'Identificador del cliente.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
   `notas` text COMMENT 'Notas internas para el favorito.', 
-  CONSTRAINT FOREIGN KEY (`ref_cliente`) REFERENCES clientes (`ref_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -303,11 +255,12 @@ CREATE TABLE IF NOT EXISTS `reservas` (
   `datos_pago` varchar(100) NOT NULL COMMENT 'Datos de pago dados por el cliente.',
   `num_comensales` int(3) NOT NULL COMMENT 'Número de comensales para la reserva.',
   `fecha_reserva` date NOT NULL COMMENT 'Fecha de la reserva.',
-  `ref_cliente` varchar(10) NOT NULL COMMENT 'Referencia del cliente asociado a la reserva.',
+  `hora_reserva` varchar(5) NOT NULL COMMENT 'Hora seleccionada por el cliente para la reserva (Ej: 21:00).',
+  `id_cliente` int(12) NOT NULL COMMENT 'Referencia del cliente asociado a la reserva.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la reserva.',
   `notas` text COMMENT 'Notas internas para la reserva.', 
   PRIMARY KEY (`id_reserva`),
-  CONSTRAINT FOREIGN KEY (`ref_cliente`) REFERENCES clientes (`ref_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
@@ -317,11 +270,37 @@ CREATE TABLE IF NOT EXISTS `reservas` (
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `control_restaurantes`;
 CREATE TABLE IF NOT EXISTS `control_restaurantes` (
-  `ref_gestor` varchar(10) NOT NULL COMMENT 'Referencia del gestor asociado al restaurante.',
+  `id_gestor` int(12) NOT NULL COMMENT 'Referencia del gestor asociado al restaurante.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado al gestor.',
   `notas` text COMMENT 'Notas internas para el control de restaurantes.', 
-  CONSTRAINT FOREIGN KEY (`ref_gestor`) REFERENCES gestores (`ref_gestor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_gestor`) REFERENCES gestores (`id_gestor`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+-- ---------------------------------------------------------------------------
+-- Estructura de la tabla "imagenes_restaurantes".
+-- ---------------------------------------------------------------------------
+DROP TABLE IF EXISTS `imagenes_restaurantes`;
+CREATE TABLE IF NOT EXISTS `imagenes_restaurantes` (
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada imagen aportada por el restaurante.',
+  `id_imagen` int(12) NOT NULL COMMENT 'Identificador la imagen.', 
+  `notas` text COMMENT 'Notas internas para la relación imagen del restaurante.', 
+  CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`),
+  CONSTRAINT FOREIGN KEY (`id_imagen`) REFERENCES imagenes (`id_imagen`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+-- ---------------------------------------------------------------------------
+-- Estructura de la tabla "imagenes_resenas".
+-- ---------------------------------------------------------------------------
+DROP TABLE IF EXISTS `imagenes_resenas`;
+CREATE TABLE IF NOT EXISTS `imagenes_resenas` (
+  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada imagen de resena.',
+  `id_imagen` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la imagen.', 
+  `notas` text COMMENT 'Notas internas para la relación imagen de resena.', 
+  CONSTRAINT FOREIGN KEY (`id_resena`) REFERENCES resenas (`id_resena`),
+  CONSTRAINT FOREIGN KEY (`id_imagen`) REFERENCES imagenes (`id_imagen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
@@ -345,7 +324,7 @@ DROP TABLE IF EXISTS `respuestas_faq`;
 CREATE TABLE IF NOT EXISTS `respuestas_faq` (
   `id_pregunta` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la pregunta FAQ.',
   `pregunta` varchar(500) NOT NULL COMMENT 'Pregunta a responder.',
-  `respuesta` varchar (500) NOT NULL COMMENT 'Respuesta dada.',
+  `respuesta` varchar(500) NOT NULL COMMENT 'Respuesta dada.',
   `notas` text COMMENT 'Notas internas para las preguntas FAQ.', 
   PRIMARY KEY (`id_pregunta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
@@ -370,9 +349,8 @@ CREATE TABLE IF NOT EXISTS `logs` (
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `configuraciones`;
 CREATE TABLE IF NOT EXISTS `configuraciones` (
-  `id_variable` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la variable.',
   `nombre_variable` varchar(50) NOT NULL COMMENT 'Nombre de la variable.',
   `valor_variable` varchar(50) NOT NULL COMMENT 'Valor de la variable.',
   `notas` text COMMENT 'Notas internas para las variables.', 
-  PRIMARY KEY (`id_variable`)
+  PRIMARY KEY (`nombre_variable`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
