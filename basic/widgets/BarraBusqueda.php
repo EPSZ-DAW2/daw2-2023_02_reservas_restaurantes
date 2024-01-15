@@ -10,6 +10,6 @@ class BarraBusqueda extends Widget
 {
     public function run()
     {
-        return $this->render('barraBusqueda', ['url' => '/site/busqueda-filtrada']);
+        return $this->render('barraBusqueda');
     }
 }
