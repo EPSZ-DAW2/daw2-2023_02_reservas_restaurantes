@@ -13,6 +13,10 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        //configuración rbac
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         //Carrusel de restaurantes
         'carrusel' => [
             'class' => 'app\components\Carrusel',
