@@ -177,4 +177,7 @@ class Restaurante extends \yii\db\ActiveRecord
         $resenas = $this->getResenas()->all();
         return count($resenas);
     }
+
+    
+
 }
