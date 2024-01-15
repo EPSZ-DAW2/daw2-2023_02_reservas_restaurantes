@@ -69,13 +69,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 . '</li>';
             $items[] = ['label' => 'Mi Perfil', 'url' => ['/site/profile']];
             //Si el usuario es propietario o gestor se muestra "Mis Restaurantes"
-            if (Yii::$app->user->identity->role == 'propietario' || Yii::$app->user->identity->role == 'gestor')
+            if (true)
                 $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/site/myrestaurants']];
             //Si el usuario es admin se muestra "Vista de Administrador
-            if (Yii::$app->user->identity->role == 'admin')
+            if (true)
                 $items[] = ['label' => 'Vista de Administrador', 'url' => ['/site/adminview']];
             //Si el usuario es moderador se muestra "Vista de moderador"
-            if (Yii::$app->user->identity->role == 'moderador')
+            if (true)
                 $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
         }
         //Se muestra el widget Nav con los items correspondientes
