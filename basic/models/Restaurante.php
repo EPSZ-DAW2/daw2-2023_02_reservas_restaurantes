@@ -18,12 +18,12 @@ use Yii;
  * @property float|null $precio_medio_comensal Precio por persona medio.
  * @property string|null $notas Notas internas para el restaurante.
  *
- * @property Imagene $carta
+ * @property Imagen $carta
  * @property CategoriaRestaurante[] $categoriaRestaurantes
  * @property ControlRestaurante[] $controlRestaurantes
  * @property Evento[] $eventos
  * @property Favorito[] $favoritos
- * @property Imagene $fotoRestaurante
+ * @property Imagen $fotoRestaurante
  * @property ImagenesRestaurante[] $imagenesRestaurantes
  * @property Resena[] $resenas
  * @property Reserva[] $reservas
@@ -50,8 +50,8 @@ class Restaurante extends \yii\db\ActiveRecord
             [['precio_medio_comensal'], 'number'],
             [['notas'], 'string'],
             [['nombre_restaurante', 'calle_restaurante', 'barrio_restaurante', 'ciudad_restaurante', 'comunidad_autonoma_restaurante'], 'string', 'max' => 100],
-            [['id_foto_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Imagene::class, 'targetAttribute' => ['id_foto_restaurante' => 'id_imagen']],
-            [['id_carta'], 'exist', 'skipOnError' => true, 'targetClass' => Imagene::class, 'targetAttribute' => ['id_carta' => 'id_imagen']],
+            [['id_foto_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_foto_restaurante' => 'id_imagen']],
+            [['id_carta'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_carta' => 'id_imagen']],
         ];
     }
 
@@ -81,7 +81,7 @@ class Restaurante extends \yii\db\ActiveRecord
      */
     public function getCarta()
     {
-        return $this->hasOne(Imagene::class, ['id_imagen' => 'id_carta']);
+        return $this->hasOne(Imagen::class, ['id_imagen' => 'id_carta']);
     }
 
     /**
@@ -131,7 +131,7 @@ class Restaurante extends \yii\db\ActiveRecord
      */
     public function getFotoRestaurante()
     {
-        return $this->hasOne(Imagene::class, ['id_imagen' => 'id_foto_restaurante']);
+        return $this->hasOne(Imagen::class, ['id_imagen' => 'id_foto_restaurante']);
     }
 
     /**

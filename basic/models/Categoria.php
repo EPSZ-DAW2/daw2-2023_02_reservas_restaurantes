@@ -16,6 +16,7 @@ use Yii;
  */
 class Categoria extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -59,4 +60,29 @@ class Categoria extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CategoriaRestaurante::class, ['id_categoria' => 'id_categoria']);
     }
+
+    /**
+     * Gets query for [[Padre]].
+     *
+     * @return \yii\db\ActiveQuery
+     * 
+     * Relación de esta categoría con la del padre
+     */
+    public function getPadre()
+    {
+        return $this->hasOne(Categoria::class, ['id_categoria' => 'id_categoria_padre']);
+    }
+
+    /**
+     * Gets query for [[Padre]].
+     *
+     * @return \yii\db\ActiveQuery
+     * 
+     * Devuelve el número de restaurantes relacionados con la categoria
+     */
+    public function getNumRestaurantes()
+    {
+        return $this->hasMany(CategoriaRestaurante::class, ['id_categoria' => 'id_categoria'])->count();
+    }
+
 }
