@@ -194,5 +194,11 @@ class Restaurante extends \yii\db\ActiveRecord
         $resenas = $this->getResenas()->all();
         return count($resenas);
     }
+
+    public function getFotoPerfilUrl()
+    {
+        $imagen = Imagen::findOne($this->id_foto_restaurante);
+        return $imagen ? $imagen->getUrlImagen() : null;
+    }
     
 }
