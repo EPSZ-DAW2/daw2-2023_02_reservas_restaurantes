@@ -73,7 +73,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/site/myrestaurants']];
             //Si el usuario es admin se muestra "Vista de Administrador
             if (true)
+<<<<<<< HEAD
                 $items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
+=======
+                $items[] = ['label' => 'Vista de Administrador', 'url' => ['/site/adminview']];
+>>>>>>> 3a3d028afd38077149efbaeeaf9dd2788efcb580
             //Si el usuario es moderador se muestra "Vista de moderador"
             if (true)
                 $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];

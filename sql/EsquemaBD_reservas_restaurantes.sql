@@ -353,4 +353,8 @@ CREATE TABLE IF NOT EXISTS `configuraciones` (
   `valor_variable` varchar(50) NOT NULL COMMENT 'Valor de la variable.',
   `notas` text COMMENT 'Notas internas para las variables.', 
   PRIMARY KEY (`nombre_variable`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
+=======
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
+>>>>>>> 3a3d028afd38077149efbaeeaf9dd2788efcb580
