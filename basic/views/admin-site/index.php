@@ -14,5 +14,10 @@ use yii\helpers\Html;
         <?= Html::a('FAQ', ['/admin-faq'], ['class' => 'btn btn-primary w-100']) ?>
       </td>
     </tr>
+    <tr class="row">
+      <td class="col">
+        <?= Html::a('Imagenes', ['/admin-imagenes'], ['class' => 'btn btn-primary w-100']) ?>
+      </td>
+    </tr>
   </table>
 </div>
