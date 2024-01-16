@@ -1,0 +1,5 @@
+/* Colores negros para el carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+}
