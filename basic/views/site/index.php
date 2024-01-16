@@ -16,7 +16,6 @@ $this->title = 'La Cuchara - Inicio';
 
         <hr>
         <!-- Carruseles -->
-<<<<<<< HEAD
       
         <?= CarruselRestaurante::widget([
             'nombreCategoria' => 'Ofertas',
@@ -26,17 +25,6 @@ $this->title = 'La Cuchara - Inicio';
             'nombreCategoria' => 'Selección La Cuchara',
         ]); ?>
 
-=======
-        <?php /*
-        <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Categoria1',
-        ]); ?>
-
-        <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Categoria2',
-        ]); ?>
-        */ ?>
->>>>>>> 3a3d028afd38077149efbaeeaf9dd2788efcb580
 
         <hr>
         <!-- Registra tu restaurante -->

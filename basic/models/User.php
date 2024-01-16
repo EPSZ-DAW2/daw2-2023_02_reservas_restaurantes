@@ -80,7 +80,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getClientes()
     {
-        return $this->hasMany(Clientes::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasMany(Cliente::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -90,7 +90,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasMany(Comentario::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -100,7 +100,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getFotoUsuario()
     {
-        return $this->hasOne(Imagenes::class, ['id_imagen' => 'id_foto_usuario']);
+        return $this->hasOne(Imagen::class, ['id_imagen' => 'id_foto_usuario']);
     }
 
     /**
@@ -110,7 +110,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getGestores()
     {
-        return $this->hasMany(Gestores::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasMany(Gestor::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -120,7 +120,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getModeradores()
     {
-        return $this->hasMany(Moderadores::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasMany(Moderador::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**
