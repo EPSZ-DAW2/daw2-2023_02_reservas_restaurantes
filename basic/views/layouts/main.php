@@ -51,33 +51,35 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
         //Se preparan los items a mostrar en el widget Nav dependiendo del rol de usuario
         $items = [
-            ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Explorar', 'url' => ['/site/explorar']],
+                ['label' => 'Inicio', 'url' => ['/site/index']],
+                ['label' => 'Explorar', 'url' => ['/site/index']],
+                ['label' => 'Búsqueda', 'url' => ['/site/index']]
         ];
-        if (Yii::$app->user->isGuest) {
-            //Si el usuario es invitado se muestra login
-            $items[] = ['label' => 'Login', 'url' => ['/site/login']];
-        } else {
-            //Si el usuario no es invitado se muestra logout y perfil
-            $items[] = '<li class="nav-item">'
-                . Html::beginForm(['/site/logout'])
-                . Html::submitButton(
-                    'Cerrar Sesión (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'nav-link btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>';
-            $items[] = ['label' => 'Mi Perfil', 'url' => ['/site/profile']];
-            //Si el usuario es propietario o gestor se muestra "Mis Restaurantes"
-            if (true)
-                $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/site/myrestaurants']];
-            //Si el usuario es admin se muestra "Vista de Administrador
-            if (true)
-                $items[] = ['label' => 'Vista de Administrador', 'url' => ['/site/adminview']];
-            //Si el usuario es moderador se muestra "Vista de moderador"
-            if (true)
-                $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+
+        if(Yii::$app->session->get('isUserLoggedIn')){
+            $items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
+            $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+            $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+
         }
+
+        $items[] =  [
+                        'label' => Yii::$app->session->get('isUserLoggedIn')
+                            ? 'Logout'
+                            : 'Login',
+                        'url' => Yii::$app->session->get('isUserLoggedIn')
+                            ? ['/site/deslogin']
+                            : ['/site/login']
+        ];
+        $items[] = [
+                        'label' => Yii::$app->session->get('isUserLoggedIn')
+                            ? 'MiPerfil (' . Yii::$app->session->get('username') . ')'
+                            : 'Registro',
+                        'url' => Yii::$app->session->get('isUserLoggedIn')
+                            ? ['/site/verperfil']
+                            : ['/site/registro']
+                    ];
+                    
         //Se muestra el widget Nav con los items correspondientes
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav'],

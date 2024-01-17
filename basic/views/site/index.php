@@ -16,15 +16,15 @@ $this->title = 'La Cuchara - Inicio';
 
         <hr>
         <!-- Carruseles -->
-        <?php /*
+      
         <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Categoria1',
+            'nombreCategoria' => 'Ofertas',
         ]); ?>
 
         <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Categoria2',
+            'nombreCategoria' => 'Selección La Cuchara',
         ]); ?>
-        */ ?>
+
 
         <hr>
         <!-- Registra tu restaurante -->
