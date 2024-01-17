@@ -19,5 +19,11 @@ use yii\helpers\Html;
         <?= Html::a('Imagenes', ['/admin-imagenes'], ['class' => 'btn btn-primary w-100']) ?>
       </td>
     </tr>
+	
+	<tr class="row">
+      <td class="col">
+      <?= Html::a('Mantenimiento Usuarios', ['/usuarios'], ['class' => 'btn btn-primary w-100']) ?>
+      </td>
+    </tr>
   </table>
 </div>

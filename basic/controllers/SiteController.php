@@ -145,6 +145,20 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+ public function actionAdmin()
+    {
+        // Verifica si el usuario actual tiene el rol de "gestor"
+        if (Yii::$app->user->can('gestor')) {
+            // Código para la página de administración
+            return $this->render('admin');
+        } else {
+            // Redirecciona o muestra un mensaje de error
+            Yii::$app->session->setFlash('error', 'No tienes permisos para acceder a esta página.');
+            return $this->goHome(); // Puedes redirigir a la página de inicio o a otro lugar según tu lógica.
+        }
+    }
+
+
 
 
 
