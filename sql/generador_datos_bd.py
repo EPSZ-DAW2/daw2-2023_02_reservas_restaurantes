@@ -1,4 +1,5 @@
 from faker import Faker
+from passlib.hash import bcrypt
 import random
 
 fake = Faker()
@@ -40,30 +41,35 @@ def generar_datos(fichero='datos_generados_BD.sql'):
                 nombre_usuario = f"cliente{i}"
                 email = f"cliente{i}@prueba.com"
                 password = "cliente"
+                password = hashed_password = bcrypt.hash(password)
                 es_gestor_propietario = "NULL"
             #PARA PROPIETARIOS DE PRUEBA
             elif i>10 and i<=15:
                 nombre_usuario = f"propietario{i-10}"
                 email = f"propietario{i-10}@prueba.com"
                 password = "propietario"
+                password = hashed_password = bcrypt.hash(password)
                 es_gestor_propietario = 1
             #PARA GESTORES DE PRUEBA
             elif i>15 and i<=20:
                 nombre_usuario = f"gestor{i-15}"
                 email = f"gestor{i-15}@prueba.com"
                 password = "gestor"
+                password = hashed_password = bcrypt.hash(password)
                 es_gestor_propietario = 0
             #PARA MODERADORES DE PRUEBA
             elif i>20 and i<=30:
                 nombre_usuario = f"moderador{i-20}"
                 email = f"moderador{i-20}@prueba.com"
                 password = "moderador"
+                password = hashed_password = bcrypt.hash(password)
                 es_gestor_propietario = "NULL"
             # PARA EL ADMIN DE PRUEBA
             else:
                 nombre_usuario = f"administrador{i-30}"
                 email = f"administrador{i-30}@prueba.com"
                 password = "administrador"
+                password = hashed_password = bcrypt.hash(password)
                 es_gestor_propietario = "NULL"
             id_foto_usuario = "NULL"
             notas = "NULL"
