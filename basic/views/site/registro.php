@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php ActiveForm::end(); ?>
                     </div>
                     <?php $form = ActiveForm::begin(['id' => 'registrogp-form',]); ?>
-                    <div class="form-group">
+                    <div class="form-group mt-1">
                         <div class="d-flex">
                             <?= Html::a('Ya eres cliente? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5']) ?>
                             <?php if(Yii::$app->session->has('registroc')) { ?>
