@@ -3,7 +3,7 @@ import random
 
 fake = Faker()
 
-def generar_datos(fichero='data.sql'):
+def generar_datos(fichero='datos_generados_BD.sql'):
     
     # abrimos el fichero
     with open(fichero, 'w', encoding='utf-8') as file:
@@ -32,63 +32,53 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `usuarios`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `notas`) VALUES\n")
+        file.write("INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `es_gestor_propietario`, `jefe`, `notas`) VALUES\n")
 
-        for i in range(1, 32 + 1):
-            nombre_usuario = fake.user_name()
-            email = fake.email()
-            password = fake.password()
+        for i in range(1, 31 + 1):
+            #PARA CLIENTES DE PRUEBA
+            if i<=10:
+                nombre_usuario = f"cliente{i}"
+                email = f"cliente{i}@prueba.com"
+                password = "cliente"
+                es_gestor_propietario = "NULL"
+                jefe = "NULL"
+            #PARA PROPIETARIOS DE PRUEBA
+            elif i>10 and i<=15:
+                nombre_usuario = f"propietario{i-10}"
+                email = f"propietario{i-10}@prueba.com"
+                password = "propietario"
+                es_gestor_propietario = 1
+                jefe = "NULL"
+            #PARA GESTORES DE PRUEBA
+            elif i>15 and i<=20:
+                nombre_usuario = f"gestor{i-15}"
+                email = f"gestor{i-15}@prueba.com"
+                password = "gestor"
+                es_gestor_propietario = 0
+                jefe = i-5
+            #PARA MODERADORES DE PRUEBA
+            elif i>20 and i<=30:
+                nombre_usuario = f"moderador{i-20}"
+                email = f"moderador{i-20}@prueba.com"
+                password = "moderador"
+                es_gestor_propietario = "NULL"
+                jefe = "NULL"
+            # PARA EL ADMIN DE PRUEBA
+            else:
+                nombre_usuario = f"administrador{i-30}"
+                email = f"administrador{i-30}@prueba.com"
+                password = "administrador"
+                es_gestor_propietario = "NULL"
+                jefe = "NULL"
             id_foto_usuario = "NULL"
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{nombre_usuario}', '{email}', '{password}', {id_foto_usuario}, {notas})"
+            insert_query = f"({i}, '{nombre_usuario}', '{email}', '{password}', {id_foto_usuario}, {es_gestor_propietario}, {jefe}, {notas})"
             
             file.write(insert_query)
             
-            if i < 32:
-                file.write(",\n")
-            else:
-                file.write(";\n")
-            
-        
-        file.write("-- --------------------------------------------------------\n")
-        file.write("-- Volcado de datos para la tabla `administradores`\n")
-        file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `administradores` (`id_administrador`, `id_usuario`, `notas`) VALUES\n")
-
-        for i in range(1, 2 + 1): 
-            id_usuario = i
-            notas = "NULL"
-
-            # Crear una cadena SQL de inserción
-            insert_query = f"({i}, {id_usuario}, {notas})"
-            
-            file.write(insert_query)
-            
-            if i < 2:
-                file.write(",\n")
-            else:
-                file.write(";\n")
-            
-        
-        file.write("-- --------------------------------------------------------\n")
-        file.write("-- Volcado de datos para la tabla `gestores`\n")
-        file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `gestores` (`id_gestor`, `es_propietario`, `id_usuario`, `notas`) VALUES\n")
-
-
-        for i in range(1, 10 + 1):
-            es_propietario = random.choice([0, 1])  # 0 para solo gestor, 1 para propietario
-            id_usuario = i+2
-            notas = "NULL"
-
-            # Crear una cadena SQL de inserción
-            insert_query = f"({i}, {es_propietario}, {id_usuario}, {notas})"
-            
-            file.write(insert_query)
-            
-            if i < 10:
+            if i < 31:
                 file.write(",\n")
             else:
                 file.write(";\n")
@@ -102,31 +92,11 @@ def generar_datos(fichero='data.sql'):
         for i in range(1, 10 + 1):
             ciudad_moderador = fake.city()
             comunidad_autonoma_moderador = fake.state()
-            id_usuario = i+12
+            id_usuario = i+20
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
             insert_query = f"({i}, '{ciudad_moderador}', '{comunidad_autonoma_moderador}', {id_usuario}, {notas})"
-            
-            file.write(insert_query)
-            
-            if i < 10:
-                file.write(",\n")
-            else:
-                file.write(";\n")
-        
-        
-        file.write("-- --------------------------------------------------------\n")
-        file.write("-- Volcado de datos para la tabla `clientes`\n")
-        file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `clientes` (`id_cliente`, `id_usuario`, `notas`) VALUES\n")
-
-        for i in range(1, 10 + 1):
-            id_usuario = i+22
-            notas = "NULL" 
-
-            # Crear una cadena SQL de inserción
-            insert_query = f"({i}, {id_usuario}, {notas})"
             
             file.write(insert_query)
             
@@ -285,20 +255,20 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `resenas`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `resenas` (`id_resena`, `titulo_resena`, `cuerpo_resena`, `puntuacion`, `precio_x_persona`, `incidencia_resena`, `fecha_resena`, `id_cliente`, `id_restaurante`, `notas`) VALUES\n")
+        file.write("INSERT INTO `resenas` (`id_resena`, `titulo_resena`, `cuerpo_resena`, `puntuacion`, `precio_x_persona`, `incidencia_resena`, `fecha_resena`, `id_usuario`, `id_restaurante`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
-            titulo_resena = f"Resena {i}"
-            cuerpo_resena = fake.text(max_nb_chars=500)
+            titulo_reseña = f"Reseña {i}"
+            cuerpo_reseña = fake.text(max_nb_chars=500)
             puntuacion = fake.random_int(min=0, max=5)
             precio_x_persona = round(fake.random.uniform(10, 100), 2) if i % 2 == 0 else "NULL"
-            incidencia_resena = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
-            fecha_resena = fake.date_between(start_date='-30d', end_date='today') 
+            incidencia_reseña = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
+            fecha_reseña = fake.date_between(start_date='-30d', end_date='today') 
             id_restaurante = fake.random_int(min=1, max=10)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{titulo_resena}', '{cuerpo_resena}', {puntuacion}, {precio_x_persona}, {incidencia_resena}, '{fecha_resena}', {i}, {id_restaurante}, {notas})"
+            insert_query = f"({i}, '{titulo_reseña}', '{cuerpo_reseña}', {puntuacion}, {precio_x_persona}, {incidencia_reseña}, '{fecha_reseña}', {i}, {id_restaurante}, {notas})"
             
             file.write(insert_query)
             
@@ -321,11 +291,11 @@ def generar_datos(fichero='data.sql'):
                 id_respuesta_padre = fake.random_int(min=1, max=3)
             texto_respuesta = fake.text(max_nb_chars=200)
             incidencia_respuesta = fake.random_int(min=0, max=2)  if i % 2 == 0 else "NULL"
-            id_resena = fake.random_int(min=1, max=10)
+            id_reseña = fake.random_int(min=1, max=10)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, {id_respuesta_padre}, '{texto_respuesta}', {incidencia_respuesta}, {id_resena}, {notas})"
+            insert_query = f"({i}, {id_respuesta_padre}, '{texto_respuesta}', {incidencia_respuesta}, {id_reseña}, {notas})"
             
             file.write(insert_query)
             
@@ -338,7 +308,7 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `favoritos`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `favoritos` (`id_cliente`, `id_restaurante`, `notas`) VALUES\n")
+        file.write("INSERT INTO `favoritos` (`id_usuario`, `id_restaurante`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
             id_restaurante = fake.random_int(min=1, max=10)
@@ -358,7 +328,7 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `reservas`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_reserva`, `hora_reserva`, `id_cliente`, `id_restaurante`, `notas`) VALUES\n")
+        file.write("INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_reserva`, `hora_reserva`, `id_usuario`, `id_restaurante`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
             datos_pago = f"Tarjeta {fake.credit_card_number()}"
@@ -382,14 +352,14 @@ def generar_datos(fichero='data.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `control_restaurantes`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `control_restaurantes` (`id_gestor`, `id_restaurante`, `notas`) VALUES\n")
+        file.write("INSERT INTO `control_restaurantes` (`id_usuario`, `id_restaurante`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
             id_restaurante = fake.random_int(min=1, max=10)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, {id_restaurante}, {notas})"
+            insert_query = f"({i+10}, {id_restaurante}, {notas})"
             
             file.write(insert_query)
             
@@ -427,12 +397,12 @@ def generar_datos(fichero='data.sql'):
         file.write("INSERT INTO `imagenes_resenas` (`id_resena`, `id_imagen`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
-            id_resena = fake.random_int(min=1, max=10)
+            id_reseña = fake.random_int(min=1, max=10)
             id_imagen = i+40
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({id_resena}, {id_imagen}, {notas})"
+            insert_query = f"({id_reseña}, {id_imagen}, {notas})"
            
             file.write(insert_query)
             

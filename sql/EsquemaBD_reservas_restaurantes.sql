@@ -42,37 +42,14 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nombre_usuario` varchar(50) NOT NULL COMMENT 'Nombre del usuario.',
   `email` varchar(32) NOT NULL COMMENT 'Email de regitro del usuario.',
   `password` varchar(200) NOT NULL COMMENT 'Contraseña de registro del usuario.',
-  `id_foto_usuario` int(12) COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',  
+  `id_foto_usuario` int(12) COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',
+  `es_gestor_propietario` tinyint(1) DEFAULT NULL COMMENT '0 gestor y 1 propietario. NULL para el resto de usuarios.',
+  `jefe` int(12) DEFAULT NULL COMMENT 'Identificador en caso de ser gestor del propietrio que le dirige. NULL para el resto de usuarios.', 
   `notas` text COMMENT 'Notas internas para el usuario.', 
   PRIMARY KEY (`id_usuario`),
+  UNIQUE INDEX `email_UNIQUE` (`email`),
+  UNIQUE INDEX `nombre_usuario_UNIQUE` (`nombre_usuario`),
   CONSTRAINT FOREIGN KEY (`id_foto_usuario`) REFERENCES imagenes (`id_imagen`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- --------------------------------------------------------
--- Tabla: 'administradores'
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `administradores`;
-CREATE TABLE IF NOT EXISTS `administradores` (
-  `id_administrador` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada administrador.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
-  `notas` text COMMENT 'Notas internas para el Administrador',
-  PRIMARY KEY (`id_administrador`),
-  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- --------------------------------------------------------
--- Tabla: 'gestores'
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `gestores`;
-CREATE TABLE IF NOT EXISTS `gestores` (
-  `id_gestor` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada gestor.',
-  `es_propietario` tinyint(1) NOT NULL COMMENT 'Si el gestor es propietario o solo gestor, 0 solo gestor 1 propietario.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
-  `notas` text COMMENT 'Notas internas para el Gestor',
-  PRIMARY KEY (`id_gestor`),
-  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
@@ -87,19 +64,6 @@ CREATE TABLE IF NOT EXISTS `moderadores` (
   `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
   `notas` text COMMENT 'Notas internas para el Moderador',
   PRIMARY KEY (`id_moderador`),
-  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
-
-
--- --------------------------------------------------------
--- Tabla: 'clientes'
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `clientes`;
-CREATE TABLE IF NOT EXISTS `clientes` (
-  `id_cliente` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada cliente.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
-  `notas` text COMMENT 'Notas internas para el Cliente',
-  PRIMARY KEY (`id_cliente`),
   CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
@@ -208,11 +172,11 @@ CREATE TABLE IF NOT EXISTS `resenas` (
   `precio_x_persona` float(6) COMMENT 'Precio por persona gastado.',
   `incidencia_resena` tinyint(1) COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
   `fecha_resena` date NOT NULL COMMENT 'Fecha de la resena.',
-  `id_cliente` int(12) NOT NULL COMMENT 'Referencia del cliente asociado a la resena.',
+  `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado a la resena.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la resena.',
   `notas` text COMMENT 'Notas internas para la resena.', 
   PRIMARY KEY (`id_resena`),
-  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
@@ -238,10 +202,10 @@ CREATE TABLE IF NOT EXISTS `respuestas` (
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `favoritos`;
 CREATE TABLE IF NOT EXISTS `favoritos` (
-  `id_cliente` int(12) NOT NULL COMMENT 'Identificador del cliente.',
+  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
   `notas` text COMMENT 'Notas internas para el favorito.', 
-  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -256,11 +220,11 @@ CREATE TABLE IF NOT EXISTS `reservas` (
   `num_comensales` int(3) NOT NULL COMMENT 'Número de comensales para la reserva.',
   `fecha_reserva` date NOT NULL COMMENT 'Fecha de la reserva.',
   `hora_reserva` varchar(5) NOT NULL COMMENT 'Hora seleccionada por el cliente para la reserva (Ej: 21:00).',
-  `id_cliente` int(12) NOT NULL COMMENT 'Referencia del cliente asociado a la reserva.',
+  `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado a la reserva.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado a la reserva.',
   `notas` text COMMENT 'Notas internas para la reserva.', 
   PRIMARY KEY (`id_reserva`),
-  CONSTRAINT FOREIGN KEY (`id_cliente`) REFERENCES clientes (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
@@ -270,10 +234,10 @@ CREATE TABLE IF NOT EXISTS `reservas` (
 -- ---------------------------------------------------------------------------
 DROP TABLE IF EXISTS `control_restaurantes`;
 CREATE TABLE IF NOT EXISTS `control_restaurantes` (
-  `id_gestor` int(12) NOT NULL COMMENT 'Referencia del gestor asociado al restaurante.',
+  `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado al restaurante.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado al gestor.',
   `notas` text COMMENT 'Notas internas para el control de restaurantes.', 
-  CONSTRAINT FOREIGN KEY (`id_gestor`) REFERENCES gestores (`id_gestor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`id_usuario`) REFERENCES usuarios (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`id_restaurante`) REFERENCES restaurantes (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
