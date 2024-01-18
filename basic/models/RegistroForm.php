@@ -43,8 +43,8 @@ class RegistroForm extends Model
         //si no hay errores en el modelo
         if (!$this->hasErrors()) {
 
-            if (strlen($this->password) < 8) {
-                $this->addError($attribute, 'La contraseña debe tener almenos 8 carcateres.');
+            if (strlen($this->password) < 6) {
+                $this->addError($attribute, 'La contraseña debe tener almenos 6 carcateres.');
             }
         }
     }
@@ -103,7 +103,7 @@ class RegistroForm extends Model
             // Iniciar sesión después del registro exitoso
             $identity = Usuario::findIdentity($usuario->id_usuario);
             Yii::$app->user->login($identity);
-            //eleimanmos las variables de ayuda para el registro
+            //elimanmos las variables de ayuda para el registro
             if(Yii::$app->session->has('registroc')) Yii::$app->session->remove('registroc');
             if(Yii::$app->session->has('registrogp')) Yii::$app->session->remove('registrogp');
             return true; // Registration and login were successful
