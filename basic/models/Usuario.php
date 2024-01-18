@@ -211,27 +211,6 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->id_usuario;
     }
 
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function getAuthKey()
-    // {
-    //     // Si no existe authKey, genera una nueva
-    //     if ($this->authKey === null) {
-    //         $this->authKey = Yii::$app->security->generateRandomString();
-    //         $this->save(false);  // Guarda el usuario sin validar las reglas de validación
-    //     }
-
-    //     return $this->authKey;
-    // }
-
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function validateAuthKey($authKey)
-    // {
-    //     return $this->authKey === $authKey;
-    // }
 
         /**
      * {@inheritdoc}
