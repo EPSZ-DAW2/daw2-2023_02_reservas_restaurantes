@@ -170,6 +170,10 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
 
 
 
@@ -245,19 +249,6 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         // No es necesario validar authKey si no existe en la base de datos.
         return true;
-    }
-    
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-        //return $this->password === md5($password);
-        //return $this->password === sha2($password);
     }
 
 
