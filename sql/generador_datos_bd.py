@@ -32,7 +32,7 @@ def generar_datos(fichero='datos_generados_BD.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `usuarios`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `es_gestor_propietario`, `jefe`, `notas`) VALUES\n")
+        file.write("INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `es_gestor_propietario`, `notas`) VALUES\n")
 
         for i in range(1, 31 + 1):
             #PARA CLIENTES DE PRUEBA
@@ -41,40 +41,35 @@ def generar_datos(fichero='datos_generados_BD.sql'):
                 email = f"cliente{i}@prueba.com"
                 password = "cliente"
                 es_gestor_propietario = "NULL"
-                jefe = "NULL"
             #PARA PROPIETARIOS DE PRUEBA
             elif i>10 and i<=15:
                 nombre_usuario = f"propietario{i-10}"
                 email = f"propietario{i-10}@prueba.com"
                 password = "propietario"
                 es_gestor_propietario = 1
-                jefe = "NULL"
             #PARA GESTORES DE PRUEBA
             elif i>15 and i<=20:
                 nombre_usuario = f"gestor{i-15}"
                 email = f"gestor{i-15}@prueba.com"
                 password = "gestor"
                 es_gestor_propietario = 0
-                jefe = i-5
             #PARA MODERADORES DE PRUEBA
             elif i>20 and i<=30:
                 nombre_usuario = f"moderador{i-20}"
                 email = f"moderador{i-20}@prueba.com"
                 password = "moderador"
                 es_gestor_propietario = "NULL"
-                jefe = "NULL"
             # PARA EL ADMIN DE PRUEBA
             else:
                 nombre_usuario = f"administrador{i-30}"
                 email = f"administrador{i-30}@prueba.com"
                 password = "administrador"
                 es_gestor_propietario = "NULL"
-                jefe = "NULL"
             id_foto_usuario = "NULL"
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{nombre_usuario}', '{email}', '{password}', {id_foto_usuario}, {es_gestor_propietario}, {jefe}, {notas})"
+            insert_query = f"({i}, '{nombre_usuario}', '{email}', '{password}', {id_foto_usuario}, {es_gestor_propietario}, {notas})"
             
             file.write(insert_query)
             
@@ -159,7 +154,7 @@ def generar_datos(fichero='datos_generados_BD.sql'):
         file.write("-- --------------------------------------------------------\n")
         file.write("-- Volcado de datos para la tabla `restaurantes`\n")
         file.write("-- --------------------------------------------------------\n")
-        file.write("INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `notas`) VALUES\n")
+        file.write("INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `notas`) VALUES\n")
 
         for i in range(1, 10 + 1):
             nombre_restaurante = f"Restaurante{i}"
@@ -170,10 +165,11 @@ def generar_datos(fichero='datos_generados_BD.sql'):
             ciudad_restaurante = fake.city()
             comunidad_autonoma_restaurante = fake.state()
             precio_medio_comensal = round(fake.random.uniform(10, 100), 2) if i % 2 == 0 else "NULL"
+            id_propietario = fake.random_int(min=11, max=15)
             notas = "NULL"
 
             # Crear una cadena SQL de inserción
-            insert_query = f"({i}, '{nombre_restaurante}', {id_foto_restaurante}, {id_carta}, '{calle_restaurante}', {barrio_restaurante}, '{ciudad_restaurante}', '{comunidad_autonoma_restaurante}', {precio_medio_comensal}, {notas})"
+            insert_query = f"({i}, '{nombre_restaurante}', {id_foto_restaurante}, {id_carta}, '{calle_restaurante}', {barrio_restaurante}, '{ciudad_restaurante}', '{comunidad_autonoma_restaurante}', {precio_medio_comensal}, {id_propietario}, {notas})"
            
             file.write(insert_query)
             

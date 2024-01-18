@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `password` varchar(200) NOT NULL COMMENT 'Contraseña de registro del usuario.',
   `id_foto_usuario` int(12) COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',
   `es_gestor_propietario` tinyint(1) DEFAULT NULL COMMENT '0 gestor y 1 propietario. NULL para el resto de usuarios.',
-  `jefe` int(12) DEFAULT NULL COMMENT 'Identificador en caso de ser gestor del propietrio que le dirige. NULL para el resto de usuarios.', 
   `notas` text COMMENT 'Notas internas para el usuario.', 
   PRIMARY KEY (`id_usuario`),
   UNIQUE INDEX `email_UNIQUE` (`email`),
@@ -108,10 +107,12 @@ CREATE TABLE IF NOT EXISTS `restaurantes` (
   `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.', 
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.', 
   `precio_medio_comensal` float(6) COMMENT 'Precio por persona medio.',
+  `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
   `notas` text COMMENT 'Notas internas para el restaurante.', 
   PRIMARY KEY (`id_restaurante`),
   CONSTRAINT FOREIGN KEY (`id_foto_restaurante`) REFERENCES imagenes (`id_imagen`),
-  CONSTRAINT FOREIGN KEY (`id_carta`) REFERENCES imagenes (`id_imagen`)
+  CONSTRAINT FOREIGN KEY (`id_carta`) REFERENCES imagenes (`id_imagen`),
+  CONSTRAINT FOREIGN KEY (`id_propietario`) REFERENCES usuarios (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 
 
