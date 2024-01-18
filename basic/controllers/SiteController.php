@@ -7,8 +7,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
 use app\models\RegistroForm;
+use app\models\LoginForm;
 use app\models\ContactForm;
 
 class SiteController extends Controller
@@ -66,55 +66,26 @@ class SiteController extends Controller
     }
 
 
+    
     /*
-        ACCIÓN DE REGISTRO DE UN CLIENTE NORMAL
+        ACCIÓN DE REGISTRO DE UN USUARIO
     */
     public function actionRegistro()
     {
         // si el usuario ya ha iniciado sesión y accede aqui
-        if (Yii::$app->session->get('isUserLoggedIn')) {
-            return $this->goHome(); // redirigimos a la pagina inicial
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
 
         // creamos el modelo de registro
         $model = new RegistroForm();
         // cargamos los datos del formulario de registro si los hay y si se cumple la validacion del registro
         if ($model->load(Yii::$app->request->post()) && $model->registro()) { 
-            return $this->goBack(); // redirigimos a la página anterior
+            return $this->goBack();
         }
-
-        // seguridad
-        $model->password = '';
 
         // si no, volvemos a la vista registro con los datos del modelo
         return $this->render('registro', [
-            'model' => $model,
-        ]);
-    }
-
-
-    /*
-        ACCIÓN DE REGISTRO DE UN GESTOR O PROPIETARIO
-    */
-    public function actionRegistrogp()
-    {
-        // si el usuario ya ha iniciado sesión y accede aqui
-        if (Yii::$app->session->get('isUserLoggedIn')) {
-            return $this->goHome(); // redirigimos a la pagina inicial
-        }
-
-        // creamos el modelo de registro
-        $model = new RegistroForm();
-        // cargamos los datos del formulario de registro si los hay y si se cumple la validacion del registro
-        if ($model->load(Yii::$app->request->post()) && $model->registro()) { 
-            return $this->goBack(); // redirigimos a la página anterior
-        }
-
-        // seguridad
-        $model->password = '';
-
-        // si no, volvemos a la vista registro con los datos del modelo
-        return $this->render('registrogp', [
             'model' => $model,
         ]);
     }
@@ -125,9 +96,9 @@ class SiteController extends Controller
     */
     public function actionLogin()
     {
-        //si el usuario ya ha iniciado sesión y accede aqui
-        if (Yii::$app->session->get('isUserLoggedIn')) {
-            return $this->goHome(); // redirigimos a la pagina inicial
+        // si el usuario ya ha iniciado sesión y accede aqui
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
 
         // creamos el modelo de login
@@ -137,44 +108,21 @@ class SiteController extends Controller
             return $this->goBack(); // redirigimos a la página anterior
         }
 
-        // seguridad
-        $model->password = '';
-
         // si no, volvemos a la vista login con los datos del modelo
         return $this->render('login', [
             'model' => $model,
         ]);
     }
- public function actionAdmin()
-    {
-        // Verifica si el usuario actual tiene el rol de "gestor"
-        if (Yii::$app->user->can('gestor')) {
-            // Código para la página de administración
-            return $this->render('admin');
-        } else {
-            // Redirecciona o muestra un mensaje de error
-            Yii::$app->session->setFlash('error', 'No tienes permisos para acceder a esta página.');
-            return $this->goHome(); // Puedes redirigir a la página de inicio o a otro lugar según tu lógica.
-        }
-    }
 
-
-
-
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
+    /*
+        ACCIÓN DE LOGOUT
+    */
     public function actionDeslogin()
     {
-        Yii::$app->session->destroy();
+        Yii::$app->user->logout();
 
         return $this->goHome();
     }
-
-    
 
     /**
      * Displays contact page.
@@ -203,6 +151,4 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-
-
 }
