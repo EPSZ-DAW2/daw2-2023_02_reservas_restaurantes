@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 .venv
-datos_generados_BD.sql
+=======
+.venv
+data.sql
+>>>>>>> 3a3d028afd38077149efbaeeaf9dd2788efcb580

@@ -163,7 +163,7 @@ def generar_datos(fichero='datos_generados_BD.sql'):
 
         for i in range(1, 10 + 1):
             nombre_restaurante = f"Restaurante{i}"
-            id_foto_restaurante = i+1
+            id_foto_restaurante = i
             id_carta = i+10
             calle_restaurante = fake.street_name()
             barrio_restaurante = "NULL"

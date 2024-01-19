@@ -41,17 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                     
-                    <?php
-                    // $warningMessage = Yii::$app->session->getFlash('warning');
-                    // if ($warningMessage !== null) {
-                    //     echo '<div class="alert alert-warning">' . $warningMessage . '</div>';
-                    // }
-
-                    // $errorMessage = Yii::$app->session->getFlash('error');
-                    // if ($errorMessage !== null) {
-                    //     echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
-                    // }
-                    ?>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

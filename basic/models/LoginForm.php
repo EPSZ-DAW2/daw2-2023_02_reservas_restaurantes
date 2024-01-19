@@ -40,65 +40,39 @@ class LoginForm extends Model
         //comprobamos si los datos del login cumplen las reglas
         if ($this->validate()) {
 
-            // PERIODO DE PRUEBAS 
-            if ($this->esAdmin())
-            {
-                Yii::$app->session->set('isUserLoggedIn', true);
-                Yii::$app->session->set('username', $this->username);
-
-                return true; // login successful
-            }
-
-            // Comprobamos si el usuario dado ya existe
+            // Comprobamos si los datos son válidos
             $existingUser = $this->getUser();
 
-            $remainingAttempts = $this->getLoginAttempts();
-
-            // If the user doesn't exist
+            // No son validos
             if ($existingUser === null) {
                 $this->decrementLoginAttempts();
-                // If remaining attempts are zero, block the session
-                if ($remainingAttempts <= 0) { 
+
+                //comprobamos los intentos restantes
+                $remainingAttempts = $this->getLoginAttempts();
+
+                if ($remainingAttempts <= 0)
                     Yii::$app->session->setFlash('error', 'Sesión bloqueada. Demasiados intentos fallidos.');
-                // left attempts
-                } else {
+                else 
                     Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
-                }
+
                 return false;
             }
-
-            // If the user exists check if the passwords are the same
-            if ($existingUser->password === $this->password)
-            {
-                Yii::$app->session->set('isUserLoggedIn', true);
-                Yii::$app->session->set('username', $this->username);
-
-                return true; // login successful
-            }
-            // If are different
+            // Si son validos
             else
             {
-                $this->decrementLoginAttempts();
-                // If remaining attempts are zero, block the session
-                if ($remainingAttempts <= 0) { 
-                    Yii::$app->session->setFlash('error', 'Sesión bloqueada. Demasiados intentos fallidos.');
-                // left attempts
-                } else {
-                    Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
-                }
-                return false;
+                Yii::$app->user->login($existingUser);
+                //eliminamos la variable de control de intentos
+                if(Yii::$app->session->has('loginAttempts')) Yii::$app->session->remove('loginAttempts');
+                return true;
             }
 
-            
-        
-            
-
-            
-
         }
+
         //si no son correctos o algo falla
         return false;
     }
+
+
 
     /**
      * Finds user by [[username]]
@@ -107,11 +81,15 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
-        }
+        // Buscar un usuario por nombre de usuario y contraseña
+        $usuario = Usuario::findOne(['nombre_usuario' => $this->username]);
 
-        return $this->_user;
+        // Verificar si se encontró un usuario y si la contraseña es válida
+        if ($usuario && $usuario->validatePassword($this->password)) {
+            return $usuario;
+        } else {
+            return null;
+        }
     }
 
 
@@ -125,7 +103,7 @@ class LoginForm extends Model
         // Verificar si la clave 'loginAttempts' existe en la sesión
         if (!Yii::$app->session->has('loginAttempts')) {
             // Si no existe, asignar el valor predeterminado (3)
-            Yii::$app->session->set('loginAttempts', 3);
+            Yii::$app->session->set('loginAttempts', 4);
         }
 
         // Obtener y devolver el valor de 'loginAttempts'
@@ -139,15 +117,6 @@ class LoginForm extends Model
     {
         $attempts = $this->getLoginAttempts() -1;
         Yii::$app->session->set('loginAttempts', $attempts);
-    }
-
-
-    private function esAdmin()
-    {
-        if($this->username === 'admin' && $this->password === 'admin')
-            return true;
-        else
-            return false;
     }
 
 }

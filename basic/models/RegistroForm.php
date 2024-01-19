@@ -14,7 +14,7 @@ class RegistroForm extends Model
     public $username;
     public $email;
     public $password;
-    public $esPropietario;
+    public $esGestorPropietario = NULL;
 
     private $_user = false;
 
@@ -26,14 +26,12 @@ class RegistroForm extends Model
     public function rules()
     {
         return [
-            // datos requeridos en el registro
             [['username', 'email', 'password'], 'required'],
-            // el email tiene que ser de tipo email
             ['email', 'email'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
-            // make 'esPropietario' safe for assignment
-            ['esPropietario', 'safe'],
+            ['esGestorPropietario', 'safe'],
+            ['username', 'unique', 'targetClass' => 'app\models\Usuario', 'targetAttribute' => 'nombre_usuario', 'message' => 'Este nombre de usuario ya está en uso.'],
+            ['email', 'unique', 'targetClass' => 'app\models\Usuario', 'message' => 'Este email ya está en uso.'],
         ];
     }
 
@@ -45,8 +43,8 @@ class RegistroForm extends Model
         //si no hay errores en el modelo
         if (!$this->hasErrors()) {
 
-            if (strlen($this->password) < 8) {
-                $this->addError($attribute, 'La contraseña debe tener almenos 8 carcateres.');
+            if (strlen($this->password) < 6) {
+                $this->addError($attribute, 'La contraseña debe tener almenos 6 carcateres.');
             }
         }
     }
@@ -60,19 +58,24 @@ class RegistroForm extends Model
     {
         //comprobamos si los datos del registro cumplen las reglas
         if ($this->validate()) {
-            // Comprobamos si el usuario dado ya existe
-            $existingUser = $this->getUser();
 
-            // Si el usuario ya existe, añadir un error al modelo
-            if ($existingUser !== null) {
-                $this->addError('username', 'Este nombre de usuario ya está en uso.');
-                return false;
-            }
-
-            // Si el usuario no existe, proceder con el registro
+            // Si el usuario y email no existen, proceder con el registro
             $resultado = $this->registrar();
             return $resultado;
         
+        } else {
+            // Personalizar los mensajes de error para el formulario
+            $errors = $this->getErrors();
+    
+            if (isset($errors['username'])) {
+                $this->addError('username', $errors['username'][0]);
+            }
+    
+            if (isset($errors['email'])) {
+                $this->addError('email', $errors['email'][0]);
+            }
+    
+            return false;
         }
         //si no son correctos o algo falla
         return false;
@@ -86,53 +89,31 @@ class RegistroForm extends Model
      */
     private function registrar()
     {
-        $user = new User();
-        $user->nombre_usuario = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password); // codificamos la contraseña
+        $usuario = new Usuario();
+        $usuario->nombre_usuario = $this->username;
+        $usuario->email = $this->email;
+        $usuario->setPassword($this->password); // codificamos la contraseña
+        $usuario->id_foto_usuario = 1; //foto default
+        $usuario->es_gestor_propietario = $this->esGestorPropietario;
 
+        print_r($usuario);
 
-        // Guardamos el usuario en la base de datos
-        // Save the user to the database
-        if ($user->save()) {
-            // Log in the user after successful registration
-            Yii::$app->session->set('isUserLoggedIn', true);
-            Yii::$app->session->set('username', $user->nombre_usuario);
-
-            //si venimos del registro de gestores/propietarios
-            if($this->esPropietario!==null)
-            {
-                $gestor = new Gestor();
-                $gestor->id_usuario = $user->id_usuario;
-                $gestor->es_propietario = $this->esPropietario;
-                $gestor->save();
-            }
-            // si venimos del registro normal de clientes
-            else
-            {
-                $cliente = new Cliente();
-                $cliente->id_usuario = $user->id_usuario;
-                $cliente->save();
-            }
-
+        // Guardamo el usuario en la BD
+        if ($usuario->save()) {
+            // Iniciar sesión después del registro exitoso
+            $identity = Usuario::findIdentity($usuario->id_usuario);
+            Yii::$app->user->login($identity);
+            //elimanmos las variables de ayuda para el registro
+            if(Yii::$app->session->has('registroc')) Yii::$app->session->remove('registroc');
+            if(Yii::$app->session->has('registrogp')) Yii::$app->session->remove('registrogp');
             return true; // Registration and login were successful
         }
 
-    }
+        // Si hay algún problema con el guardado, imprime los errores para depuración
+        print_r($usuario->errors);
 
-    /*
-        BUSCA UN USUARIO POR SU NOMBRE
+        return false;
 
-        * devuelve el usuario o null
-    */
-    public function getUser()
-    {
-        // si todavia no hay un usaurio cargado en el modelo lo buscamos por su nombre dado en el registro
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
-        }
-
-        return $this->_user; //devolvemos el usuario o null dependiendo el resultado de la búsqueda
     }
 
 }
