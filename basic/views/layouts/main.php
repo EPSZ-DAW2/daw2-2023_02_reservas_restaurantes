@@ -16,6 +16,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\models\Usuario;
 
 use yii\helpers\Url;
 
@@ -46,7 +47,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         NavBar::begin([
             'brandLabel' => Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top py-1']
         ]);
 
         //Se preparan los items a mostrar en el widget Nav dependiendo del rol de usuario
@@ -81,6 +82,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     'label' => Yii::$app->user->isGuest ? 'Login' : 'Logout',
                     'url' => Yii::$app->user->isGuest ? ['/site/login'] : ['/site/deslogin']
                 ];
+        if(!Yii::$app->user->isGuest) {
+            $usuario = Yii::$app->user->identity;
+            $fotoUsuario = $usuario->getFotoUsuario();
+        }
         $items[] = 
                 [
                     'label' => Yii::$app->user->isGuest
@@ -88,8 +93,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         : 'MiPerfil (' . Yii::$app->user->identity->nombre_usuario . ')',
                     'url' => Yii::$app->user->isGuest
                         ? ['/site/registro']
-                        : ['/site/verperfil']
+                        : ['/site/verperfil'],
                 ];
+        if(!Yii::$app->user->isGuest)
+            $items[] = ['label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Foto de perfil', 'style' => 'width: 25px; height: 25px;']),
+                        'url' => ['/site/verperfil'],
+                        'linkOptions' => ['class' => 'nav-link'],
+                        'encode' => false];
                     
         //Se muestra el widget Nav con los items correspondientes
         echo Nav::widget([
