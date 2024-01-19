@@ -7,19 +7,33 @@
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
+-- ------------------------------------------------------------------------------
+-- Esquema de la Base de Datos para una página de reservas de restaurantes online
+-- (c) DAW2 - EPSZ - Universidad Salamanca
+-- ------------------------------------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+SET AUTOCOMMIT=0;
+START TRANSACTION;
+
+
+-- --------------------------------------------------------
+-- Base de datos: `daw2_2023_02_reservas_restaurantes`
+-- --------------------------------------------------------
+DROP DATABASE IF EXISTS `daw2_2023_02_reservas_restaurantes`;
+CREATE DATABASE IF NOT EXISTS `daw2_2023_02_reservas_restaurantes`
+  CHARACTER SET 'utf8'
+  COLLATE 'utf8_general_ci';
+
+USE `daw2_2023_02_reservas_restaurantes`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `daw2_2023_02_reservas_restaurantes`
---
 
 -- --------------------------------------------------------
 
