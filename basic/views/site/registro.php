@@ -8,7 +8,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-if(isset($_POST['registrogp-button']))
+// $_GET --> por si venimos del inicio
+if(isset($_POST['registrogp-button']) || isset($_GET['registrogp']) )
 {
     Yii::$app->session->set('registrogp', 1); //si queremos registrar un propietario o gestor
     if(Yii::$app->session->has('registroc')) Yii::$app->session->remove('registroc');
