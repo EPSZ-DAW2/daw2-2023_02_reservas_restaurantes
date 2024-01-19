@@ -63,22 +63,20 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
         }
 
-        $items[] =  [
-                        'label' => Yii::$app->session->get('isUserLoggedIn')
-                            ? 'Logout'
-                            : 'Login',
-                        'url' => Yii::$app->session->get('isUserLoggedIn')
-                            ? ['/site/deslogin']
-                            : ['/site/login']
-        ];
-        $items[] = [
-                        'label' => Yii::$app->session->get('isUserLoggedIn')
-                            ? 'MiPerfil (' . Yii::$app->session->get('username') . ')'
-                            : 'Registro',
-                        'url' => Yii::$app->session->get('isUserLoggedIn')
-                            ? ['/site/verperfil']
-                            : ['/site/registro']
-                    ];
+        $items[] =  
+                [
+                    'label' => Yii::$app->user->isGuest ? 'Login' : 'Logout',
+                    'url' => Yii::$app->user->isGuest ? ['/site/login'] : ['/site/deslogin']
+                ];
+        $items[] = 
+                [
+                    'label' => Yii::$app->user->isGuest
+                        ? 'Registro'
+                        : 'MiPerfil (' . Yii::$app->user->identity->nombre_usuario . ')',
+                    'url' => Yii::$app->user->isGuest
+                        ? ['/site/registro']
+                        : ['/site/verperfil']
+                ];
                     
         //Se muestra el widget Nav con los items correspondientes
         echo Nav::widget([

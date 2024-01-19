@@ -46,7 +46,6 @@ class UsuariosController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-		
     }
 
     /**

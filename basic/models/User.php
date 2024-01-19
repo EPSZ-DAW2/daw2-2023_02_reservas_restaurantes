@@ -2,156 +2,105 @@
 
 namespace app\models;
 
-use Yii;
-
-/**
- * This is the model class for table "usuarios".
- *
- * @property int $id_usuario Identificador de cada usuario.
- * @property string $nombre_usuario Nombre del usuario.
- * @property string $email Email de regitro del usuario.
- * @property string $password Contraseña de registro del usuario.
- * @property int|null $id_foto_usuario ID de la foto de perfil del usuario. NULL si no tiene.
- * @property string|null $notas Notas internas para el usuario.
- *
- * @property Administradores[] $administradores
- * @property Clientes[] $clientes
- * @property Comentarios[] $comentarios
- * @property Imagenes $fotoUsuario
- * @property Gestores[] $gestores
- * @property Moderadores[] $moderadores
- */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $id;
+    public $username;
+    public $password;
+    public $authKey;
+    public $accessToken;
+
+    private static $users = [
+        '100' => [
+            'id' => '100',
+            'username' => 'admin',
+            'password' => 'admin',
+            'authKey' => 'test100key',
+            'accessToken' => '100-token',
+        ],
+        '101' => [
+            'id' => '101',
+            'username' => 'demo',
+            'password' => 'demo',
+            'authKey' => 'test101key',
+            'accessToken' => '101-token',
+        ],
+    ];
+
 
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function findIdentity($id)
     {
-        return 'usuarios';
+        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public static function findIdentityByAccessToken($token, $type = null)
     {
-        return [
-            [['nombre_usuario', 'email', 'password'], 'required'],
-            [['id_foto_usuario'], 'integer'],
-            [['notas'], 'string'],
-            [['nombre_usuario'], 'string', 'max' => 50],
-            [['email'], 'string', 'max' => 32],
-            [['password'], 'string', 'max' => 200],
-            //[['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
-        ];
+        foreach (self::$users as $user) {
+            if ($user['accessToken'] === $token) {
+                return new static($user);
+            }
+        }
+
+        return null;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id_usuario' => Yii::t('app', 'Identificador de cada usuario.'),
-            'nombre_usuario' => Yii::t('app', 'Nombre del usuario.'),
-            'email' => Yii::t('app', 'Email de regitro del usuario.'),
-            'password' => Yii::t('app', 'Contraseña de registro del usuario.'),
-            'id_foto_usuario' => Yii::t('app', 'ID de la foto de perfil del usuario. NULL si no tiene.'),
-            'notas' => Yii::t('app', 'Notas internas para el usuario.'),
-        ];
-    }
-
-    /**
-     * Gets query for [[Administradores]].
-     *
-     * @return \yii\db\ActiveQuery|AdministradoresQuery
-     */
-    public function getAdministradores()
-    {
-        return $this->hasMany(Administradores::class, ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * Gets query for [[Clientes]].
-     *
-     * @return \yii\db\ActiveQuery|ClientesQuery
-     */
-    public function getClientes()
-    {
-        return $this->hasMany(Cliente::class, ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * Gets query for [[Comentarios]].
-     *
-     * @return \yii\db\ActiveQuery|ComentariosQuery
-     */
-    public function getComentarios()
-    {
-        return $this->hasMany(Comentario::class, ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * Gets query for [[FotoUsuario]].
-     *
-     * @return \yii\db\ActiveQuery|ImagenesQuery
-     */
-    public function getFotoUsuario()
-    {
-        return $this->hasOne(Imagen::class, ['id_imagen' => 'id_foto_usuario']);
-    }
-
-    /**
-     * Gets query for [[Gestores]].
-     *
-     * @return \yii\db\ActiveQuery|GestoresQuery
-     */
-    public function getGestores()
-    {
-        return $this->hasMany(Gestor::class, ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * Gets query for [[Moderadores]].
-     *
-     * @return \yii\db\ActiveQuery|ModeradoresQuery
-     */
-    public function getModeradores()
-    {
-        return $this->hasMany(Moderador::class, ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return UsuariosQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UserQuery(get_called_class());
-    }
-
-
-    /**
-     * Finds a user by their username.
+     * Finds user by username
      *
      * @param string $username
-     * @return User|array|null
+     * @return static|null
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['nombre_usuario' => $username]);
+        foreach (self::$users as $user) {
+            if (strcasecmp($user['username'], $username) === 0) {
+                return new static($user);
+            }
+        }
+
+        return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * Sets the user's password and hashes it using Yii's security methods.
-     *
-     * @param string $password
+     * {@inheritdoc}
      */
-    public function setPassword($password)
+    public function getAuthKey()
     {
-        $this->password = Yii::$app->security->generatePasswordHash($password);
+        return $this->authKey;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
+    }
+
+    /**
+     * Validates password
+     *
+     * @param string $password password to validate
+     * @return bool if password provided is valid for current user
+     */
+    public function validatePassword($password)
+    {
+        return $this->password === $password;
+        //return $this->password === md5($password);
+        //return $this->password === sha2($password);
     }
 }
