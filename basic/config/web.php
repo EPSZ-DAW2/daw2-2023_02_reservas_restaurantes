@@ -1,6 +1,5 @@
 <?php
 
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -44,10 +43,6 @@ $config = [
             ],
         ],
         'db' => $db,
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
-		
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -59,6 +54,7 @@ $config = [
     ],
     'params' => $params,
 ];
+
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
