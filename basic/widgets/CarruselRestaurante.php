@@ -14,7 +14,7 @@ use Yii;
 class CarruselRestaurante extends Widget
 {
   public $nombreCategoria;
-  private $ids = [];
+  private $models = [];
 
   public function init()
   {
@@ -33,13 +33,13 @@ class CarruselRestaurante extends Widget
     {
       foreach ($restaurantesCategoria as $relacion)
       {
-          $this->ids[] = strval($relacion->id_restaurante);
+          $this->models[] = Restaurante::findOne($relacion->id_restaurante);
       }
     }
   }
 
   public function run()
   {
-    return $this->render('carruselRestaurante', ['ids' => $this->ids, 'fichasPorBloque' => 4, 'nombreCategoria'=>$this->nombreCategoria]);
+    return $this->render('carruselRestaurante', ['nombreCategoria'=>$this->nombreCategoria, 'models' => $this->models]);
   }
 }

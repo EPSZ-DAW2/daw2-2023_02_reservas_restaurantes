@@ -1,28 +1,43 @@
 <?php
-use yii\bootstrap5\Carousel;
-use \app\widgets\FichaRestaurante;
-
-$bloques = array_chunk($ids, $fichasPorBloque);
-
-$items = [];
-//Se crean items cada uno con cuatro fichas
-foreach ($bloques as $bloque)
-{
-    $contenido = '<div class="d-flex justify-content-center p-1">';
-    foreach ($bloque as $id) 
-    {
-        $contenido .= FichaRestaurante::widget(['id' => $id]);
-    }
-    $contenido .= '</div>';
-    $items[] = ['content' => $contenido];
-}
-echo "<div style='display: flex; justify-content: center; align-items: center; height: 30vh; width: 100%; margin: 15px;'>";
-echo "<div style='width: 80%; height: 100%;'>";
-echo "<h2 class='text-center'>".$nombreCategoria."</h2>";
-echo Carousel::widget([
-    'items' => $items,
-    'options' => ['class' => 'carousel carousel-fade', 'style' => 'transition: none; width: 100%; height: 100%;'],
-]);
-echo "</div>";
-echo "</div>";
+use yii\bootstrap5\BootstrapPluginAsset;
+use yii\helpers\Html;
+$this->registerCssFile("@web/css/carruselRestaurante.css"); //css
+$this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [BootstrapPluginAsset::class, \yii\web\JqueryAsset::class]]); //js (jQuery)
 ?>
+
+<div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <?php 
+        foreach($models as $model){ ?>
+            <div class='carousel-item'>
+            <div class="card" <?php isset($ficha) ? 'style="height: 150px; width:150px;"' : '' ?>>
+              <div class="img-wrapper">
+                <img src="<?=Html::encode($model->getFotoPerfilUrl()) ?>" alt="...">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title"><?= Html::encode($model->nombre_restaurante) ?></h5>
+                <p class="card-text">
+<?= Html::encode($model->getPuntuacionPromedio()) ?> cucharas<br>
+<?= Html::encode($model->getNumResenas()) ?><br>
+<?= Html::encode($model->precio_medio_comensal) ?>&euro;<br>
+<?= Html::encode($model->ciudad_restaurante) ?><br>
+<?= Html::encode($model->barrio_restaurante) ?><br>
+Precio por comensal: <?= Html::encode($model->precio_medio_comensal) ?>&euro;<br>
+Tipo: 
+              </p>
+                <a href="#" class="btn btn-primary">Ver Restaurante</a>
+              </div>
+            </div>
+            
+            </div>
+        <?php } ?>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>

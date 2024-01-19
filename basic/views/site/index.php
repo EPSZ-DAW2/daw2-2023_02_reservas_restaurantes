@@ -18,11 +18,11 @@ $this->title = 'La Cuchara - Inicio';
         <!-- Carruseles -->
       
         <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Ofertas',
+            'nombreCategoria' => 'Categoria1',
         ]); ?>
 
         <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Selección La Cuchara',
+            'nombreCategoria' => 'Categoria2',
         ]); ?>
 
 
