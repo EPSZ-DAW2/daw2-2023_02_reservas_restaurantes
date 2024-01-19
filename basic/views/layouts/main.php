@@ -56,12 +56,25 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ['label' => 'Búsqueda', 'url' => ['/site/index']]
         ];
 
-        if(Yii::$app->session->get('isUserLoggedIn')){
-            $items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
-            $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
-            $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+		if (!Yii::$app->user->isGuest) {
+			// Obtener los roles del usuario actual
+			$userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
-        }
+			// Verificar si el usuario tiene el rol de administrador
+			if (isset($userRoles['administrador'])) {
+				$items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
+			}
+
+			// Verificar si el usuario tiene el rol de moderador
+			if (isset($userRoles['moderador'])) {
+				$items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+			}
+
+			// Verificar si el usuario tiene el rol de gestor
+			if (isset($userRoles['gestor'])) {
+				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+			}
+		}
 
         $items[] =  
                 [
