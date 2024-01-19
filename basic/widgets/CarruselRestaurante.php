@@ -13,7 +13,8 @@ use Yii;
 */
 class CarruselRestaurante extends Widget
 {
-  public $nombreCategoria;
+  public $idCategoria;
+  private $nombreCategoria;
   private $models = [];
 
   public function init()
@@ -21,11 +22,12 @@ class CarruselRestaurante extends Widget
     parent::init();
     
     //obtiene una instancia de la categoria por el nombre
-    $categoria = Categoria::find()->where(['nombre_categoria' => $this->nombreCategoria])->one();
+    $categoria = Categoria::find()->where(['id_categoria' => $this->idCategoria])->one();
+    $this->nombreCategoria = $categoria->nombre_categoria;
     if($categoria != NULL)
     {
       //obtiene todas las relaciones con esa categoria
-      $restaurantesCategoria = CategoriaRestaurante::find()->where(['id_categoria' => $categoria->id_categoria])->all();
+      $restaurantesCategoria = CategoriaRestaurante::find()->where(['id_categoria' => $this->idCategoria])->all();
     }
 
     //Guarda el id de los restaurantes en esa categoría para enviarlo a la vista
@@ -40,6 +42,8 @@ class CarruselRestaurante extends Widget
 
   public function run()
   {
-    return $this->render('carruselRestaurante', ['nombreCategoria'=>$this->nombreCategoria, 'models' => $this->models]);
+    return $this->render('carruselRestaurante', [
+      'nombreCategoria'=>$this->nombreCategoria, 'idCategoria' => $this->idCategoria, 'models' => $this->models
+    ]);
   }
 }
