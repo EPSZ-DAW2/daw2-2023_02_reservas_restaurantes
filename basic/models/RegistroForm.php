@@ -14,7 +14,7 @@ class RegistroForm extends Model
     public $username;
     public $email;
     public $password;
-    public $esGestorPropietario = NULL;
+    public $rol = NULL;
 
     private $_user = false;
 
@@ -29,7 +29,7 @@ class RegistroForm extends Model
             [['username', 'email', 'password'], 'required'],
             ['email', 'email'],
             ['password', 'validatePassword'],
-            ['esGestorPropietario', 'safe'],
+            ['rol', 'safe'],
             ['username', 'unique', 'targetClass' => 'app\models\Usuario', 'targetAttribute' => 'nombre_usuario', 'message' => 'Este nombre de usuario ya está en uso.'],
             ['email', 'unique', 'targetClass' => 'app\models\Usuario', 'message' => 'Este email ya está en uso.'],
         ];
@@ -94,9 +94,8 @@ class RegistroForm extends Model
         $usuario->email = $this->email;
         $usuario->setPassword($this->password); // codificamos la contraseña
         $usuario->id_foto_usuario = 1; //foto default
-        $usuario->es_gestor_propietario = $this->esGestorPropietario;
-
-        print_r($usuario);
+        $usuario->rol = $this->rol;
+        $usuario->bloqueado = 0; //no bloqueado
 
         // Guardamo el usuario en la BD
         if ($usuario->save()) {

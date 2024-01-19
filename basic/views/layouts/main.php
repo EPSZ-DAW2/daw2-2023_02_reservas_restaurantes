@@ -16,6 +16,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\models\Usuario;
 
 use yii\helpers\Url;
 
@@ -46,7 +47,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         NavBar::begin([
             'brandLabel' => Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top py-1']
         ]);
 
         //Se preparan los items a mostrar en el widget Nav dependiendo del rol de usuario
@@ -56,18 +57,35 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ['label' => 'Búsqueda', 'url' => ['/site/index']]
         ];
 
-        if(Yii::$app->session->get('isUserLoggedIn')){
-            $items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
-            $items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
-            $items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+		if (!Yii::$app->user->isGuest) {
+			// Obtener los roles del usuario actual
+			$userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
-        }
+			// Verificar si el usuario tiene el rol de administrador
+			if (isset($userRoles['administrador'])) {
+				$items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
+			}
+
+			// Verificar si el usuario tiene el rol de moderador
+			if (isset($userRoles['moderador'])) {
+				$items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+			}
+
+			// Verificar si el usuario tiene el rol de gestor
+			if (isset($userRoles['gestor'])) {
+				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+			}
+		}
 
         $items[] =  
                 [
                     'label' => Yii::$app->user->isGuest ? 'Login' : 'Logout',
                     'url' => Yii::$app->user->isGuest ? ['/site/login'] : ['/site/deslogin']
                 ];
+        if(!Yii::$app->user->isGuest) {
+            $usuario = Yii::$app->user->identity;
+            $fotoUsuario = $usuario->getFotoUsuario();
+        }
         $items[] = 
                 [
                     'label' => Yii::$app->user->isGuest
@@ -75,8 +93,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         : 'MiPerfil (' . Yii::$app->user->identity->nombre_usuario . ')',
                     'url' => Yii::$app->user->isGuest
                         ? ['/site/registro']
-                        : ['/site/verperfil']
+                        : ['/site/verperfil'],
                 ];
+        if(!Yii::$app->user->isGuest)
+            $items[] = ['label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Foto de perfil', 'style' => 'width: 25px; height: 25px;']),
+                        'url' => ['/site/verperfil'],
+                        'linkOptions' => ['class' => 'nav-link'],
+                        'encode' => false];
                     
         //Se muestra el widget Nav con los items correspondientes
         echo Nav::widget([

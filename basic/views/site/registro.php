@@ -50,7 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'password')->passwordInput() ?>
 
                     <?php if (Yii::$app->session->has('registrogp')) { ?>
-                    <?= $form->field($model, 'esGestorPropietario')->label('Rol')->dropDownList([0 => 'Gestor', 1 => 'Propietario']) ?>
+                    <?= $form->field($model, 'rol')->label('Rol')->dropDownList(['gestor' => 'Gestor', 'propietario' => 'Propietario']) ?>
+                    <?php } else { ?>
+                    <?= $form->field($model, 'rol')->label('')->hiddenInput(['value' => 'cliente']) ?>
                     <?php } ?>
                     <div class="form-group">
                         <div>
