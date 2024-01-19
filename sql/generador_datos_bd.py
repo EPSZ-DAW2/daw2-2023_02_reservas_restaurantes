@@ -193,7 +193,7 @@ def generar_datos(fichero='data.sql'):
 
         for i in range(1, 10 + 1):
             nombre_restaurante = f"Restaurante{i}"
-            id_foto_restaurante = i
+            id_foto_restaurante = i + 1
             id_carta = i+10
             calle_restaurante = fake.street_name()
             barrio_restaurante = "NULL"
