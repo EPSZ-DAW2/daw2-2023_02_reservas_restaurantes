@@ -9,7 +9,7 @@ use app\models\Categoria;
 /**
  * CategoriaSearch represents the model behind the search form of `app\models\Categoria`.
  */
-class CategoriaSearch extends Categoria
+class CategoriaRestauranteSearch extends Categoria
 {
 
     public $nombre_categoria_padre;
