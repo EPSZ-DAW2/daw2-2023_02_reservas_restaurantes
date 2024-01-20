@@ -69,6 +69,18 @@ class TipoComida extends \yii\db\ActiveRecord
         return new TipoComidaQuery(get_called_class());
     }
 
+    /**
+     * Gets query for [[Padre]].
+     *
+     * @return \yii\db\ActiveQuery
+     * 
+     * Relación de este tipo con la del padre
+     */
+    public function getPadre()
+    {
+        return $this->hasOne(TipoComida::class, ['id_tipo_comida' => 'id_tipo_padre']);
+    }
+
 
     /**
      * Obtiene los nombres de todas los tipos y sus subtipos en la base de datos.
