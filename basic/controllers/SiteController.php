@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\RegistroForm;
 use app\models\LoginForm;
+use app\models\BusquedaFiltrada;
 use app\models\ContactForm;
 use app\models\Categoria;
 
