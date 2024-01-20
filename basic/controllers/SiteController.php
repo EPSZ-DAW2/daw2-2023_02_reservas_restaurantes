@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\RegistroForm;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Categoria;
 
 class SiteController extends Controller
 {
@@ -60,9 +61,14 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($numCategorias = 2)
     {
-        return $this->render('index');
+        //Se obtiene el id de la última categoría en la bbdd
+        $maxCategoria = Categoria::find()->max('id_categoria');
+        return $this->render('index', [
+            'maxCategoria' => $maxCategoria,
+            'numCategorias' => $numCategorias
+        ]);
     }
 
 
@@ -124,31 +130,54 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
+    /*
+        ACCIÓN DE BÚSQUEDA FILTRADA
+    */
+    public function actionBusquedaFiltrada()
+    {
+        // creamos el modelo de busqueda
+        $model = new BusquedaFiltrada();
+        // cargamos los datos del formulario de filtro si los hay y si se cumple la validacion del registro
+        if ($model->load(Yii::$app->request->post()) && $model->busquedaFiltrada()) { 
+            return $this->goBack();
         }
-        return $this->render('contact', [
+
+        //obtenemos las categorias disponibles de restaurantes en la app
+        $categoriasConSubcategorias = Categoria::obtenerCategoriasConPadre();
+
+        // si no, volvemos a la vista registro con los datos del modelo
+        return $this->render('busqueda-filtrada', [
             'model' => $model,
+            'categoriasBD' => $categoriasConSubcategorias,
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    // /**
+    //  * Displays contact page.
+    //  *
+    //  * @return Response|string
+    //  */
+    // public function actionContact()
+    // {
+    //     $model = new ContactForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+    //         Yii::$app->session->setFlash('contactFormSubmitted');
+
+    //         return $this->refresh();
+    //     }
+    //     return $this->render('contact', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    // /**
+    //  * Displays about page.
+    //  *
+    //  * @return string
+    //  */
+    // public function actionAbout()
+    // {
+    //     return $this->render('about');
+    // }
 }
