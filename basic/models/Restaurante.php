@@ -201,4 +201,31 @@ class Restaurante extends \yii\db\ActiveRecord
         return $imagen ? $imagen->getUrlImagen() : null;
     }
     
+
+    /**
+     * Devuelve un array con todas las comunidades autónomas de todos los restaurantes sin duplicados.
+     * @return array
+     */
+    public static function getAllComunidadesAutonomas()
+    {
+        return array_unique(self::find()->select('comunidad_autonoma_restaurante')->column());
+    }
+
+    /**
+     * Devuelve un array con todas las ciudades de todos los restaurantes sin duplicados.
+     * @return array
+     */
+    public static function getAllCiudades()
+    {
+        return array_unique(self::find()->select('ciudad_restaurante')->column());
+    }
+
+    /**
+     * Devuelve un array con todos los barrios de todos los restaurantes sin duplicados y sin campos vacíos.
+     * @return array
+     */
+    public static function getAllBarrios()
+    {
+        return array_filter(array_unique(self::find()->select('barrio_restaurante')->column()));
+    }
 }
