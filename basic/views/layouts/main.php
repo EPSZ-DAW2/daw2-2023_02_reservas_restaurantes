@@ -55,7 +55,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         //Items siempre en vista: Inicio, Búsqueda
         $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Búsqueda', 'url' => ['/site/busqueda-filtrada']]
+                ['label' => 'Búsqueda', 'url' => ['/site/index']]
         ];
 
         $items2 = []; //Items para perfil
@@ -148,21 +148,21 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </main>
 
-    <!-- Pie de página con información relevante -->
-    <footer id="footer" class="mt-auto py-3 bg-light">
-        <div class="container">
-            <div class="row text-muted">
-                <div class="col-md-6 text-center text-md-start">&copy; La Cuchara <?= date('Y') ?></div>
-                <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-                <div class="col-md-6 text-center text-md-end">
-                    <ul class="list-unstyled">
-                        <li><a class="text-muted" href="<?= Url::to(['/site/faq']) ?>">FAQ</a></li>
-                        <li><a class="text-muted" href="<?= Url::to(['/site/contacto']) ?>">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- pie de página -->
+    <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">&copy; La Cuchara <?= date('Y') ?></p>
+
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        </a>
+
+        <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="<?= Url::to(['/site/faq']) ?>" class="nav-link px-2 text-muted">FAQ</a></li>
+        <li class="nav-item"><a href="<?= Url::to(['/site/contacto']) ?>" class="nav-link px-2 text-muted">Contacto</a></li>
+        </ul>
     </footer>
+    </div>
 
     <?php $this->endBody() ?>
 </body>
