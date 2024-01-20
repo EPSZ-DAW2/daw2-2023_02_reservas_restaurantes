@@ -42,7 +42,7 @@ $this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [Boot
                     Tipo: 
                   </p>
                 </div>
-                <a href="#" class="btn btn-primary mt-auto">Ver Restaurante</a>
+                <a href="#" class="btn btn-primary mt-auto" id="boton-ver-restaurante">Ver Restaurante</a>
               </div>
             </div>
             
