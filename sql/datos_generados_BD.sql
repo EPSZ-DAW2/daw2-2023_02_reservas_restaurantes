@@ -133,15 +133,15 @@ INSERT INTO `tipos_comida` (`id_tipo_comida`, `id_tipo_padre`, `nombre_tipo`, `n
 -- Volcado de datos para la tabla `restaurantes`
 -- --------------------------------------------------------
 INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `notas`) VALUES
-(1, 'Restaurante1', 1, 11, 'Dyer Garden', NULL, 'South Johnport', 'Alaska', NULL, 14, NULL),
+(1, 'Restaurante1', 1, 11, 'Dyer Garden', NULL, 'South Johnport', 'Alaska', 55.72, 14, NULL),
 (2, 'Restaurante2', 2, 12, 'Smith Cliffs', NULL, 'Anthonyville', 'Kansas', 55.72, 12, NULL),
-(3, 'Restaurante3', 3, 13, 'Nicholson Curve', NULL, 'Carolineland', 'Rhode Island', NULL, 13, NULL),
+(3, 'Restaurante3', 3, 13, 'Nicholson Curve', NULL, 'Carolineland', 'Rhode Island', 55.72, 13, NULL),
 (4, 'Restaurante4', 4, 14, 'Edwards Mission', NULL, 'Dawsonchester', 'Massachusetts', 97.34, 14, NULL),
-(5, 'Restaurante5', 5, 15, 'Ruiz Centers', NULL, 'Johnsontown', 'Ohio', NULL, 12, NULL),
+(5, 'Restaurante5', 5, 15, 'Ruiz Centers', NULL, 'Johnsontown', 'Ohio', 55.72, 12, NULL),
 (6, 'Restaurante6', 6, 16, 'Kristi Plains', NULL, 'Hamptonhaven', 'Rhode Island', 66.93, 13, NULL),
-(7, 'Restaurante7', 7, 17, 'Adams Springs', NULL, 'North Ashleyland', 'New Hampshire', NULL, 15, NULL),
+(7, 'Restaurante7', 7, 17, 'Adams Springs', NULL, 'North Ashleyland', 'New Hampshire', 55.72, 15, NULL),
 (8, 'Restaurante8', 8, 18, 'Taylor Stravenue', NULL, 'West Wendy', 'Iowa', 17.17, 11, NULL),
-(9, 'Restaurante9', 9, 19, 'Jennifer Causeway', NULL, 'South Jackie', 'Wyoming', NULL, 11, NULL),
+(9, 'Restaurante9', 9, 19, 'Jennifer Causeway', NULL, 'South Jackie', 'Wyoming', 55.72, 11, NULL),
 (10, 'Restaurante10', 10, 20, 'Evans Avenue', NULL, 'Georgehaven', 'Montana', 86.01, 14, NULL);
 -- --------------------------------------------------------
 -- Volcado de datos para la tabla `categoria_restaurante`

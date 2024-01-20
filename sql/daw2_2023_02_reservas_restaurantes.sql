@@ -686,7 +686,7 @@ CREATE TABLE `restaurantes` (
   `barrio_restaurante` varchar(100) DEFAULT NULL COMMENT 'Barrio del restaurante.',
   `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.',
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.',
-  `precio_medio_comensal` float DEFAULT NULL COMMENT 'Precio por persona medio.',
+  `precio_medio_comensal` float NOT NULL COMMENT 'Precio por persona medio.',
   `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para el restaurante.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

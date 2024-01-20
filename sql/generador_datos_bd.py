@@ -171,7 +171,7 @@ def generar_datos(fichero='datos_generados_BD.sql'):
             barrio_restaurante = "NULL"
             ciudad_restaurante = fake.city()
             comunidad_autonoma_restaurante = fake.state()
-            precio_medio_comensal = round(fake.random.uniform(10, 100), 2) if i % 2 == 0 else "NULL"
+            precio_medio_comensal = round(fake.random.uniform(10, 100), 2)
             id_propietario = fake.random_int(min=11, max=15)
             notas = "NULL"
 
