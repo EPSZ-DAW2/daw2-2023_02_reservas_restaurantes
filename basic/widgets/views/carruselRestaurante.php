@@ -8,30 +8,30 @@ $this->registerCssFile("@web/css/carruselRestaurante.css", [
 $this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [BootstrapPluginAsset::class, \yii\web\JqueryAsset::class]]); //js (jQuery)
 ?>
 
-<h2 class="nombre-carrusel"><?=$nombreCategoria?></h2>
-<div id="carouselExampleControls<?=$idCategoria?>" class="carousel carruselRestaurante" >
-    <div class="carousel-inner">
+<h2 class="nombre-carrusel carruselRestaurante"><?=$nombreCategoria?></h2>
+<div id="carouselExampleControls<?=$idCategoria?>" class="carousel carruselRestaurante">
+    <div class="carousel-inner carruselRestaurante">
         <?php 
         $activo=1;
         foreach($models as $model){ ?>
             <?php
             if($activo==1){
-              echo "<div class='carousel-item active'>";
+              echo "<div class='carousel-item active carruselRestaurante'>";
               $activo=0;
             }else{
             ?>
-              <div class='carousel-item'>
+              <div class='carousel-item carruselRestaurante'>
             <?php
             }
             ?>
-            <div class="card">
-              <div class="img-wrapper">
-                <img src="<?=Html::encode($model->getFotoPerfilUrl()) ?>" alt="<?= Html::encode($model->nombre_restaurante) ?>">
+            <div class="card carruselRestaurante">
+              <div class="img-wrapper carruselRestaurante">
+                <img src="<?=Html::encode($model->getFotoPerfilUrl()) ?>" alt="<?= Html::encode($model->nombre_restaurante) ?>" class="carruselRestaurante">
               </div>
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title"><?= Html::encode($model->nombre_restaurante) ?></h5>
-                <div class="mb-auto">
-                  <p class="card-text">
+              <div class="card-body d-flex flex-column carruselRestaurante">
+                <h5 class="card-title carruselRestaurante"><?= Html::encode($model->nombre_restaurante) ?></h5>
+                <div class="mb-auto carruselRestaurante">
+                  <p class="card-text carruselRestaurante">
                     <?= Html::encode($model->getPuntuacionPromedio()) ?> cucharas<br>
                     <?= Html::encode($model->getNumResenas())?> Valoraciones<br>
                     <?= Html::encode($model->ciudad_restaurante) ?><br>
@@ -42,19 +42,19 @@ $this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [Boot
                     Tipo: 
                   </p>
                 </div>
-                <a href="#" class="btn btn-primary mt-auto" id="boton-ver-restaurante">Ver Restaurante</a>
+                <a href="#" class="btn btn-primary mt-auto carruselRestaurante" id="boton-ver-restaurante">Ver Restaurante</a>
               </div>
             </div>
             
             </div>
         <?php } ?>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <button class="carousel-control-prev carruselRestaurante" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon carruselRestaurante" aria-hidden="true"></span>
       <span class="visually-hidden">Anterior</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <button class="carousel-control-next carruselRestaurante" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="next">
+      <span class="carousel-control-next-icon carruselRestaurante" aria-hidden="true"></span>
       <span class="visually-hidden">Siguiente</span>
     </button>
   </div>
