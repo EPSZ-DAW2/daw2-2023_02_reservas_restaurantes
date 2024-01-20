@@ -696,15 +696,15 @@ CREATE TABLE `restaurantes` (
 --
 
 INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `notas`) VALUES
-(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', NULL, 14, NULL),
+(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', 55.72, 14, NULL),
 (2, 'Restaurante2', 2, 12, 'Lee Port', NULL, 'East Tinafurt', 'Virginia', 81.73, 13, NULL),
-(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', NULL, 12, NULL),
+(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', 55.72, 12, NULL),
 (4, 'Restaurante4', 4, 14, 'Desiree Circles', NULL, 'North Gabrielview', 'Kentucky', 16.66, 11, NULL),
-(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', NULL, 14, NULL),
+(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', 55.72, 14, NULL),
 (6, 'Restaurante6', 6, 16, 'Chad Lodge', NULL, 'Brownmouth', 'Nebraska', 95.71, 11, NULL),
-(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', NULL, 14, NULL),
+(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', 55.72, 14, NULL),
 (8, 'Restaurante8', 8, 18, 'Robert Pine', NULL, 'Annehaven', 'Connecticut', 82.36, 13, NULL),
-(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', NULL, 15, NULL),
+(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', 55.72, 15, NULL),
 (10, 'Restaurante10', 10, 20, 'Dennis Flat', NULL, 'Camachoville', 'Montana', 74.53, 13, NULL);
 
 -- --------------------------------------------------------
