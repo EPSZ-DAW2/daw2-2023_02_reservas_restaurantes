@@ -81,7 +81,7 @@ class TipoComida extends \yii\db\ActiveRecord
 
         foreach ($tipos as $tipo) {
             $tipoConPadre = [
-                'cat' => $tipo->nombre_tipo,
+                'tipo' => $tipo->nombre_tipo,
                 'padre' => self::obtenerNombresTipoPadre($tipo),
             ];
 

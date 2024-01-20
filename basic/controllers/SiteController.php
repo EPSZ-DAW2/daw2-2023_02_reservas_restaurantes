@@ -12,6 +12,7 @@ use app\models\LoginForm;
 use app\models\BusquedaFiltrada;
 use app\models\ContactForm;
 use app\models\Categoria;
+use app\models\TipoComida;
 
 class SiteController extends Controller
 {
@@ -144,13 +145,15 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
-        //obtenemos las categorias disponibles de restaurantes en la app
+        //obtenemos las categorias y tipos disponibles de restaurantes en la app
         $categoriasConSubcategorias = Categoria::obtenerCategoriasConPadre();
+        $tiposConSubtipos = TipoComida::obtenerTiposConPadre();
 
         // si no, volvemos a la vista registro con los datos del modelo
         return $this->render('busqueda-filtrada', [
             'model' => $model,
             'categoriasBD' => $categoriasConSubcategorias,
+            'tiposBD' => $tiposConSubtipos,
         ]);
     }
 
