@@ -51,60 +51,84 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ]);
 
         //Se preparan los items a mostrar en el widget Nav dependiendo del rol de usuario
+
+        //Items siempre en vista: Inicio, Búsqueda
         $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Explorar', 'url' => ['/site/index']],
                 ['label' => 'Búsqueda', 'url' => ['/site/index']]
         ];
 
-		if (!Yii::$app->user->isGuest) {
+        $items2 = []; //Items para perfil
+
+        //Items para invitado
+		if (Yii::$app->user->isGuest) {
+            $items2[] = ['label' => 'Login', 'url' => ['/site/login']]; //Login
+        }else{
 			// Obtener los roles del usuario actual
 			$userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
 			// Verificar si el usuario tiene el rol de administrador
-			if (isset($userRoles['administrador'])) {
-				$items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
-			}
+			if (isset($userRoles['administrador']) || isset($userRoles['moderador'])) {
+                $itemsGestion = [];
+                if(isset($userRoles['moderador']) && !isset($userRoles['administrador'])){
+                    //Si es moderador, solo puede acceder a Restaurantes, Reseñas/Respuestas, Clientes, Incidencias
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/admin-incidencias']];
+                    $itemsGestion[] = ['label' => 'Reseñas/Respuestas', 'url' => ['/admin-resenas']];
+                    $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
 
-			// Verificar si el usuario tiene el rol de moderador
-			if (isset($userRoles['moderador'])) {
-				$items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+                }else if(isset($userRoles['administrador'])){
+                    //Si es administrador, puede acceder a todo
+                    $itemsGestion[] = ['label' => 'Backups', 'url' => ['/admin-backups']];
+                    $itemsGestion[] = ['label' => 'Categorías', 'url' => ['/admin-categorias']];
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Configuraciones', 'url' => ['/admin-configuraciones']];
+                    $itemsGestion[] = ['label' => 'FAQ', 'url' => ['/admin-faq']];
+                    $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/admin-incidencias']];
+                    $itemsGestion[] = ['label' => 'Imágenes', 'url' => ['/admin-imagenes']];
+                    $itemsGestion[] = ['label' => 'Reseñas/Respuestas', 'url' => ['/admin-resenas']];
+                    $itemsGestion[] = ['label' => 'Reservas', 'url' => ['/admin-reservas']];
+                    $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
+                    $itemsGestion[] = ['label' => 'Usuarios', 'url' => ['/usuarios']];
+                }
+
+                //se agregan los items de gestión al nav
+				$items[] = [
+                    'label' => 'Gestión', 
+                    'items' => $itemsGestion
+                ];
 			}
 
 			// Verificar si el usuario tiene el rol de gestor
-			if (isset($userRoles['gestor'])) {
-				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+			if (isset($userRoles['gestor']) || isset($userRoles['propietario'])) {
+				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/mis-restaurantes']]; //Mis restaurantes (para propietarios y gestores)
 			}
-		}
 
-        $items[] =  
-                [
-                    'label' => Yii::$app->user->isGuest ? 'Login' : 'Logout',
-                    'url' => Yii::$app->user->isGuest ? ['/site/login'] : ['/site/deslogin']
-                ];
-        if(!Yii::$app->user->isGuest) {
-            $usuario = Yii::$app->user->identity;
+            //area personal (Dropdown)
+            $nombreUsuario = Yii::$app->user->identity->nombre_usuario;
+            $usuario = Usuario::findOne(['nombre_usuario' => $nombreUsuario]);
             $fotoUsuario = $usuario->getFotoUsuario();
-        }
-        $items[] = 
-                [
-                    'label' => Yii::$app->user->isGuest
-                        ? 'Registro'
-                        : 'MiPerfil (' . Yii::$app->user->identity->nombre_usuario . ')',
-                    'url' => Yii::$app->user->isGuest
-                        ? ['/site/registro']
-                        : ['/site/verperfil'],
-                ];
-        if(!Yii::$app->user->isGuest)
-            $items[] = ['label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Foto de perfil', 'style' => 'width: 25px; height: 25px;']),
-                        'url' => ['/site/verperfil'],
-                        'linkOptions' => ['class' => 'nav-link'],
-                        'encode' => false];
-                    
-        //Se muestra el widget Nav con los items correspondientes
+            $items2[] = [
+                'label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Perfil', 'style' => 'width: 25px; height: 25px;']),
+                'items' => [
+                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/site/verperfil']],
+                    ['label' => 'Logout', 'url' => ['/site/deslogin']],
+                ],
+                'linkOptions' => ['class' => 'nav-link'],
+                'encode' => false,
+                'dropdownOptions' => ['class' => 'dropdown-menu dropdown-menu-end'], //prevenir que salga de la página
+            ];
+		}
+        
+        //Se muestra el widget Nav con los items correspondientes en el centro
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav'],
+            'options' => ['class' => 'navbar-nav mx-auto'],
             'items' => $items
+        ]);
+        //Otro Nav alineado a la derecha para las opciones del perfil
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav ms-auto'],
+            'items' => $items2
         ]);
         NavBar::end();
         ?>
