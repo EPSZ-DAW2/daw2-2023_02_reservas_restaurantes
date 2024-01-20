@@ -55,7 +55,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         //Items siempre en vista: Inicio, Búsqueda
         $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Búsqueda', 'url' => ['/site/index']]
+                ['label' => 'Búsqueda', 'url' => ['/site/busqueda-filtrada']]
         ];
 
         $items2 = []; //Items para perfil
