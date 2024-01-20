@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\RegistroForm;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Categoria;
 
 class SiteController extends Controller
 {
@@ -60,9 +61,14 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($numCategorias = 2)
     {
-        return $this->render('index');
+        //Se obtiene el id de la última categoría en la bbdd
+        $maxCategoria = Categoria::find()->max('id_categoria');
+        return $this->render('index', [
+            'maxCategoria' => $maxCategoria,
+            'numCategorias' => $numCategorias
+        ]);
     }
 
 

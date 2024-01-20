@@ -6,8 +6,10 @@ $this->registerCssFile("@web/css/carruselRestaurante.css", [
   'depends' => [BootstrapAsset::class],
 ]);//css
 $this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [BootstrapPluginAsset::class, \yii\web\JqueryAsset::class]]); //js (jQuery)
-?>
 
+if(!empty($models)){ //si no hay restaurantes en la categoría no se muestra el carrusel
+?>
+<hr>
 <h2 class="nombre-carrusel"><?=$nombreCategoria?></h2>
 <div id="carouselExampleControls<?=$idCategoria?>" class="carousel carruselRestaurante carrusel-restaurante" >
     <div class="carousel-inner carrusel-restaurante">
@@ -58,3 +60,4 @@ $this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [Boot
       <span class="visually-hidden">Siguiente</span>
     </button>
   </div>
+<?php } ?>
