@@ -55,7 +55,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         //Items siempre en vista: Inicio, Búsqueda
         $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Búsqueda', 'url' => ['/site/index']]
+                ['label' => 'Búsqueda', 'url' => ['/site/busqueda-filtrada']]
         ];
 
         $items2 = []; //Items para perfil
@@ -63,6 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         //Items para invitado
 		if (Yii::$app->user->isGuest) {
             $items2[] = ['label' => 'Login', 'url' => ['/site/login']]; //Login
+            $items2[] = ['label' => 'Registro', 'url' => ['/site/registro']]; //Registro
         }else{
 			// Obtener los roles del usuario actual
 			$userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
