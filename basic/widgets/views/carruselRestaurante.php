@@ -34,7 +34,7 @@ if(!empty($models)){ //si no hay restaurantes en la categoría no se muestra el 
                 <h5 class="card-title carrusel-restaurante"><?= Html::encode($model->nombre_restaurante) ?></h5>
                 <div class="mb-auto carrusel-restaurante">
                   <p class="card-text carrusel-restaurante">
-                    <?= Html::encode($model->puntuacionPromedio) ?> cucharas<br>
+                    <?= Html::encode($model->puntuacionPromedio) ?> &#129348;<br>
                     <?= Html::encode($model->numResenas)?> Valoraciones<br>
                     <?= Html::encode($model->ciudad_restaurante) ?><br>
                     <?php if ($model->barrio_restaurante != NULL) { ?>
