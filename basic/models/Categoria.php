@@ -16,6 +16,7 @@ use Yii;
  */
 class Categoria extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -91,6 +92,26 @@ class Categoria extends \yii\db\ActiveRecord
     public static function find()
     {
         return new CategoriaQuery(get_called_class());
+    }
+
+    /*
+    * Devuelve las categorias que son hijo de esta
+    */
+    public function getHijos()
+    {
+        return Categoria::find()->where(['id_categoria_padre' => $this->id_categoria])->all();
+    }
+
+    public function getDescendientes($categorias)
+    {
+        $hijos = $this->hijos;
+        
+        foreach ($hijos as $hijo) {
+            $categorias[] = $hijo;
+            $categorias = $hijo->getDescendientes($categorias);
+        }
+
+        return $categorias;
     }
 
 
