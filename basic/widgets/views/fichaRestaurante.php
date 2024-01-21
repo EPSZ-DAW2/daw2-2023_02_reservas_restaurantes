@@ -3,12 +3,25 @@
 use yii\helpers\Html;
 ?>
 
-<div class="d-flex align-items-center justify-content-center position-relative border border-3 rounded-3 overflow-hidden" style="width: 200px; height: 200px; background-image: url('<?= Html::encode($model->getFotoPerfilUrl()) ?>'); background-size: cover;">
-  <div class="position-absolute top-0 end-0 bottom-0 start-0" style="background-color: rgba(0, 0, 0, 0.5);"></div>
-  <div class="position-relative p-2 text-white">
-    <h2 class="mb-1"><?= Html::encode($model->nombre_restaurante) ?></h2>
-    <p class="small mb-0"><?= Html::encode($model->getPuntuacionPromedio()) ?> cucharas, (<?= Html::encode($model->getNumResenas()) ?>) valoraciones</p>
-    <p class="small mb-0"><?= Html::encode($model->ciudad_restaurante) ?>, <?= Html::encode($model->barrio_restaurante) ?></p>
-    <p class="small">Precio por comensal: <?= Html::encode($model->precio_medio_comensal) ?>&euro;</p>
-  </div>
+<div class="col">
+  <div class="card carrusel-restaurante h-100">
+    <div class="img-wrapper carrusel-restaurante" style="background: url('<?=Html::encode($model->getFotoPerfilUrl()) ?>') center center / cover no-repeat; height: 0; padding-bottom: 50%;">
+    </div>
+    <div class="card-body d-flex flex-column carrusel-restaurante">
+      <h5 class="card-title carrusel-restaurante"><?= Html::encode($model->nombre_restaurante) ?></h5>
+      <div class="mb-auto carrusel-restaurante">
+        <p class="card-text carrusel-restaurante">
+          <?= Html::encode($model->getPuntuacionPromedio()) ?> cucharas<br>
+          <?= Html::encode($model->getNumResenas())?> Valoraciones<br>
+          <?= Html::encode($model->ciudad_restaurante) ?><br>
+          <?php if ($model->barrio_restaurante != NULL) { ?>
+            <?= Html::encode($model->barrio_restaurante) ?><br>
+          <?php } ?>
+          Precio por comensal: <?= Html::encode($model->precio_medio_comensal) ?>&euro;<br>
+          Tipo: 
+        </p>
+      </div>
+      <a href="#" class="btn btn-primary mt-auto carrusel-restaurante">Ver Restaurante</a>
+    </div>
+  </div> 
 </div>
