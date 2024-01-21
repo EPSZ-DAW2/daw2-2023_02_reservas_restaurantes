@@ -68,9 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <div class="col-lg-6">
                                 <?php if(Yii::$app->session->has('registroc')) { ?>
-                                    <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
+                                    <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
                                 <?php } else { ?>            
-                                    <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
+                                    <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
                                 <?php } ?>
                             </div>
                         </div>
