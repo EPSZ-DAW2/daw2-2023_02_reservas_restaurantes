@@ -11,7 +11,7 @@ use yii\helpers\Html;
       <h5 class="card-title carrusel-restaurante"><?= Html::encode($model->nombre_restaurante) ?></h5>
       <div class="mb-auto carrusel-restaurante">
         <p class="card-text carrusel-restaurante">
-          <?= Html::encode($model->puntuacionPromedio) ?> cucharas<br>
+          <?= Html::encode($model->puntuacionPromedio) ?> 🥄<br>
           <?= Html::encode($model->numResenas)?> Valoraciones<br>
           <?= Html::encode($model->ciudad_restaurante) ?><br>
           <?php if ($model->barrio_restaurante != NULL) { ?>
