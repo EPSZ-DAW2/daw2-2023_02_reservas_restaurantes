@@ -164,15 +164,14 @@ class SiteController extends Controller
 
 
         
-        // cargamos los datos introducidos en la barra de busqueda
-        if (Yii::$app->request->get('palabrasClave')) { 
-            
-            $palabrasClave = Yii::$app->request->get('palabrasClave');            
 
+
+        // cargamos los datos del formulario de filtro si los hay
+        if ($model->load(Yii::$app->request->post())) { 
             //caragmos los ids de la respuesta en caso de haberla
-            $ids_restaurante = $model->busquedaBarra($palabrasClave);
+            $ids_restaurante = $model->busquedaFiltrada();
 
-            //si ha encontrado algun restaurante con lo dado en la busqueda
+            //si ha ido bien la validacion de datos y ha encontrado algun restaurante con el filtro
             if($ids_restaurante != false)
             {
                 $dataProvider->query->andWhere(['id_restaurante' => $ids_restaurante]);
@@ -195,12 +194,16 @@ class SiteController extends Controller
         }
 
 
-        // cargamos los datos del formulario de filtro si los hay
-        if ($model->load(Yii::$app->request->post())) { 
-            //caragmos los ids de la respuesta en caso de haberla
-            $ids_restaurante = $model->busquedaFiltrada();
 
-            //si ha ido bien la validacion de datos y ha encontrado algun restaurante con el filtro
+        // cargamos los datos introducidos en la barra de busqueda
+        else if (Yii::$app->request->get('palabrasClave')) { 
+            
+            $palabrasClave = Yii::$app->request->get('palabrasClave');            
+
+            //caragmos los ids de la respuesta en caso de haberla
+            $ids_restaurante = $model->busquedaBarra($palabrasClave);
+
+            //si ha encontrado algun restaurante con lo dado en la busqueda
             if($ids_restaurante != false)
             {
                 $dataProvider->query->andWhere(['id_restaurante' => $ids_restaurante]);
