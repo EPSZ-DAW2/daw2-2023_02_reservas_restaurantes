@@ -67,6 +67,11 @@ class SiteController extends Controller
      */
     public function actionIndex($numCategorias = 2)
     {
+
+        if (Yii::$app->request->get('removeBlockedSession')) {
+            Yii::$app->session->remove('loginBlockedUntil');
+        }    
+
         //Se obtiene el id de la última categoría en la bbdd
         $maxCategoria = Categoria::find()->max('id_categoria');
         return $this->render('index', [
@@ -106,6 +111,16 @@ class SiteController extends Controller
     */
     public function actionLogin()
     {
+
+        // Verificar si la sesión está bloqueada
+        if (Yii::$app->session->get('loginBlockedUntil')) {
+            $lockTime = Yii::$app->session->get('loginBlockedUntil');
+            return $this->render('loginBlocked', [
+                'tiempo' => $lockTime,
+            ]);
+            
+        }
+
         // si el usuario ya ha iniciado sesión y accede aqui
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
