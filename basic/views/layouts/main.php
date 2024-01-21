@@ -138,10 +138,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
             <?php //breadcrumbs: "Breadcrumbs displays a list of links indicating the position of the current page in the whole site hierarchy."
-            if (!empty($this->params['breadcrumbs'])) :
+            if (!empty($this->params['breadcrumbs'])){
             ?>
-                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-            <?php endif ?>
+                <?= Breadcrumbs::widget([
+                    'homeLink' => [
+                        'label' => 'Inicio',
+                        'url' => Yii::$app->homeUrl,
+                    ],
+                    'links' => $this->params['breadcrumbs']
+                    ]) ?>
+            <?php } ?>
             <!-- Se muestran alertas y el contenido (vistas renderizadas) -->
             <?= Alert::widget() ?>
             <?= $content ?>
