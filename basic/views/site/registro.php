@@ -24,7 +24,7 @@ $this->title = 'Registro';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class= "container">
-    <div class="site-login">
+    <div class="site-regisro">
         <div class="row">
             <div class="d-flex justify-content-center">
                 <div class="col-lg-6">
@@ -62,17 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <?php $form = ActiveForm::begin(['id' => 'registrogp-form',]); ?>
                     <div class="form-group mt-1">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <?= Html::a('Ya eres cliente? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5 mt-md-1']) ?>
-                            </div>
-                            <div class="col-lg-6">
-                                <?php if(Yii::$app->session->has('registroc')) { ?>
-                                    <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
-                                <?php } else { ?>            
-                                    <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
-                                <?php } ?>
-                            </div>
+                        <div class="row ms-auto me-auto">
+                            <?= Html::a('Ya eres cliente? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5 mt-md-1']) ?>
+                            <?php if(Yii::$app->session->has('registroc')) { ?>
+                                <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
+                            <?php } else { ?>            
+                                <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
+                            <?php } ?>
                         </div>
                     </div>
                     <?php ActiveForm::end(); ?>
