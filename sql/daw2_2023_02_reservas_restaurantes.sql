@@ -688,6 +688,7 @@ CREATE TABLE `restaurantes` (
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.',
   `precio_medio_comensal` float NOT NULL COMMENT 'Precio por persona medio.',
   `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
+  `aforo_maximo`int(6) NOT NULL COMMENT 'Aforo máximo del restaurante.',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para el restaurante.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -695,17 +696,17 @@ CREATE TABLE `restaurantes` (
 -- Volcado de datos para la tabla `restaurantes`
 --
 
-INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `notas`) VALUES
-(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', 55.72, 14, NULL),
-(2, 'Restaurante2', 2, 12, 'Lee Port', NULL, 'East Tinafurt', 'Virginia', 81.73, 13, NULL),
-(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', 55.72, 12, NULL),
-(4, 'Restaurante4', 4, 14, 'Desiree Circles', NULL, 'North Gabrielview', 'Kentucky', 16.66, 11, NULL),
-(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', 55.72, 14, NULL),
-(6, 'Restaurante6', 6, 16, 'Chad Lodge', NULL, 'Brownmouth', 'Nebraska', 95.71, 11, NULL),
-(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', 55.72, 14, NULL),
-(8, 'Restaurante8', 8, 18, 'Robert Pine', NULL, 'Annehaven', 'Connecticut', 82.36, 13, NULL),
-(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', 55.72, 15, NULL),
-(10, 'Restaurante10', 10, 20, 'Dennis Flat', NULL, 'Camachoville', 'Montana', 74.53, 13, NULL);
+INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `aforo_maximo` ,`notas`) VALUES
+(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', 55.72, 14, 35, NULL),
+(2, 'Restaurante2', 2, 12, 'Lee Port', NULL, 'East Tinafurt', 'Virginia', 81.73, 13, 35, NULL),
+(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', 55.72, 12, 35, NULL),
+(4, 'Restaurante4', 4, 14, 'Desiree Circles', NULL, 'North Gabrielview', 'Kentucky', 16.66, 11, 35, NULL),
+(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', 55.72, 14, 35, NULL),
+(6, 'Restaurante6', 6, 16, 'Chad Lodge', NULL, 'Brownmouth', 'Nebraska', 95.71, 11, 35, NULL),
+(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', 55.72, 14, 35, NULL),
+(8, 'Restaurante8', 8, 18, 'Robert Pine', NULL, 'Annehaven', 'Connecticut', 82.36, 13, 35, NULL),
+(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', 55.72, 15, 35, NULL),
+(10, 'Restaurante10', 10, 20, 'Dennis Flat', NULL, 'Camachoville', 'Montana', 74.53, 13, 35, NULL);
 
 -- --------------------------------------------------------
 
@@ -824,131 +825,53 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id
 --
 
 CREATE TABLE horario (
-  id_horario int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada horario.',
+  id_horario int(12) NOT NULL COMMENT 'Identificador de cada horario.',
   id_restaurante int(12) NOT NULL COMMENT 'Identificador del restaurante',
   hora_apertura TIME NOT NULL COMMENT 'Hora en la que inicia el servicio.',
   hora_cierre TIME NOT NULL COMMENT 'Hora en la que termina el servicio.',
   dia ENUM('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo') NOT NULL COMMENT 'Día de la semana en que se aplica este horario.',
-  notas text DEFAULT NULL COMMENT 'Notas internas para los horarios.',
-  PRIMARY KEY (id_horario),
-  CONSTRAINT horario_ibfk_1 FOREIGN KEY (id_restaurante) REFERENCES restaurantes (id_restaurante) ON DELETE CASCADE ON UPDATE CASCADE
+  notas text DEFAULT NULL COMMENT 'Notas internas para los horarios.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO `horario` (`id_restaurante`, `hora_apertura`, `hora_cierre`, `dia`, `notas`) VALUES
-(1, '9:00', '16:30', 'martes', NULL),
-(1, '20:00', '23:00', 'martes', NULL),
-(1, '9:00', '16:30', 'miércoles', NULL),
-(1, '20:00', '23:00', 'miércoles', NULL),
-(1, '9:00', '16:30', 'jueves', NULL),
-(1, '20:00', '23:00', 'jueves', NULL),
-(1, '9:00', '16:30', 'viernes', NULL),
-(1, '9:00', '16:30', 'sábado', NULL),
-(1, '20:00', '23:00', 'sábado', NULL),
-(1, '9:00', '16:30', 'domingo', NULL),
-(1, '20:00', '23:00', 'domingo', NULL),
-(2, '9:00', '16:30', 'martes', NULL),
-(2, '20:00', '23:00', 'martes', NULL),
-(2, '9:00', '16:30', 'miércoles', NULL),
-(2, '20:00', '23:00', 'miércoles', NULL),
-(2, '9:00', '16:30', 'jueves', NULL),
-(2, '20:00', '23:00', 'jueves', NULL),
-(2, '9:00', '16:30', 'viernes', NULL),
-(2, '20:00', '23:00', 'viernes', NULL),
-(2, '9:00', '16:30', 'sábado', NULL),
-(2, '20:00', '23:00', 'sábado', NULL),
-(2, '9:00', '16:30', 'domingo', NULL),
-(3, '9:00', '16:30', 'martes', NULL),
-(3, '20:00', '23:00', 'martes', NULL),
-(3, '9:00', '16:30', 'miércoles', NULL),
-(3, '20:00', '23:00', 'miércoles', NULL),
-(3, '9:00', '16:30', 'jueves', NULL),
-(3, '20:00', '23:00', 'jueves', NULL),
-(3, '20:00', '23:00', 'viernes', NULL),
-(3, '9:00', '16:30', 'sábado', NULL),
-(3, '20:00', '23:00', 'sábado', NULL),
-(3, '9:00', '16:30', 'domingo', NULL),
-(3, '20:00', '23:00', 'domingo', NULL),
-(4, '9:00', '16:30', 'martes', NULL),
-(4, '20:00', '23:00', 'martes', NULL),
-(4, '9:00', '16:30', 'miércoles', NULL),
-(4, '20:00', '23:00', 'miércoles', NULL),
-(4, '9:00', '16:30', 'jueves', NULL),
-(4, '20:00', '23:00', 'jueves', NULL),
-(4, '9:00', '16:30', 'viernes', NULL),
-(4, '20:00', '23:00', 'lunes', NULL),
-(4, '9:00', '16:30', 'sábado', NULL),
-(4, '20:00', '23:00', 'sábado', NULL),
-(4, '9:00', '16:30', 'domingo', NULL),
-(4, '20:00', '23:00', 'domingo', NULL),
-(5, '9:00', '16:30', 'martes', NULL),
-(5, '9:00', '16:30', 'miércoles', NULL),
-(5, '20:00', '23:00', 'miércoles', NULL),
-(5, '9:00', '16:30', 'jueves', NULL),
-(5, '20:00', '23:00', 'jueves', NULL),
-(5, '9:00', '16:30', 'viernes', NULL),
-(5, '20:00', '23:00', 'viernes', NULL),
-(5, '9:00', '16:30', 'sábado', NULL),
-(5, '20:00', '23:00', 'sábado', NULL),
-(5, '9:00', '16:30', 'domingo', NULL),
-(5, '20:00', '23:00', 'domingo', NULL),
-(6, '9:00', '16:30', 'martes', NULL),
-(6, '20:00', '23:00', 'martes', NULL),
-(6, '9:00', '16:30', 'miércoles', NULL),
-(6, '20:00', '23:00', 'miércoles', NULL),
-(6, '9:00', '16:30', 'jueves', NULL),
-(6, '20:00', '23:00', 'jueves', NULL),
-(6, '9:00', '16:30', 'sábado', NULL),
-(6, '20:00', '23:00', 'sábado', NULL),
-(6, '9:00', '16:30', 'domingo', NULL),
-(6, '20:00', '23:00', 'domingo', NULL),
-(7, '9:00', '16:30', 'martes', NULL),
-(7, '20:00', '23:00', 'martes', NULL),
-(7, '9:00', '16:30', 'miércoles', NULL),
-(7, '20:00', '23:00', 'miércoles', NULL),
-(7, '9:00', '16:30', 'jueves', NULL),
-(7, '20:00', '23:00', 'jueves', NULL),
-(7, '9:00', '16:30', 'viernes', NULL),
-(7, '20:00', '23:00', 'viernes', NULL),
-(7, '9:00', '16:30', 'sábado', NULL),
-(7, '20:00', '23:00', 'sábado', NULL),
-(7, '9:00', '16:30', 'domingo', NULL),
-(7, '20:00', '23:00', 'domingo', NULL),
-(8, '9:00', '16:30', 'martes', NULL),
-(8, '20:00', '23:00', 'martes', NULL),
-(8, '9:00', '16:30', 'miércoles', NULL),
-(8, '20:00', '23:00', 'miércoles', NULL),
-(8, '9:00', '16:30', 'jueves', NULL),
-(8, '20:00', '23:00', 'jueves', NULL),
-(8, '20:00', '23:00', 'viernes', NULL),
-(8, '9:00', '16:30', 'sábado', NULL),
-(8, '20:00', '23:00', 'sábado', NULL),
-(8, '9:00', '16:30', 'domingo', NULL),
-(8, '20:00', '23:00', 'domingo', NULL),
-(9, '9:00', '16:30', 'martes', NULL),
-(9, '20:00', '23:00', 'martes', NULL),
-(9, '9:00', '16:30', 'miércoles', NULL),
-(9, '20:00', '23:00', 'miércoles', NULL),
-(9, '9:00', '16:30', 'jueves', NULL),
-(9, '20:00', '23:00', 'jueves', NULL),
-(9, '9:00', '16:30', 'viernes', NULL),
-(9, '20:00', '23:00', 'viernes', NULL),
-(9, '9:00', '16:30', 'sábado', NULL),
-(9, '20:00', '23:00', 'sábado', NULL),
-(9, '9:00', '16:30', 'domingo', NULL),
-(9, '20:00', '23:00', 'domingo', NULL),
-(10, '20:00', '23:00', 'martes', NULL),
-(10, '9:00', '16:30', 'miércoles', NULL),
-(10, '20:00', '23:00', 'miércoles', NULL),
-(10, '9:00', '16:30', 'jueves', NULL),
-(10, '20:00', '23:00', 'jueves', NULL),
-(10, '9:00', '16:30', 'viernes', NULL),
-(10, '20:00', '23:00', 'viernes', NULL),
-(10, '9:00', '16:30', 'lunes', NULL),
-(10, '20:00', '23:00', 'lunes', NULL);
+INSERT INTO `horario` (`id_horario`,`id_restaurante`, `hora_apertura`, `hora_cierre`, `dia`, `notas`) VALUES
+(1, 1, '9:00', '16:30', 'martes', NULL),
+(2, 1, '20:00', '23:00', 'martes', NULL),
+(3, 1, '9:00', '16:30', 'miércoles', NULL),
+(4, 1, '20:00', '23:00', 'miércoles', NULL),
+(5, 1, '9:00', '16:30', 'jueves', NULL),
+(6, 1, '20:00', '23:00', 'jueves', NULL),
+(7, 1, '9:00', '16:30', 'viernes', NULL),
+(8, 1, '9:00', '16:30', 'sábado', NULL),
+(9, 1, '20:00', '23:00', 'sábado', NULL),
+(10, 1, '9:00', '16:30', 'domingo', NULL),
+(11, 1, '20:00', '23:00', 'domingo', NULL),
+(12, 2, '9:00', '16:30', 'martes', NULL),
+(13, 2, '20:00', '23:00', 'martes', NULL),
+(14, 2, '9:00', '16:30', 'miércoles', NULL),
+(15, 2, '20:00', '23:00', 'miércoles', NULL),
+(16, 2, '9:00', '16:30', 'jueves', NULL),
+(17, 2, '20:00', '23:00', 'jueves', NULL),
+(18, 2, '9:00', '16:30', 'viernes', NULL),
+(19, 2, '20:00', '23:00', 'viernes', NULL),
+(20, 2, '9:00', '16:30', 'sábado', NULL),
+(21, 2, '20:00', '23:00', 'sábado', NULL),
+(22, 2, '9:00', '16:30', 'domingo', NULL),
+(23, 3, '9:00', '16:30', 'martes', NULL),
+(24, 3, '20:00', '23:00', 'martes', NULL),
+(25, 3, '9:00', '16:30', 'miércoles', NULL),
+(26, 3, '20:00', '23:00', 'miércoles', NULL),
+(27, 3, '9:00', '16:30', 'jueves', NULL),
+(28, 3, '20:00', '23:00', 'jueves', NULL),
+(29, 3, '20:00', '23:00', 'viernes', NULL),
+(30, 3, '9:00', '16:30', 'sábado', NULL),
+(31, 3, '20:00', '23:00', 'sábado', NULL),
+(32, 3, '9:00', '16:30', 'domingo', NULL),
+(33, 3, '20:00', '23:00', 'domingo', NULL);
+
 
 --
 -- Índices para tablas volcadas
@@ -1129,6 +1052,13 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `nombre_usuario_UNIQUE` (`nombre_usuario`),
   ADD KEY `id_foto_usuario` (`id_foto_usuario`);
 
+-- 
+-- Indices de la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD PRIMARY KEY (`id_horario`);
+
+
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
@@ -1210,6 +1140,9 @@ ALTER TABLE `tipos_comida`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada usuario.', AUTO_INCREMENT=32;
+
+ALTER TABLE `horario`
+  MODIFY `id_horario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada horario.', AUTO_INCREMENT=11;	
 
 --
 -- Restricciones para tablas volcadas
@@ -1329,6 +1262,12 @@ ALTER TABLE `tipo_restaurante`
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_foto_usuario`) REFERENCES `imagenes` (`id_imagen`);
 COMMIT;
+
+--
+-- Filtros para la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurantes` (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
