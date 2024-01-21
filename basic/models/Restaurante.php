@@ -248,4 +248,13 @@ class Restaurante extends \yii\db\ActiveRecord
     {
         return array_filter(array_unique(self::find()->select('barrio_restaurante')->column()));
     }
+
+    /**
+     * Devuelve un array con todos los IDs de todos los restaurantes.
+     * @return array
+     */
+    public static function getAllIDs()
+    {
+        return array_unique(self::find()->select('id_restaurante')->column());
+    }
 }
