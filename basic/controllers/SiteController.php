@@ -14,6 +14,7 @@ use app\models\TipoComida;
 use app\models\Restaurante;
 use app\models\ContactForm;
 use app\models\Categoria;
+use app\models\Configuracion;
 use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
@@ -173,7 +174,7 @@ class SiteController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Restaurante::find()->where(['id_restaurante' => $IDs]),
             'pagination' => [
-                'pageSize' => 8, // Número de elementos por página
+                'pageSize' => Configuracion::findByNombreVariable('numElemsBusquedaFiltrada'),
             ],
         ]);
 
