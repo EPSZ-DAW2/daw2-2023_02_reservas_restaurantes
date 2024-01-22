@@ -56,9 +56,9 @@ class LoginForm extends Model
                     //comprobamos si la configuracion esta activa y sino le damos un valor por defecto (10)
                     $loginBlockedUntil = Configuracion::findByNombreVariable('maxLoginAttempts');
                     if($loginBlockedUntil)
-                        Yii::$app->session->set('loginAttempts', $loginBlockedUntil);
+                        Yii::$app->session->set('loginBlockedUntil', $loginBlockedUntil);
                     else
-                        Yii::$app->session->set('loginAttempts', 10);
+                        Yii::$app->session->set('loginBlockedUntil', 10);
                     Yii::$app->session->remove('loginAttempts');
                     Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
 
