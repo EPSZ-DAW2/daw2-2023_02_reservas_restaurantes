@@ -258,7 +258,7 @@ INSERT INTO `configuraciones` (`nombre_variable`, `valor_variable`, `notas`) VAL
 ('loginBlockedUntil', '10', 'Tiempo que deberá essperar el usuario para que se le debloquee el login de nuevo.'),
 ('numElemsCONF', '10', 'Número de elementos que se mostrarán en la administración de configuraciones.'),
 ('numElemsBusquedaFiltrada', '8', 'Número de restaurantes que se mostrarán en la vista pública de búsqueda filtrada.'),
-('numElemsReserva', '10', 'Número de reserva que se mostrarán en la administración de reservas.'),
+('numElemsReservas', '10', 'Número de reserva que se mostrarán en la administración de reservas.'),
 ('along', 'firm', NULL),
 ('another', 'item', NULL),
 ('hair', 'two', NULL),
