@@ -6,8 +6,14 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Categoria $model */
 
+use yii\grid\GridView;
+use app\models\CategoriaRestaurante;
+use \yii\data\ActiveDataProvider;
+
+use yii\helpers\Url;
+
 $this->title = $model->id_categoria;
-$this->params['breadcrumbs'][] = ['label' => 'Categorias', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categorías', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_categoria' => $model->id_categoria], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_categoria' => $model->id_categoria], [
+        <?= Html::a('Editar', ['update', 'id_categoria' => $model->id_categoria], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id_categoria' => $model->id_categoria], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -35,7 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'nombre_categoria_padre',
                 'value' => function ($model) {
-                    return $model->padre->nombre_categoria;
+                    if($model->padre){
+                        return $model->padre->nombre_categoria;
+                    }else{
+                        return null;
+                    }
                 },
             ],
             [
@@ -47,5 +57,47 @@ $this->params['breadcrumbs'][] = $this->title;
             'notas:ntext',
         ],
     ]) ?>
+
+    <div>
+        <h2>Restaurantes de la categoría</h2>
+        <?= GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => CategoriaRestaurante::find()->where(['id_categoria' => $model->id_categoria]),
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]),
+            'columns' => [
+                [
+                    'attribute' => 'id_restaurante',
+                    'value' => function($model) {
+                        return $model->restaurante->id_restaurante;
+                    }
+                ],
+                [
+                    'attribute' => 'nombre_restaurante',
+                    'value' => function($model) {
+                        return $model->restaurante->nombre_restaurante;
+                    }
+                ],
+                [
+                    'header' => 'Action',
+                    'content' => function($model) {
+                        return Html::a('Eliminar', [
+                                'eliminar-restaurante', 'id_restaurante' => $model->id_restaurante, 'id_categoria' => $model->id_categoria
+                            ], 
+                            [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'method' => 'post',
+                                ],
+                            ]
+                        );
+                    }
+                ],
+            ],
+        ]); ?>
+    </div>
 
 </div>

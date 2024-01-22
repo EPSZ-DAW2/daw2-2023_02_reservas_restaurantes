@@ -3,10 +3,13 @@
 namespace app\controllers;
 
 use app\models\Categoria;
+use app\models\CategoriaRestaurante;
 use app\models\CategoriaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use Yii;
 
 /**
  * AdminCategoriasController implements the CRUD actions for Categoria model.
@@ -99,9 +102,35 @@ class AdminCategoriasController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
+
+    //Función para agregar un restaurante desde el formulario en la vista de update
+    public function actionAgregarRestaurante()
+    {
+        $categoriaRestauranteModel = new CategoriaRestaurante();
+    
+        if ($categoriaRestauranteModel->load(Yii::$app->request->post())) {
+            if ($categoriaRestauranteModel->save()) {
+                return $this->redirect(['view', 'id_categoria' => $categoriaRestauranteModel->id_categoria]);
+            }
+        }
+    
+        return $this->render('update', [
+            'model' => Categoria::find($categoriaRestauranteModel->id_categoria)->one(),
+        ]);
+    }
+
+    //Función para eliminar un restaurante de la categoría desde view
+    public function actionEliminarRestaurante($id_categoria, $id_restaurante)
+    {
+        $categoriaRestauranteModel = CategoriaRestaurante::find()->where(['id_categoria' => $id_categoria, 'id_restaurante' => $id_restaurante])->one();
+        $categoriaRestauranteModel->delete();
+
+        return $this->redirect(['view', 'id_categoria' => $id_categoria]);
+    }
+
 
     /**
      * Deletes an existing Categoria model.
@@ -132,4 +161,5 @@ class AdminCategoriasController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }
