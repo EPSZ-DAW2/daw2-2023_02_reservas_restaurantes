@@ -254,6 +254,8 @@ CREATE TABLE `configuraciones` (
 --
 
 INSERT INTO `configuraciones` (`nombre_variable`, `valor_variable`, `notas`) VALUES
+('maxLoginAttempts', '4', 'Número máximo de intentos que tendrá el usuario para hacer login.'),
+('loginBlockedUntil', '10', 'Tiempo que deberá essperar el usuario para que se le debloquee el login de nuevo.'),
 ('along', 'firm', NULL),
 ('another', 'item', NULL),
 ('hair', 'two', NULL),

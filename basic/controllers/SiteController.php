@@ -68,6 +68,7 @@ class SiteController extends Controller
     public function actionIndex($numCategorias = 2)
     {
 
+        // si venimos redirigidos del bloqueo de sesion
         if (Yii::$app->request->get('removeBlockedSession')) {
             Yii::$app->session->remove('loginBlockedUntil');
         }    
@@ -118,7 +119,6 @@ class SiteController extends Controller
             return $this->render('loginBlocked', [
                 'tiempo' => $lockTime,
             ]);
-            
         }
 
         // si el usuario ya ha iniciado sesión y accede aqui

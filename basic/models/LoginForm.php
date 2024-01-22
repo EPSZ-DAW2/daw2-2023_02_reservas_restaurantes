@@ -37,20 +37,6 @@ class LoginForm extends Model
      */
     public function login()
     {
-        // Al inicio del método `login` en la clase `LoginForm`
-        if (Yii::$app->session->has('sessionLocked')) {
-            // Verifica si ha pasado suficiente tiempo desde el bloqueo
-            $lockTime = Yii::$app->session->get('sessionLocked');
-            $unlockTime = strtotime('+30 minutes', $lockTime); // Puedes ajustar el tiempo de bloqueo
-            if (time() < $unlockTime) {
-                Yii::$app->session->setFlash('error', 'Sesión bloqueada. Intenta nuevamente más tarde.');
-                return false;
-            } else {
-                // Si ha pasado suficiente tiempo, elimina la variable de sesión de bloqueo
-                Yii::$app->session->remove('sessionLocked');
-            }
-        }
-
         //comprobamos si los datos del login cumplen las reglas
         if ($this->validate()) {
 
@@ -64,13 +50,15 @@ class LoginForm extends Model
                 //comprobamos los intentos restantes
                 $remainingAttempts = $this->getLoginAttempts();
 
+                // si la sesion va a bloquearse
                 if ($remainingAttempts <= 1)
                 {
-                    Yii::$app->session->set('loginBlockedUntil', Yii::$app->params['loginBlockTime']);
+                    Yii::$app->session->set('loginBlockedUntil', Configuracion::findByNombreVariable('loginBlockedUntil'));
                     Yii::$app->session->remove('loginAttempts');
                     Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
 
                 }
+                // si no damos el aviso de incorrecto
                 else 
                     Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
 
@@ -122,7 +110,7 @@ class LoginForm extends Model
         // Verificar si la clave 'loginAttempts' existe en la sesión
         if (!Yii::$app->session->has('loginAttempts')) {
             // Si no existe, asignar el valor predeterminado (4)
-            Yii::$app->session->set('loginAttempts', Yii::$app->params['maxLoginAttempts']);
+            Yii::$app->session->set('loginAttempts', Configuracion::findByNombreVariable('maxLoginAttempts'));
         }
 
         // Obtener y devolver el valor de 'loginAttempts'
