@@ -8,6 +8,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+$this->title = 'Registro';
+
 if(isset($_POST['registrogp-button']) || isset($_GET['registrogp']))
 {
     Yii::$app->session->set('registrogp', 1); //si queremos registrar un propietario o gestor
@@ -20,7 +22,6 @@ if(isset($_POST['registroc-button']))
     if(Yii::$app->session->has('registrogp')) Yii::$app->session->remove('registrogp');
 } 
 
-$this->title = 'Registro';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class= "container">
