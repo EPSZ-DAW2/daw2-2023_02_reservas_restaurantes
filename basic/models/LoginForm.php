@@ -53,7 +53,12 @@ class LoginForm extends Model
                 // si la sesion va a bloquearse
                 if ($remainingAttempts <= 1)
                 {
-                    Yii::$app->session->set('loginBlockedUntil', Configuracion::findByNombreVariable('loginBlockedUntil'));
+                    //comprobamos si la configuracion esta activa y sino le damos un valor por defecto (10)
+                    $loginBlockedUntil = Configuracion::findByNombreVariable('maxLoginAttempts');
+                    if($loginBlockedUntil)
+                        Yii::$app->session->set('loginAttempts', $loginBlockedUntil);
+                    else
+                        Yii::$app->session->set('loginAttempts', 10);
                     Yii::$app->session->remove('loginAttempts');
                     Yii::$app->session->setFlash('warning', "Usuario o contraseña incorrectos. Intentos restantes: $remainingAttempts");
 
@@ -109,8 +114,12 @@ class LoginForm extends Model
     {
         // Verificar si la clave 'loginAttempts' existe en la sesión
         if (!Yii::$app->session->has('loginAttempts')) {
-            // Si no existe, asignar el valor predeterminado (4)
-            Yii::$app->session->set('loginAttempts', Configuracion::findByNombreVariable('maxLoginAttempts'));
+            //comprobamos si la configuracion esta activa y sino le damos un valor por defecto (4)
+            $loginAttemps = Configuracion::findByNombreVariable('maxLoginAttempts');
+            if($loginAttemps)
+                Yii::$app->session->set('loginAttempts', $loginAttemps);
+            else
+                Yii::$app->session->set('loginAttempts', 4);
         }
 
         // Obtener y devolver el valor de 'loginAttempts'
