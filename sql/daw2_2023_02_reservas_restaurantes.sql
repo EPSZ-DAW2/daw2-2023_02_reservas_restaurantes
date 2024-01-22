@@ -54,7 +54,6 @@ CREATE TABLE `auth_assignment` (
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('administrador', '31', 1705667110),
 ('cliente', '1', 1705667110),
-('cliente', '10', 1705667110),
 ('cliente', '2', 1705667110),
 ('cliente', '3', 1705667110),
 ('cliente', '4', 1705667110),
@@ -63,6 +62,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('cliente', '7', 1705667110),
 ('cliente', '8', 1705667110),
 ('cliente', '9', 1705667110),
+('cliente', '10', 1705667110),
 ('gestor', '16', 1705667110),
 ('gestor', '17', 1705667110),
 ('gestor', '18', 1705667110),
@@ -153,16 +153,16 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id_categoria`, `id_categoria_padre`, `nombre_categoria`, `notas`) VALUES
-(1, NULL, 'Categoria1', NULL),
-(2, NULL, 'Categoria2', NULL),
-(3, NULL, 'Categoria3', NULL),
-(4, NULL, 'Categoria4', NULL),
-(5, NULL, 'Categoria5', NULL),
-(6, NULL, 'Categoria6', NULL),
-(7, 2, 'Categoria7', NULL),
-(8, 2, 'Categoria8', NULL),
-(9, 3, 'Categoria9', NULL),
-(10, 3, 'Categoria10', NULL);
+(1, NULL, 'Ofertas', NULL),
+(2, 4, 'Selección España', NULL),
+(3, 4, 'Mejores de la semana', NULL),
+(4, 9, 'Prestigio', NULL),
+(5, 9, 'Mejores para Vegetarianos', NULL),
+(6, 4, 'Ambiente tranquilo', NULL),
+(7, 1, 'Familiar', NULL),
+(8, 6, 'Cena romántica', NULL),
+(9, NULL, 'Premiado', NULL),
+(10, 1, 'Sin Gluten económicos', NULL);
 
 -- --------------------------------------------------------
 
@@ -181,16 +181,33 @@ CREATE TABLE `categoria_restaurante` (
 --
 
 INSERT INTO `categoria_restaurante` (`id_categoria`, `id_restaurante`, `notas`) VALUES
-(9, 2, NULL),
-(6, 4, NULL),
+(10, 1, NULL),
+(1, 1, NULL),
+(7, 1, NULL),
+(8, 2, NULL),
+(5, 2, NULL),
+(9, 3, NULL),
+(1, 3, NULL),
+(2, 3, NULL),
 (4, 4, NULL),
-(1, 7, NULL),
-(1, 3, NULL),
-(10, 7, NULL),
-(1, 4, NULL),
-(1, 3, NULL),
-(10, 4, NULL),
-(8, 1, NULL);
+(6, 4, NULL),
+(1, 5, NULL),
+(10, 5, NULL),
+(9, 5, NULL),
+(3, 6, NULL),
+(5, 6, NULL),
+(6, 6, NULL),
+(7, 7, NULL),
+(3, 7, NULL),
+(6, 8, NULL),
+(2, 8, NULL),
+(9, 9, NULL),
+(8, 9, NULL),
+(4, 9, NULL),
+(3, 9, NULL),
+(10, 10, NULL),
+(7, 10, NULL);
+
 
 -- --------------------------------------------------------
 
@@ -237,6 +254,10 @@ CREATE TABLE `configuraciones` (
 --
 
 INSERT INTO `configuraciones` (`nombre_variable`, `valor_variable`, `notas`) VALUES
+('maxLoginAttempts', '4', 'Número máximo de intentos que tendrá el usuario para hacer login.'),
+('loginBlockedUntil', '10', 'Tiempo que deberá essperar el usuario para que se le debloquee el login de nuevo.'),
+('numElemsCONF', '10', 'Número de elementos que se mostrarán en la administración de configuraciones.'),
+('numElemsBusquedaFiltrada', '8', 'Número de restaurantes que se mostrarán en la vista pública de búsqueda filtrada.'),
 ('along', 'firm', NULL),
 ('another', 'item', NULL),
 ('hair', 'two', NULL),
@@ -686,8 +707,9 @@ CREATE TABLE `restaurantes` (
   `barrio_restaurante` varchar(100) DEFAULT NULL COMMENT 'Barrio del restaurante.',
   `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.',
   `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.',
-  `precio_medio_comensal` float DEFAULT NULL COMMENT 'Precio por persona medio.',
+  `precio_medio_comensal` float NOT NULL COMMENT 'Precio por persona medio.',
   `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
+  `aforo_maximo`int(6) NOT NULL COMMENT 'Aforo máximo del restaurante.',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para el restaurante.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -695,17 +717,25 @@ CREATE TABLE `restaurantes` (
 -- Volcado de datos para la tabla `restaurantes`
 --
 
-INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `notas`) VALUES
-(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', NULL, 14, NULL),
-(2, 'Restaurante2', 2, 12, 'Lee Port', NULL, 'East Tinafurt', 'Virginia', 81.73, 13, NULL),
-(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', NULL, 12, NULL),
-(4, 'Restaurante4', 4, 14, 'Desiree Circles', NULL, 'North Gabrielview', 'Kentucky', 16.66, 11, NULL),
-(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', NULL, 14, NULL),
-(6, 'Restaurante6', 6, 16, 'Chad Lodge', NULL, 'Brownmouth', 'Nebraska', 95.71, 11, NULL),
-(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', NULL, 14, NULL),
-(8, 'Restaurante8', 8, 18, 'Robert Pine', NULL, 'Annehaven', 'Connecticut', 82.36, 13, NULL),
-(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', NULL, 15, NULL),
-(10, 'Restaurante10', 10, 20, 'Dennis Flat', NULL, 'Camachoville', 'Montana', 74.53, 13, NULL);
+INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `aforo_maximo` ,`notas`) VALUES
+(1, 'Savory Haven', 11, 11, 'Brian Roads', '123 Maple Street', 'Clintonchester', 'Maine', 55.72, 14, 35, NULL),
+(2, 'Culinary Oasis', 2, 12, 'Lee Port', '456 Willow Avenue', 'East Tinafurt', 'Virginia', 81.73, 13, 35, NULL),
+(3, 'Spice Symphony', 3, 13, 'Kidd Radial', '789 Elm Lane', 'Christensenfurt', 'Tennessee', 55.72, 12, 35, NULL),
+(4, 'Urban Palate', 4, 14, 'Desiree Circles', '101 Pine Boulevard', 'North Gabrielview', 'Kentucky', 16.66, 11, 70, NULL),
+(5, 'Gourmet Grove', 5, 15, 'Brown Roads', '234 Cedar Court', 'Hayesshire', 'Wyoming', 55.72, 14, 22, NULL),
+(6, 'Fusion Junction', 6, 16, 'Chad Lodge', '567 Birch Drive', 'Brownmouth', 'Nebraska', 95.71, 11, 50, NULL),
+(7, 'Epicurean Elegance', 7, 17, 'Tyler Spur', '890 Oak Circle', 'Sethton', 'North Carolina', 55.72, 14, 35, NULL),
+(8, 'Sizzling Bites', 8, 18, 'Robert Pine', '112 Spruce Way', 'Annehaven', 'Connecticut', 82.36, 13, 35, NULL),
+(9, 'Bistro Bliss', 9, 19, 'Mendoza Corner', '345 Sycamore Lane', 'South Raymondfort', 'North Carolina', 55.72, 15, 35, NULL),
+(10, 'Gastronomy Galore', 10, 20, 'Brian Roads', '678 Pinecrest Avenue', 'Camachoville', 'Texas', 74.53, 13, 35, NULL),
+(11, 'Flavor Fiesta', 12, 21, 'Dennis Flat', '901 Magnolia Street', 'Camachoville', 'Connecticut', 16, 13, 40, NULL),
+(12, 'Tantalizing Tastes', 13, 22, 'Chad Lodge', '234 Redwood Road', 'Camachoville', 'Wyoming', 10, 13, 35, NULL),
+(13, 'Amborisa Alley', 14, 23, 'Dennis Flat', '567 Willow Way', 'Camachoville', 'Kentuchy', 21.5, 13, 35, NULL),
+(14, 'Whisk & Whimsy', 15, 24, 'Robert Pine', '890 Elm Grove', 'Camachoville', 'Maine', 25, 13, 35, NULL),
+(15, 'Heart & Harvest', 16, 25, 'Brian Roads', '123 Cedar Avenue', 'Camachoville', 'Maine', 17.8, 13, 35, NULL),
+(16, 'Panorama Plates', 17, 26, 'Mendoza Corner', '456 Birch Boulevard', 'Camachoville', 'Virginia', 250, 13, 35, NULL),
+(17, 'Mosaic Munch', 18, 27, 'Dennis Flat', '789 Oak Lane', 'Camachoville', 'North Carolina', 58.3, 13, 35, NULL),
+(18, 'Zenith Zest', 19, 28, 'Lee Port', '101 Pinecrest Court', 'Camachoville', 'Tennessee', 18, 13, 35, NULL);
 
 -- --------------------------------------------------------
 
@@ -725,16 +755,16 @@ CREATE TABLE `tipos_comida` (
 --
 
 INSERT INTO `tipos_comida` (`id_tipo_comida`, `id_tipo_padre`, `nombre_tipo`, `notas`) VALUES
-(1, NULL, 'Tipo1', NULL),
-(2, NULL, 'Tipo2', NULL),
-(3, NULL, 'Tipo3', NULL),
-(4, NULL, 'Tipo4', NULL),
-(5, NULL, 'Tipo5', NULL),
-(6, NULL, 'Tipo6', NULL),
-(7, 1, 'Tipo7', NULL),
-(8, 2, 'Tipo8', NULL),
-(9, 1, 'Tipo9', NULL),
-(10, 2, 'Tipo10', NULL);
+(1, NULL, 'Asiática', NULL),
+(2, 5, 'Sushi', NULL),
+(3, NULL, 'Americana', NULL),
+(4, 3, 'Hamburguesería', NULL),
+(5, 1, 'Japonesa', NULL),
+(6, 3, 'Tex-Mex', NULL),
+(7, 1, 'India', NULL),
+(8, 7, 'Picante', NULL),
+(9, 1, 'China', NULL),
+(10, 5, 'Ramen', NULL);
 
 -- --------------------------------------------------------
 
@@ -786,37 +816,168 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `rol`, `bloqueado`, `notas`) VALUES
-(1, 'cliente1', 'cliente1@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(2, 'cliente2', 'cliente2@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(3, 'cliente3', 'cliente3@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(4, 'cliente4', 'cliente4@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(5, 'cliente5', 'cliente5@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(6, 'cliente6', 'cliente6@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(7, 'cliente7', 'cliente7@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(8, 'cliente8', 'cliente8@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(9, 'cliente9', 'cliente9@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(10, 'cliente10', 'cliente10@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', NULL, 'cliente', 0, NULL),
-(11, 'propietario1', 'propietario1@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', NULL, 'propietario', 0, NULL),
-(12, 'propietario2', 'propietario2@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', NULL, 'propietario', 0, NULL),
-(13, 'propietario3', 'propietario3@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', NULL, 'propietario', 0, NULL),
-(14, 'propietario4', 'propietario4@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', NULL, 'propietario', 0, NULL),
-(15, 'propietario5', 'propietario5@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', NULL, 'propietario', 0, NULL),
-(16, 'gestor1', 'gestor1@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', NULL, 'gestor', 0, NULL),
-(17, 'gestor2', 'gestor2@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', NULL, 'gestor', 0, NULL),
-(18, 'gestor3', 'gestor3@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', NULL, 'gestor', 0, NULL),
-(19, 'gestor4', 'gestor4@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', NULL, 'gestor', 0, NULL),
-(20, 'gestor5', 'gestor5@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', NULL, 'gestor', 0, NULL),
-(21, 'moderador1', 'moderador1@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(22, 'moderador2', 'moderador2@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(23, 'moderador3', 'moderador3@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(24, 'moderador4', 'moderador4@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(25, 'moderador5', 'moderador5@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(26, 'moderador6', 'moderador6@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(27, 'moderador7', 'moderador7@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(28, 'moderador8', 'moderador8@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(29, 'moderador9', 'moderador9@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(30, 'moderador10', 'moderador10@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', NULL, 'moderador', 0, NULL),
-(31, 'administrador1', 'administrador1@prueba.com', '$2y$13$VcfOxmSbPsYZ0Gy46Vze4.fY3vcd26Q4Fi7.W1eu1oBGqAgNg0QIS', NULL, 'administrador', 0, NULL);
+(1, 'cliente1', 'cliente1@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(2, 'cliente2', 'cliente2@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(3, 'cliente3', 'cliente3@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(4, 'cliente4', 'cliente4@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(5, 'cliente5', 'cliente5@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(6, 'cliente6', 'cliente6@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(7, 'cliente7', 'cliente7@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(8, 'cliente8', 'cliente8@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(9, 'cliente9', 'cliente9@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(10, 'cliente10', 'cliente10@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
+(11, 'propietario1', 'propietario1@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(12, 'propietario2', 'propietario2@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(13, 'propietario3', 'propietario3@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(14, 'propietario4', 'propietario4@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(15, 'propietario5', 'propietario5@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(16, 'gestor1', 'gestor1@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(17, 'gestor2', 'gestor2@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(18, 'gestor3', 'gestor3@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(19, 'gestor4', 'gestor4@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(20, 'gestor5', 'gestor5@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(21, 'moderador1', 'moderador1@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(22, 'moderador2', 'moderador2@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(23, 'moderador3', 'moderador3@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(24, 'moderador4', 'moderador4@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(25, 'moderador5', 'moderador5@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(26, 'moderador6', 'moderador6@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(27, 'moderador7', 'moderador7@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(28, 'moderador8', 'moderador8@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(29, 'moderador9', 'moderador9@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(30, 'moderador10', 'moderador10@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(31, 'administrador1', 'administrador1@prueba.com', '$2y$13$VcfOxmSbPsYZ0Gy46Vze4.fY3vcd26Q4Fi7.W1eu1oBGqAgNg0QIS', 1, 'administrador', 0, NULL);
+
+
+--
+-- Estructura para la tabla horario
+--
+
+CREATE TABLE horario (
+  id_horario int(12) NOT NULL COMMENT 'Identificador de cada horario.',
+  id_restaurante int(12) NOT NULL COMMENT 'Identificador del restaurante',
+  hora_apertura TIME NOT NULL COMMENT 'Hora en la que inicia el servicio.',
+  hora_cierre TIME NOT NULL COMMENT 'Hora en la que termina el servicio.',
+  dia ENUM('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo') NOT NULL COMMENT 'Día de la semana en que se aplica este horario.',
+  notas text DEFAULT NULL COMMENT 'Notas internas para los horarios.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `horario`
+--
+
+INSERT INTO `horario` (`id_horario`,`id_restaurante`, `hora_apertura`, `hora_cierre`, `dia`, `notas`) VALUES
+(1, 1, '9:00', '16:30', 'martes', NULL),
+(2, 1, '20:00', '23:00', 'martes', NULL),
+(3, 1, '9:00', '16:30', 'miércoles', NULL),
+(4, 1, '20:00', '23:00', 'miércoles', NULL),
+(5, 1, '9:00', '16:30', 'jueves', NULL),
+(6, 1, '20:00', '23:00', 'jueves', NULL),
+(7, 1, '9:00', '16:30', 'viernes', NULL),
+(8, 1, '9:00', '16:30', 'sábado', NULL),
+(9, 1, '20:00', '23:00', 'sábado', NULL),
+(10, 1, '9:00', '16:30', 'domingo', NULL),
+(11, 1, '20:00', '23:00', 'domingo', NULL),
+(12, 2, '9:00', '16:30', 'martes', NULL),
+(13, 2, '20:00', '23:00', 'martes', NULL),
+(14, 2, '9:00', '16:30', 'miércoles', NULL),
+(15, 2, '20:00', '23:00', 'miércoles', NULL),
+(16, 2, '9:00', '16:30', 'jueves', NULL),
+(17, 2, '20:00', '23:00', 'jueves', NULL),
+(18, 2, '9:00', '16:30', 'viernes', NULL),
+(19, 2, '20:00', '23:00', 'viernes', NULL),
+(20, 2, '9:00', '16:30', 'sábado', NULL),
+(21, 2, '20:00', '23:00', 'sábado', NULL),
+(22, 2, '9:00', '16:30', 'domingo', NULL),
+(23, 3, '9:00', '16:30', 'martes', NULL),
+(24, 3, '20:00', '23:00', 'martes', NULL),
+(25, 3, '9:00', '16:30', 'miércoles', NULL),
+(26, 3, '20:00', '23:00', 'miércoles', NULL),
+(27, 3, '9:00', '16:30', 'jueves', NULL),
+(28, 3, '20:00', '23:00', 'jueves', NULL),
+(29, 3, '20:00', '23:00', 'viernes', NULL),
+(30, 3, '9:00', '16:30', 'sábado', NULL),
+(31, 3, '20:00', '23:00', 'sábado', NULL),
+(32, 3, '9:00', '16:30', 'domingo', NULL),
+(33, 3, '20:00', '23:00', 'domingo', NULL),
+(34, 4, '9:00', '16:30', 'martes', NULL),
+(35, 4, '20:00', '23:00', 'martes', NULL),
+(36, 4, '9:00', '16:30', 'miércoles', NULL),
+(37, 4, '20:00', '23:00', 'miércoles', NULL),
+(38, 4, '9:00', '16:30', 'jueves', NULL),
+(39, 4, '20:00', '23:00', 'jueves', NULL),
+(40, 4, '9:00', '16:30', 'viernes', NULL),
+(41, 4, '20:00', '23:00', 'viernes', NULL),
+(42, 4, '9:00', '16:30', 'sábado', NULL),
+(43, 4, '20:00', '23:00', 'sábado', NULL),
+(44, 4, '9:00', '16:30', 'domingo', NULL),
+(45, 4, '20:00', '23:00', 'domingo', NULL),
+(46, 5, '9:00', '16:30', 'martes', NULL),
+(47, 5, '20:00', '23:00', 'martes', NULL),
+(48, 5, '9:00', '16:30', 'miércoles', NULL),
+(49, 5, '20:00', '23:00', 'miércoles', NULL),
+(50, 5, '9:00', '16:30', 'jueves', NULL),
+(51, 5, '20:00', '23:00', 'jueves', NULL),
+(52, 5, '9:00', '16:30', 'viernes', NULL),
+(53, 5, '20:00', '23:00', 'viernes', NULL),
+(54, 5, '9:00', '16:30', 'sábado', NULL),
+(55, 5, '20:00', '23:00', 'sábado', NULL),
+(56, 5, '9:00', '16:30', 'domingo', NULL),
+(57, 5, '20:00', '23:00', 'domingo', NULL),
+(58, 6, '9:00', '16:30', 'martes', NULL),
+(59, 6, '20:00', '23:00', 'martes', NULL),
+(60, 6, '9:00', '16:30', 'miércoles', NULL),
+(61, 6, '20:00', '23:00', 'miércoles', NULL),
+(62, 6, '9:00', '16:30', 'jueves', NULL),
+(63, 6, '20:00', '23:00', 'jueves', NULL),
+(64, 6, '9:00', '16:30', 'viernes', NULL),
+(65, 6, '20:00', '23:00', 'viernes', NULL),
+(66, 6, '9:00', '16:30', 'sábado', NULL),
+(67, 6, '20:00', '23:00', 'sábado', NULL),
+(68, 6, '9:00', '16:30', 'domingo', NULL),
+(69, 6, '20:00', '23:00', 'domingo', NULL),
+(70, 7, '9:00', '16:30', 'martes', NULL),
+(71, 7, '20:00', '23:00', 'martes', NULL),
+(72, 7, '9:00', '16:30', 'miércoles', NULL),
+(73, 7, '20:00', '23:00', 'miércoles', NULL),
+(74, 7, '9:00', '16:30', 'jueves', NULL),
+(75, 7, '20:00', '23:00', 'jueves', NULL),
+(76, 7, '9:00', '16:30', 'viernes', NULL),
+(77, 7, '20:00', '23:00', 'viernes', NULL),
+(78, 7, '9:00', '16:30', 'sábado', NULL),
+(79, 7, '20:00', '23:00', 'sábado', NULL),
+(80, 7, '9:00', '16:30', 'domingo', NULL),
+(81, 7, '20:00', '23:00', 'domingo', NULL),
+(82, 8, '9:00', '16:30', 'martes', NULL),
+(83, 8, '20:00', '23:00', 'martes', NULL),
+(84, 8, '9:00', '16:30', 'miércoles', NULL),
+(85, 8, '20:00', '23:00', 'miércoles', NULL),
+(86, 8, '9:00', '16:30', 'jueves', NULL),
+(87, 8, '20:00', '23:00', 'jueves', NULL),
+(88, 8, '9:00', '16:30', 'viernes', NULL),
+(89, 8, '20:00', '23:00', 'viernes', NULL),
+(90, 8, '9:00', '16:30', 'sábado', NULL),
+(91, 8, '20:00', '23:00', 'sábado', NULL),
+(92, 8, '9:00', '16:30', 'domingo', NULL),
+(93, 8, '20:00', '23:00', 'domingo', NULL),
+(94, 9, '9:00', '16:30', 'martes', NULL),
+(95, 9, '20:00', '23:00', 'martes', NULL),
+(96, 9, '9:00', '16:30', 'miércoles', NULL),
+(97, 9, '20:00', '23:00', 'miércoles', NULL),
+(98, 9, '9:00', '16:30', 'jueves', NULL),
+(99, 9, '20:00', '23:00', 'jueves', NULL),
+(100, 9, '9:00', '16:30', 'viernes', NULL),
+(101, 9, '20:00', '23:00', 'viernes', NULL),
+(102, 9, '9:00', '16:30', 'sábado', NULL),
+(103, 9, '20:00', '23:00', 'sábado', NULL),
+(104, 9, '9:00', '16:30', 'domingo', NULL),
+(105, 9, '20:00', '23:00', 'domingo', NULL),
+(106, 10, '9:00', '16:30', 'martes', NULL),
+(107, 10, '20:00', '23:00', 'martes', NULL),
+(108, 10, '9:00', '16:30', 'miércoles', NULL),
+(109, 10, '20:00', '23:00', 'miércoles', NULL),
+(110, 10, '9:00', '16:30', 'jueves', NULL);
+
 
 --
 -- Índices para tablas volcadas
@@ -997,6 +1158,13 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `nombre_usuario_UNIQUE` (`nombre_usuario`),
   ADD KEY `id_foto_usuario` (`id_foto_usuario`);
 
+-- 
+-- Indices de la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD PRIMARY KEY (`id_horario`);
+
+
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
@@ -1078,6 +1246,9 @@ ALTER TABLE `tipos_comida`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada usuario.', AUTO_INCREMENT=32;
+
+ALTER TABLE `horario`
+  MODIFY `id_horario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada horario.', AUTO_INCREMENT=11;	
 
 --
 -- Restricciones para tablas volcadas
@@ -1197,6 +1368,12 @@ ALTER TABLE `tipo_restaurante`
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_foto_usuario`) REFERENCES `imagenes` (`id_imagen`);
 COMMIT;
+
+--
+-- Filtros para la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurantes` (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
