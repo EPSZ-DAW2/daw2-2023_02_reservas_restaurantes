@@ -46,6 +46,9 @@ class ReservaSearch extends Reserva
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Configuracion::findByNombreVariable('numElemsReservas'),
+            ],
         ]);
 
         $this->load($params);
