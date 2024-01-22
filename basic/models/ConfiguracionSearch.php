@@ -45,6 +45,9 @@ class ConfiguracionSearch extends Configuracion
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Configuracion::findByNombreVariable('numElemsCONF'),
+            ],
         ]);
 
         $this->load($params);
