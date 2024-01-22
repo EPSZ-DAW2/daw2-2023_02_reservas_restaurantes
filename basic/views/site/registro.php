@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group mt-1">
                         <div class="row ms-auto me-auto">
                             <?= Html::a('Ya eres usuario? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5 mt-md-1']) ?>
-                            <?php if(Yii::$app->session->has('registroc')) { ?>
+                            <?php if((Yii::$app->session->has('registroc')) || ((!Yii::$app->session->has('registroc')) && (!Yii::$app->session->has('registrogp')))) { ?>
                                 <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
                             <?php } else { ?>            
                                 <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
