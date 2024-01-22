@@ -153,16 +153,16 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id_categoria`, `id_categoria_padre`, `nombre_categoria`, `notas`) VALUES
-(1, NULL, 'Categoria1', NULL),
-(2, NULL, 'Categoria2', NULL),
-(3, NULL, 'Categoria3', NULL),
-(4, NULL, 'Categoria4', NULL),
-(5, NULL, 'Categoria5', NULL),
-(6, NULL, 'Categoria6', NULL),
-(7, 2, 'Categoria7', NULL),
-(8, 2, 'Categoria8', NULL),
-(9, 3, 'Categoria9', NULL),
-(10, 3, 'Categoria10', NULL);
+(1, NULL, 'Ofertas', NULL),
+(2, 4, 'Selección España', NULL),
+(3, 4, 'Mejores de la semana', NULL),
+(4, 9, 'Prestigio', NULL),
+(5, 9, 'Mejores para Vegetarianos', NULL),
+(6, 4, 'Ambiente tranquilo', NULL),
+(7, 1, 'Familiar', NULL),
+(8, 6, 'Cena romántica', NULL),
+(9, NULL, 'Premiado', NULL),
+(10, 1, 'Sin Gluten económicos', NULL);
 
 -- --------------------------------------------------------
 
@@ -181,16 +181,33 @@ CREATE TABLE `categoria_restaurante` (
 --
 
 INSERT INTO `categoria_restaurante` (`id_categoria`, `id_restaurante`, `notas`) VALUES
-(9, 2, NULL),
-(6, 4, NULL),
+(10, 1, NULL),
+(1, 1, NULL),
+(7, 1, NULL),
+(8, 2, NULL),
+(5, 2, NULL),
+(9, 3, NULL),
+(1, 3, NULL),
+(2, 3, NULL),
 (4, 4, NULL),
-(1, 7, NULL),
-(1, 3, NULL),
-(10, 7, NULL),
-(1, 4, NULL),
-(1, 3, NULL),
-(10, 4, NULL),
-(8, 1, NULL);
+(6, 4, NULL),
+(1, 5, NULL),
+(10, 5, NULL),
+(9, 5, NULL),
+(3, 6, NULL),
+(5, 6, NULL),
+(6, 6, NULL),
+(7, 7, NULL),
+(3, 7, NULL),
+(6, 8, NULL),
+(2, 8, NULL),
+(9, 9, NULL),
+(8, 9, NULL),
+(4, 9, NULL),
+(3, 9, NULL),
+(10, 10, NULL),
+(7, 10, NULL);
+
 
 -- --------------------------------------------------------
 
@@ -697,16 +714,24 @@ CREATE TABLE `restaurantes` (
 --
 
 INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `aforo_maximo` ,`notas`) VALUES
-(1, 'Restaurante1', 1, 11, 'Brian Roads', NULL, 'Clintonchester', 'Maine', 55.72, 14, 35, NULL),
-(2, 'Restaurante2', 2, 12, 'Lee Port', NULL, 'East Tinafurt', 'Virginia', 81.73, 13, 35, NULL),
-(3, 'Restaurante3', 3, 13, 'Kidd Radial', NULL, 'Christensenfurt', 'Tennessee', 55.72, 12, 35, NULL),
-(4, 'Restaurante4', 4, 14, 'Desiree Circles', NULL, 'North Gabrielview', 'Kentucky', 16.66, 11, 35, NULL),
-(5, 'Restaurante5', 5, 15, 'Brown Roads', NULL, 'Hayesshire', 'Wyoming', 55.72, 14, 35, NULL),
-(6, 'Restaurante6', 6, 16, 'Chad Lodge', NULL, 'Brownmouth', 'Nebraska', 95.71, 11, 35, NULL),
-(7, 'Restaurante7', 7, 17, 'Tyler Spur', NULL, 'Sethton', 'North Carolina', 55.72, 14, 35, NULL),
-(8, 'Restaurante8', 8, 18, 'Robert Pine', NULL, 'Annehaven', 'Connecticut', 82.36, 13, 35, NULL),
-(9, 'Restaurante9', 9, 19, 'Mendoza Corner', NULL, 'South Raymondfort', 'North Carolina', 55.72, 15, 35, NULL),
-(10, 'Restaurante10', 10, 20, 'Dennis Flat', NULL, 'Camachoville', 'Montana', 74.53, 13, 35, NULL);
+(1, 'Savory Haven', 11, 11, 'Brian Roads', '123 Maple Street', 'Clintonchester', 'Maine', 55.72, 14, 35, NULL),
+(2, 'Culinary Oasis', 2, 12, 'Lee Port', '456 Willow Avenue', 'East Tinafurt', 'Virginia', 81.73, 13, 35, NULL),
+(3, 'Spice Symphony', 3, 13, 'Kidd Radial', '789 Elm Lane', 'Christensenfurt', 'Tennessee', 55.72, 12, 35, NULL),
+(4, 'Urban Palate', 4, 14, 'Desiree Circles', '101 Pine Boulevard', 'North Gabrielview', 'Kentucky', 16.66, 11, 70, NULL),
+(5, 'Gourmet Grove', 5, 15, 'Brown Roads', '234 Cedar Court', 'Hayesshire', 'Wyoming', 55.72, 14, 22, NULL),
+(6, 'Fusion Junction', 6, 16, 'Chad Lodge', '567 Birch Drive', 'Brownmouth', 'Nebraska', 95.71, 11, 50, NULL),
+(7, 'Epicurean Elegance', 7, 17, 'Tyler Spur', '890 Oak Circle', 'Sethton', 'North Carolina', 55.72, 14, 35, NULL),
+(8, 'Sizzling Bites', 8, 18, 'Robert Pine', '112 Spruce Way', 'Annehaven', 'Connecticut', 82.36, 13, 35, NULL),
+(9, 'Bistro Bliss', 9, 19, 'Mendoza Corner', '345 Sycamore Lane', 'South Raymondfort', 'North Carolina', 55.72, 15, 35, NULL),
+(10, 'Gastronomy Galore', 10, 20, 'Brian Roads', '678 Pinecrest Avenue', 'Camachoville', 'Texas', 74.53, 13, 35, NULL),
+(11, 'Flavor Fiesta', 12, 21, 'Dennis Flat', '901 Magnolia Street', 'Camachoville', 'Connecticut', 16, 13, 40, NULL),
+(12, 'Tantalizing Tastes', 13, 22, 'Chad Lodge', '234 Redwood Road', 'Camachoville', 'Wyoming', 10, 13, 35, NULL),
+(13, 'Amborisa Alley', 14, 23, 'Dennis Flat', '567 Willow Way', 'Camachoville', 'Kentuchy', 21.5, 13, 35, NULL),
+(14, 'Whisk & Whimsy', 15, 24, 'Robert Pine', '890 Elm Grove', 'Camachoville', 'Maine', 25, 13, 35, NULL),
+(15, 'Heart & Harvest', 16, 25, 'Brian Roads', '123 Cedar Avenue', 'Camachoville', 'Maine', 17.8, 13, 35, NULL),
+(16, 'Panorama Plates', 17, 26, 'Mendoza Corner', '456 Birch Boulevard', 'Camachoville', 'Virginia', 250, 13, 35, NULL),
+(17, 'Mosaic Munch', 18, 27, 'Dennis Flat', '789 Oak Lane', 'Camachoville', 'North Carolina', 58.3, 13, 35, NULL),
+(18, 'Zenith Zest', 19, 28, 'Lee Port', '101 Pinecrest Court', 'Camachoville', 'Tennessee', 18, 13, 35, NULL);
 
 -- --------------------------------------------------------
 
@@ -726,16 +751,16 @@ CREATE TABLE `tipos_comida` (
 --
 
 INSERT INTO `tipos_comida` (`id_tipo_comida`, `id_tipo_padre`, `nombre_tipo`, `notas`) VALUES
-(1, NULL, 'Tipo1', NULL),
-(2, NULL, 'Tipo2', NULL),
-(3, NULL, 'Tipo3', NULL),
-(4, NULL, 'Tipo4', NULL),
-(5, NULL, 'Tipo5', NULL),
-(6, NULL, 'Tipo6', NULL),
-(7, 1, 'Tipo7', NULL),
-(8, 2, 'Tipo8', NULL),
-(9, 1, 'Tipo9', NULL),
-(10, 2, 'Tipo10', NULL);
+(1, NULL, 'Asiática', NULL),
+(2, 5, 'Sushi', NULL),
+(3, NULL, 'Americana', NULL),
+(4, 3, 'Hamburguesería', NULL),
+(5, 1, 'Japonesa', NULL),
+(6, 3, 'Tex-Mex', NULL),
+(7, 1, 'India', NULL),
+(8, 7, 'Picante', NULL),
+(9, 1, 'China', NULL),
+(10, 5, 'Ramen', NULL);
 
 -- --------------------------------------------------------
 
