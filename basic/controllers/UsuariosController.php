@@ -5,8 +5,11 @@ namespace app\controllers;
 use app\models\UsuariosMantenimiento;
 use app\models\BuscarUsuario;
 use yii\web\Controller;
+use app\models\Imagen;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
+
 
 /**
  * UsuariosController implements the CRUD actions for UsuariosMantenimiento model.
@@ -29,6 +32,18 @@ class UsuariosController extends Controller
                 ],
             ]
         );
+    }
+	
+	public function beforeAction($action)
+    {
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+        // Verificar si el usuario tiene el rol de administrador
+        if (!isset($userRoles['administrador'])) {
+            return $this->goHome();
+        }
+
+        return parent::beforeAction($action);
     }
 	
 
@@ -90,18 +105,31 @@ class UsuariosController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_usuario)
-    {
-        $model = $this->findModel($id_usuario);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+	public function actionUpdate($id_usuario)
+{
+    $model = $this->findModel($id_usuario);
+
+    if ($this->request->isPost && $model->load($this->request->post())) {
+        // Asignar el valor del rol al modelo
+        $model->rol = $this->request->post('UsuariosMantenimiento')['rol'];
+
+        // Guardar el modelo
+        if ($model->save()) {
+            // Llamar a la acción para asignar roles
+            Yii::$app->runAction('roles/asignar-roles');
+
+            // Redireccionar a la vista
             return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
+
+    return $this->render('update', [
+        'model' => $model,
+    ]);
+}
+
+	
 
     /**
      * Deletes an existing UsuariosMantenimiento model.
@@ -132,4 +160,57 @@ class UsuariosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	
+	//Accion para poder listar los roles del sistema
+	public function actionListarRoles()
+	{
+    $roles = Yii::$app->authManager->getRoles();
+
+    return $this->render('listar-roles', [
+        'roles' => $roles,
+    ]);
+	}
+	
+	//Accion para poder asignar roles a UsuariosController
+
+
+// En tu controlador
+public function actionAsignarRol($id_usuario) {
+    // Obtener la lista de usuarios
+    $usuarios = UsuariosMantenimiento::find()->all();
+
+    // Resto del código para la acción
+    return $this->render('asignar-rol', [
+        'usuarios' => $usuarios,
+        // Otros datos que necesites pasar a la vista
+    ]);
+}
+
+
+
+
+	
+
+
+
+	
+	//Accion para bloquear ususarios ponemos a 1 en la base de datos
+	public function actionBloquearUsuario($id_usuario)
+	{
+    $model = $this->findModel($id_usuario);
+
+    if ($this->request->isPost) {
+        $model->bloqueado = 1; // O el valor que uses para indicar que está bloqueado
+        $model->save();
+
+        return $this->redirect(['view', 'id_usuario' => $id_usuario]);
+    }
+
+    return $this->render('bloquear-usuario', [
+        'model' => $model,
+    ]);
+	}
+
+
+
 }

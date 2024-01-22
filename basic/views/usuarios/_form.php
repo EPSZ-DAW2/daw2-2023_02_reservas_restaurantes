@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="usuarios-mantenimiento-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+   <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true]) ?>
 
@@ -18,7 +18,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_foto_usuario')->textInput() ?>
+    <?= $form->field($model, 'rol')->dropDownList([
+        'administrador' => 'administrador',
+        'gestor' => 'gestor',
+		'moderador' => 'moderador',
+		'propietario' => 'propietario',
+		'cliente' => 'cliente',
+       
+    ], ['prompt' => 'Seleccionar Rol']) ?>
+
+    <?= $form->field($model, 'bloqueado')->dropDownList([
+        '0' => 'No',
+        '1' => 'Sí',
+    ], ['prompt' => 'Seleccionar Estado de Bloqueo']) ?>
 
     <?= $form->field($model, 'notas')->textarea(['rows' => 6]) ?>
 
@@ -29,3 +41,5 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+

@@ -8,6 +8,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+$this->title = 'Registro';
+
 if(isset($_POST['registrogp-button']) || isset($_GET['registrogp']))
 {
     Yii::$app->session->set('registrogp', 1); //si queremos registrar un propietario o gestor
@@ -20,7 +22,6 @@ if(isset($_POST['registroc-button']))
     if(Yii::$app->session->has('registrogp')) Yii::$app->session->remove('registrogp');
 } 
 
-$this->title = 'Registro';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class= "container">
@@ -63,8 +64,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $form = ActiveForm::begin(['id' => 'registrogp-form',]); ?>
                     <div class="form-group mt-1">
                         <div class="row ms-auto me-auto">
-                            <?= Html::a('Ya eres cliente? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5 mt-md-1']) ?>
-                            <?php if(Yii::$app->session->has('registroc')) { ?>
+                            <?= Html::a('Ya eres usuario? Inicia sesión', ['/site/login'], ['class' => 'btn btn-secondary col-lg-5 mt-md-1']) ?>
+                            <?php if((Yii::$app->session->has('registroc')) || ((!Yii::$app->session->has('registroc')) && (!Yii::$app->session->has('registrogp')))) { ?>
                                 <?= Html::submitButton('Diriges un restaurante? Regístrate', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registrogp-button', 'value' => 1]) ?>   
                             <?php } else { ?>            
                                 <?= Html::submitButton('Regístrate como Cliente', ['class' => 'btn btn-secondary col-lg-5 mt-md-1 mt-sm-1 mt-xs-1 mt-1 ms-auto', 'name' => 'registroc-button', 'value' => 1]) ?>   
