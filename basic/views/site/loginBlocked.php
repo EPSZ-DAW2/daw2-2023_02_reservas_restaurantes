@@ -35,7 +35,7 @@ JS
     <div class="site-login-blocked alert alert-danger d-flex align-items-center justify-content-center">
         <div class="text-center">
             <h1><?= Html::encode($this->title) ?></h1>
-            <p class="mt-5">Sesión bloqueada. Intenta nuevamente más tarde.</p>
+            <p class="mt-5">Login bloqueado. Espera que acabe el tiempo.</p>
             <p>Tiempo restante: <span id="tiempo-restante"><?= $tiempo ?></span> segundos</p>
         </div>
     </div>
