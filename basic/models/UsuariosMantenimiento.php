@@ -36,13 +36,13 @@ class UsuariosMantenimiento extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['nombre_usuario', 'email', 'password'], 'required'],
-            [['id_foto_usuario'], 'integer'],
+         return [
+            [['nombre_usuario', 'email', 'password', 'rol', 'bloqueado'], 'required'],
+            [['bloqueado', 'id_foto_usuario'], 'integer'],
             [['notas'], 'string'],
-            [['nombre_usuario'], 'string', 'max' => 50],
+            [['nombre_usuario', 'rol'], 'string', 'max' => 50],
             [['email', 'password'], 'string', 'max' => 32],
-            [['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
+            [['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
         ];
     }
 
@@ -51,13 +51,13 @@ class UsuariosMantenimiento extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
-            'id_usuario' => 'Id Usuario',
-            'nombre_usuario' => 'Nombre Usuario',
-            'email' => 'Email',
-            'password' => 'Password',
-            'id_foto_usuario' => 'Id Foto Usuario',
-            'notas' => 'Notas',
+         return [
+            [['nombre_usuario', 'email', 'password', 'rol', 'bloqueado'], 'required'],
+            [['bloqueado', 'id_foto_usuario'], 'integer'],
+            [['notas'], 'string'],
+            [['nombre_usuario', 'rol'], 'string', 'max' => 50],
+            [['email', 'password'], 'string', 'max' => 32],
+            [['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
         ];
     }
 
@@ -98,7 +98,7 @@ class UsuariosMantenimiento extends \yii\db\ActiveRecord
      */
     public function getFotoUsuario()
     {
-        return $this->hasOne(Imagenes::class, ['id_imagen' => 'id_foto_usuario']);
+        return $this->hasOne(Imagen::class, ['id_imagen' => 'id_foto_usuario']);
     }
 
     /**
@@ -120,4 +120,6 @@ class UsuariosMantenimiento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Moderadores::class, ['id_usuario' => 'id_usuario']);
     }
+	
+	
 }

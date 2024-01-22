@@ -200,5 +200,61 @@ class Restaurante extends \yii\db\ActiveRecord
         $imagen = Imagen::findOne($this->id_foto_restaurante);
         return $imagen ? $imagen->getUrlImagen() : null;
     }
+
+    //Función que devuelve el tipo de restaurante
+    public function getTiposComida()
+    {
+        //Se encuentran todos los tipos de comida asignados al restaurante
+        $tipoRestaurante = TipoRestaurante::findAll(['id_restaurante' => $this->id_restaurante]);
+        $tipos = [];
+        if($tipoRestaurante != null){
+            foreach($tipoRestaurante as $tipo){
+                $tipoComida = TipoComida::findOne($tipo->id_tipo_comida);
+                $tipos[] = $tipoComida->nombre_tipo;
+                //se busca el tipo padre y de haberlo se agrega
+                $tipoPadre = TipoComida::findOne($tipoComida->id_tipo_padre);
+                if($tipoPadre != null){
+                    $tipos[] = $tipoPadre->nombre_tipo;
+                }
+            }
+        }
+        return $tipos;
+    }
     
+
+    /**
+     * Devuelve un array con todas las comunidades autónomas de todos los restaurantes sin duplicados.
+     * @return array
+     */
+    public static function getAllComunidadesAutonomas()
+    {
+        return array_unique(self::find()->select('comunidad_autonoma_restaurante')->column());
+    }
+
+    /**
+     * Devuelve un array con todas las ciudades de todos los restaurantes sin duplicados.
+     * @return array
+     */
+    public static function getAllCiudades()
+    {
+        return array_unique(self::find()->select('ciudad_restaurante')->column());
+    }
+
+    /**
+     * Devuelve un array con todos los barrios de todos los restaurantes sin duplicados y sin campos vacíos.
+     * @return array
+     */
+    public static function getAllBarrios()
+    {
+        return array_filter(array_unique(self::find()->select('barrio_restaurante')->column()));
+    }
+
+    /**
+     * Devuelve un array con todos los IDs de todos los restaurantes.
+     * @return array
+     */
+    public static function getAllIDs()
+    {
+        return array_unique(self::find()->select('id_restaurante')->column());
+    }
 }

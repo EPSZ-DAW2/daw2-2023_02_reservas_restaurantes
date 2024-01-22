@@ -16,6 +16,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\models\Usuario;
 
 use yii\helpers\Url;
 
@@ -46,55 +47,89 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         NavBar::begin([
             'brandLabel' => Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top py-1']
         ]);
 
         //Se preparan los items a mostrar en el widget Nav dependiendo del rol de usuario
+
+        //Items siempre en vista: Inicio, Búsqueda
         $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Explorar', 'url' => ['/site/index']],
-                ['label' => 'Búsqueda', 'url' => ['/site/index']]
+                ['label' => 'Búsqueda', 'url' => ['/site/busqueda-filtrada']]
         ];
 
-		if (!Yii::$app->user->isGuest) {
+        $items2 = []; //Items para perfil
+
+        //Items para invitado
+		if (Yii::$app->user->isGuest) {
+            $items2[] = ['label' => 'Login', 'url' => ['/site/login']]; //Login
+            $items2[] = ['label' => 'Registro', 'url' => ['/site/registro']]; //Registro
+        }else{
 			// Obtener los roles del usuario actual
 			$userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
 			// Verificar si el usuario tiene el rol de administrador
-			if (isset($userRoles['administrador'])) {
-				$items[] = ['label' => 'Vista de Administrador', 'url' => ['/admin-site']];
-			}
+			if (isset($userRoles['administrador']) || isset($userRoles['moderador'])) {
+                $itemsGestion = [];
+                if(isset($userRoles['moderador']) && !isset($userRoles['administrador'])){
+                    //Si es moderador, solo puede acceder a Restaurantes, Reseñas/Respuestas, Clientes, Incidencias
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/admin-incidencias']];
+                    $itemsGestion[] = ['label' => 'Reseñas/Respuestas', 'url' => ['/admin-resenas']];
+                    $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
 
-			// Verificar si el usuario tiene el rol de moderador
-			if (isset($userRoles['moderador'])) {
-				$items[] = ['label' => 'Vista de Moderador', 'url' => ['/site/moderatorview']];
+                }else if(isset($userRoles['administrador'])){
+                    //Si es administrador, puede acceder a todo
+                    $itemsGestion[] = ['label' => 'Backups', 'url' => ['/admin-backups']];
+                    $itemsGestion[] = ['label' => 'Categorías', 'url' => ['/admin-categorias']];
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Configuraciones', 'url' => ['/admin-configuracion']];
+                    $itemsGestion[] = ['label' => 'FAQ', 'url' => ['/admin-faq']];
+                    $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/admin-incidencias']];
+                    $itemsGestion[] = ['label' => 'Imágenes', 'url' => ['/admin-imagenes']];
+                    $itemsGestion[] = ['label' => 'Reseñas/Respuestas', 'url' => ['/admin-resenas']];
+                    $itemsGestion[] = ['label' => 'Reservas', 'url' => ['/admin-reservas']];
+                    $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
+                    $itemsGestion[] = ['label' => 'Usuarios', 'url' => ['/usuarios']];
+                }
+
+                //se agregan los items de gestión al nav
+				$items[] = [
+                    'label' => 'Gestión', 
+                    'items' => $itemsGestion
+                ];
 			}
 
 			// Verificar si el usuario tiene el rol de gestor
-			if (isset($userRoles['gestor'])) {
-				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/eventos']];
+			if (isset($userRoles['gestor']) || isset($userRoles['propietario'])) {
+				$items[] = ['label' => 'Mis Restaurantes', 'url' => ['/mis-restaurantes']]; //Mis restaurantes (para propietarios y gestores)
 			}
-		}
 
-        $items[] =  
-                [
-                    'label' => Yii::$app->user->isGuest ? 'Login' : 'Logout',
-                    'url' => Yii::$app->user->isGuest ? ['/site/login'] : ['/site/deslogin']
-                ];
-        $items[] = 
-                [
-                    'label' => Yii::$app->user->isGuest
-                        ? 'Registro'
-                        : 'MiPerfil (' . Yii::$app->user->identity->nombre_usuario . ')',
-                    'url' => Yii::$app->user->isGuest
-                        ? ['/site/registro']
-                        : ['/site/verperfil']
-                ];
-                    
-        //Se muestra el widget Nav con los items correspondientes
+            //area personal (Dropdown)
+            $nombreUsuario = Yii::$app->user->identity->nombre_usuario;
+            $usuario = Usuario::findOne(['nombre_usuario' => $nombreUsuario]);
+            $fotoUsuario = $usuario->getFotoUsuario();
+            $items2[] = [
+                'label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Perfil', 'style' => 'width: 25px; height: 25px;']),
+                'items' => [
+                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/site/verperfil']],
+                    ['label' => 'Logout', 'url' => ['/site/deslogin']],
+                ],
+                'linkOptions' => ['class' => 'nav-link'],
+                'encode' => false,
+                'dropdownOptions' => ['class' => 'dropdown-menu dropdown-menu-end'], //prevenir que salga de la página
+            ];
+		}
+        
+        //Se muestra el widget Nav con los items correspondientes en el centro
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav'],
+            'options' => ['class' => 'navbar-nav mx-auto'],
             'items' => $items
+        ]);
+        //Otro Nav alineado a la derecha para las opciones del perfil
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav ms-auto'],
+            'items' => $items2
         ]);
         NavBar::end();
         ?>
@@ -103,31 +138,37 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
             <?php //breadcrumbs: "Breadcrumbs displays a list of links indicating the position of the current page in the whole site hierarchy."
-            if (!empty($this->params['breadcrumbs'])) :
+            if (!empty($this->params['breadcrumbs'])){
             ?>
-                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-            <?php endif ?>
+                <?= Breadcrumbs::widget([
+                    'homeLink' => [
+                        'label' => 'Inicio',
+                        'url' => Yii::$app->homeUrl,
+                    ],
+                    'links' => $this->params['breadcrumbs']
+                    ]) ?>
+            <?php } ?>
             <!-- Se muestran alertas y el contenido (vistas renderizadas) -->
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </main>
 
-    <!-- Pie de página con información relevante -->
-    <footer id="footer" class="mt-auto py-3 bg-light">
-        <div class="container">
-            <div class="row text-muted">
-                <div class="col-md-6 text-center text-md-start">&copy; La Cuchara <?= date('Y') ?></div>
-                <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-                <div class="col-md-6 text-center text-md-end">
-                    <ul class="list-unstyled">
-                        <li><a class="text-muted" href="<?= Url::to(['/site/faq']) ?>">FAQ</a></li>
-                        <li><a class="text-muted" href="<?= Url::to(['/site/contacto']) ?>">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- pie de página -->
+    <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">&copy; La Cuchara <?= date('Y') ?></p>
+
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        </a>
+
+        <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="<?= Url::to(['/site/faq']) ?>" class="nav-link px-2 text-muted">FAQ</a></li>
+        <li class="nav-item"><a href="<?= Url::to(['/site/contacto']) ?>" class="nav-link px-2 text-muted">Contacto</a></li>
+        </ul>
     </footer>
+    </div>
 
     <?php $this->endBody() ?>
 </body>

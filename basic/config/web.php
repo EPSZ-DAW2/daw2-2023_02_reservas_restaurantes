@@ -1,10 +1,11 @@
 <?php
 
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    'language' => 'es-ES',
+    'sourceLanguage' => 'es-ES',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],

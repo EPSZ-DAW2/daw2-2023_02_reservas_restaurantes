@@ -12,7 +12,8 @@ use Yii;
  * @property string $email Email de regitro del usuario.
  * @property string $password Contraseña de registro del usuario.
  * @property int $id_foto_usuario ID de la foto de perfil del usuario.
- * @property int|null $es_gestor_propietario 0 gestor y 1 propietario. NULL para el resto de usuarios.
+ * @property string $rol Tipo de rol del usuario.
+ * @property bool $bloqueado 0 normal - 1 bloqueado.
  * @property string|null $notas Notas internas para el usuario.
  *
  * @property Comentarios[] $comentarios
@@ -45,9 +46,10 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['nombre_usuario', 'email', 'password', 'id_foto_usuario'], 'required'],
-            [['id_foto_usuario', 'es_gestor_propietario'], 'integer'],
+            [['id_foto_usuario', 'bloqueado'], 'integer'],
             [['notas'], 'string'],
             [['nombre_usuario'], 'string', 'max' => 50],
+            [['rol'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 32],
             [['password'], 'string', 'max' => 200],
             [['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
@@ -65,7 +67,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => Yii::t('app', 'Email de regitro del usuario.'),
             'password' => Yii::t('app', 'Contraseña de registro del usuario.'),
             'id_foto_usuario' => Yii::t('app', 'ID de la foto de perfil del usuario.'),
-            'es_gestor_propietario' => Yii::t('app', '0 gestor y 1 propietario. NULL para el resto de usuarios.'),
+            'rol' => Yii::t('app', 'Tipo de rol del usuario.'),
+            'bloqueado' => Yii::t('app', '0 normal y 1 bloqueado.'),
             'notas' => Yii::t('app', 'Notas internas para el usuario.'),
         ];
     }

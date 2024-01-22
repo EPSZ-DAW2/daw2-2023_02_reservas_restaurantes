@@ -1,28 +1,73 @@
 <?php
-use yii\bootstrap5\Carousel;
-use \app\widgets\FichaRestaurante;
+use yii\bootstrap5\BootstrapPluginAsset;
+use yii\helpers\Html;
+use yii\bootstrap5\BootstrapAsset;
+$this->registerCssFile("@web/css/carruselRestaurante.css", [
+  'depends' => [BootstrapAsset::class],
+]);//css
+$this->registerJsFile("@web/scripts/carruselRestaurante.js", ['depends' => [BootstrapPluginAsset::class, \yii\web\JqueryAsset::class]]); //js (jQuery)
 
-$bloques = array_chunk($ids, $fichasPorBloque);
-
-$items = [];
-//Se crean items cada uno con cuatro fichas
-foreach ($bloques as $bloque)
-{
-    $contenido = '<div class="d-flex justify-content-center p-1">';
-    foreach ($bloque as $id) 
-    {
-        $contenido .= FichaRestaurante::widget(['id' => $id]);
-    }
-    $contenido .= '</div>';
-    $items[] = ['content' => $contenido];
-}
-echo "<div style='display: flex; justify-content: center; align-items: center; height: 30vh; width: 100%; margin: 15px;'>";
-echo "<div style='width: 80%; height: 100%;'>";
-echo "<h2 class='text-center'>".$nombreCategoria."</h2>";
-echo Carousel::widget([
-    'items' => $items,
-    'options' => ['class' => 'carousel carousel-fade', 'style' => 'transition: none; width: 100%; height: 100%;'],
-]);
-echo "</div>";
-echo "</div>";
+if(!empty($models)){ //si no hay restaurantes en la categoría no se muestra el carrusel
 ?>
+<hr>
+<h2 class="nombre-carrusel"><?=$nombreCategoria?></h2>
+<div id="carouselExampleControls<?=$idCategoria?>" class="carousel carruselRestaurante carrusel-restaurante" >
+    <div class="carousel-inner carrusel-restaurante">
+        <?php 
+        $activo=1;
+        foreach($models as $model){ ?>
+            <?php
+            if($activo==1){
+              echo "<div class='carousel-item active carrusel-restaurante'>";
+              $activo=0;
+            }else{
+            ?>
+              <div class='carousel-item carrusel-restaurante'>
+            <?php
+            }
+            ?>
+            <div class="card carrusel-restaurante">
+              <div class="img-wrapper carrusel-restaurante">
+                <img src="<?=Html::encode($model->fotoPerfilUrl) ?>" alt="<?= Html::encode($model->nombre_restaurante) ?>">
+              </div>
+              <div class="card-body d-flex flex-column carrusel-restaurante">
+                <h5 class="card-title carrusel-restaurante"><?= Html::encode($model->nombre_restaurante) ?></h5>
+                <div class="mb-auto carrusel-restaurante">
+                  <p class="card-text carrusel-restaurante">
+                    <?= Html::encode($model->puntuacionPromedio) ?> &#129348;<br>
+                    <?= Html::encode($model->numResenas)?> Valoraciones<br>
+                    <?= Html::encode($model->ciudad_restaurante) ?><br>
+                    <?php if ($model->barrio_restaurante != NULL) { ?>
+                      <?= Html::encode($model->barrio_restaurante) ?><br>
+                    <?php } ?>
+                    Precio por comensal: <?= Html::encode($model->precio_medio_comensal) ?>&euro;<br>
+                    Tipo de comida: <?php
+                    $primerTipo=true; 
+                    foreach($model->tiposComida as $tipo){
+                      if($primerTipo){
+                        echo $tipo;
+                        $primerTipo=false;
+                      }else{
+                        echo ", ".$tipo;
+                      }
+                    }
+                    ?>
+                  </p>
+                </div>
+                <a href="#" class="btn btn-primary mt-auto carrusel-restaurante">Ver Restaurante</a>
+              </div>
+            </div>
+            
+            </div>
+        <?php } ?>
+    </div>
+    <button class="carousel-control-prev carrusel-restaurante" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon carrusel-restaurante" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next carrusel-restaurante" type="button" data-bs-target="#carouselExampleControls<?=$idCategoria?>" data-bs-slide="next">
+      <span class="carousel-control-next-icon carrusel-restaurante" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+<?php } ?>

@@ -9,7 +9,13 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\RegistroForm;
 use app\models\LoginForm;
+use app\models\BusquedaFiltrada;
+use app\models\TipoComida;
+use app\models\Restaurante;
 use app\models\ContactForm;
+use app\models\Categoria;
+use app\models\Configuracion;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -60,9 +66,20 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($numCategorias = 2)
     {
-        return $this->render('index');
+
+        // si venimos redirigidos del bloqueo de sesion
+        if (Yii::$app->request->get('removeBlockedSession')) {
+            Yii::$app->session->remove('loginBlockedUntil');
+        }    
+
+        //Se obtiene el id de la última categoría en la bbdd
+        $maxCategoria = Categoria::find()->max('id_categoria');
+        return $this->render('index', [
+            'maxCategoria' => $maxCategoria,
+            'numCategorias' => $numCategorias
+        ]);
     }
 
 
@@ -96,6 +113,15 @@ class SiteController extends Controller
     */
     public function actionLogin()
     {
+
+        // Verificar si la sesión está bloqueada
+        if (Yii::$app->session->get('loginBlockedUntil')) {
+            $lockTime = Yii::$app->session->get('loginBlockedUntil');
+            return $this->render('loginBlocked', [
+                'tiempo' => $lockTime,
+            ]);
+        }
+
         // si el usuario ya ha iniciado sesión y accede aqui
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -124,31 +150,134 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
+    /*
+        ACCIÓN DE BÚSQUEDA FILTRADA
+    */
+    public function actionBusquedaFiltrada()
+    {
+        // creamos el modelo de busqueda
+        $model = new BusquedaFiltrada();
+
+        //obtenemos las categorias y tipos disponibles de restaurantes en la app
+        $categoriasConSubcategorias = Categoria::obtenerCategoriasConPadre();
+        $tiposConSubtipos = TipoComida::obtenerTiposConPadre();
+
+        //obtenemos las comunidadesautonomas, ciudades y barrios de los distintos restaurantes
+        $comunidades = Restaurante::getAllComunidadesAutonomas();
+        $ciudades = Restaurante::getAllCiudades();
+        $barrios = Restaurante::getAllBarrios();
+
+        //obtenemos los IDs de todos los restaurantes para el mostrado sin fltros
+        $IDs = Restaurante::getAllIDs();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Restaurante::find()->where(['id_restaurante' => $IDs]),
+            'pagination' => [
+                'pageSize' => Configuracion::findByNombreVariable('numElemsBusquedaFiltrada'),
+            ],
+        ]);
+
+
+        
+
+
+        // cargamos los datos del formulario de filtro si los hay
+        if ($model->load(Yii::$app->request->post())) { 
+            //caragmos los ids de la respuesta en caso de haberla
+            $ids_restaurante = $model->busquedaFiltrada();
+
+            //si ha ido bien la validacion de datos y ha encontrado algun restaurante con el filtro
+            if($ids_restaurante != false)
+            {
+                $dataProvider->query->andWhere(['id_restaurante' => $ids_restaurante]);
+            }
+            // si no
+            else
+            {
+                Yii::$app->session->setFlash('warning', 'No se han encontrado restaurantes que cumplan tus filtros de búsqueda. Prueba con otros.');
+
+                return $this->render('busqueda-filtrada', [
+                    'model' => $model,
+                    'categoriasBD' => $categoriasConSubcategorias,
+                    'tiposBD' => $tiposConSubtipos,
+                    'comunidades' => $comunidades,
+                    'ciudades' => $ciudades,
+                    'barrios' => $barrios,
+                    'dataProvider' => null,
+                ]);
+            } 
         }
-        return $this->render('contact', [
+
+
+
+        // cargamos los datos introducidos en la barra de busqueda
+        else if (Yii::$app->request->get('palabrasClave')) { 
+            
+            $palabrasClave = Yii::$app->request->get('palabrasClave');            
+
+            //caragmos los ids de la respuesta en caso de haberla
+            $ids_restaurante = $model->busquedaBarra($palabrasClave);
+
+            //si ha encontrado algun restaurante con lo dado en la busqueda
+            if($ids_restaurante != false)
+            {
+                $dataProvider->query->andWhere(['id_restaurante' => $ids_restaurante]);
+            }
+            // si no
+            else
+            {
+                Yii::$app->session->setFlash('warning', 'No se han encontrado restaurantes que cumplan tus filtros de búsqueda. Prueba con otros.');
+
+                return $this->render('busqueda-filtrada', [
+                    'model' => $model,
+                    'categoriasBD' => $categoriasConSubcategorias,
+                    'tiposBD' => $tiposConSubtipos,
+                    'comunidades' => $comunidades,
+                    'ciudades' => $ciudades,
+                    'barrios' => $barrios,
+                    'dataProvider' => null,
+                ]);
+            } 
+        }
+
+
+        return $this->render('busqueda-filtrada', [
             'model' => $model,
+            'categoriasBD' => $categoriasConSubcategorias,
+            'tiposBD' => $tiposConSubtipos,
+            'comunidades' => $comunidades,
+            'ciudades' => $ciudades,
+            'barrios' => $barrios,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    // /**
+    //  * Displays contact page.
+    //  *
+    //  * @return Response|string
+    //  */
+    // public function actionContact()
+    // {
+    //     $model = new ContactForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+    //         Yii::$app->session->setFlash('contactFormSubmitted');
+
+    //         return $this->refresh();
+    //     }
+    //     return $this->render('contact', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    // /**
+    //  * Displays about page.
+    //  *
+    //  * @return string
+    //  */
+    // public function actionAbout()
+    // {
+    //     return $this->render('about');
+    // }
 }

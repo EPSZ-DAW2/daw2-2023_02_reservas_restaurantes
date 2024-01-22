@@ -22,7 +22,7 @@ class CategoriaSearch extends Categoria
     {
         return [
             [['id_categoria', 'id_categoria_padre', 'num_restaurantes'], 'integer'],
-            [['nombre_categoria', 'notas', 'nombre_cataegoria_padre'], 'safe'],
+            [['nombre_categoria', 'notas', 'nombre_categoria_padre'], 'safe'],
         ];
     }
 

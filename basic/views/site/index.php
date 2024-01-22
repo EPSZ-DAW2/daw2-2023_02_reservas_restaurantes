@@ -14,17 +14,20 @@ $this->title = 'La Cuchara - Inicio';
         <!-- Barra de búsqueda -->
         <?= BarraBusqueda::widget() ?>
 
-        <hr>
         <!-- Carruseles -->
       
-        <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Ofertas',
-        ]); ?>
-
-        <?= CarruselRestaurante::widget([
-            'nombreCategoria' => 'Selección La Cuchara',
-        ]); ?>
-
+        <?php 
+            for($i=1; $i<=$maxCategoria && $i<=$numCategorias; $i++){
+                echo CarruselRestaurante::widget([
+                    'idCategoria' => $i,
+                ]);
+            }
+        if($numCategorias < $maxCategoria){
+            echo '<div class="text-center">';
+            echo Html::a('Mostrar más categorías', ['index', 'numCategorias' => $numCategorias + 2], ['class' => 'btn btn-outline-primary']);
+            echo '</div>';
+        }    
+        ?>
 
         <hr>
         <!-- Registra tu restaurante -->

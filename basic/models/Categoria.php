@@ -16,6 +16,7 @@ use Yii;
  */
 class Categoria extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -82,6 +83,69 @@ class Categoria extends \yii\db\ActiveRecord
     public function getNumRestaurantes()
     {
         return $this->hasMany(CategoriaRestaurante::class, ['id_categoria' => 'id_categoria'])->count();
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return CategoriaQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CategoriaQuery(get_called_class());
+    }
+
+    /*
+    * Devuelve las categorias que son hijo de esta
+    */
+    public function getHijos()
+    {
+        return Categoria::find()->where(['id_categoria_padre' => $this->id_categoria])->all();
+    }
+
+    public function getDescendientes($categorias)
+    {
+        $hijos = $this->hijos;
+        
+        foreach ($hijos as $hijo) {
+            $categorias[] = $hijo;
+            $categorias = $hijo->getDescendientes($categorias);
+        }
+
+        return $categorias;
+    }
+
+
+    /**
+     * Obtiene los nombres de todas las categorías y sus subcategorías en la base de datos.
+     * @return array Lista de categorías y sus subcategorías
+     */
+    public static function obtenerCategoriasConPadre()
+    {
+        $categorias = Categoria::find()->all();
+        $categoriasConPadre = [];
+
+        foreach ($categorias as $categoria) {
+            $categoriaConPadre = [
+                'cat' => $categoria->nombre_categoria,
+                'padre' => self::obtenerNombresCategoriasPadre($categoria),
+            ];
+
+            $categoriasConPadre[] = $categoriaConPadre;
+        }
+
+        return $categoriasConPadre;
+    }
+
+
+    /**
+     * Obtiene los nombres de las subcategorías de una categoría dada.
+     * @param Categoria $categoria Categoría para la cual obtener las subcategorías
+     * @return array Lista de nombres de subcategorías
+     */
+    private static function obtenerNombresCategoriasPadre($categoria)
+    {
+        $padre = $categoria->getPadre()->select('nombre_categoria')->scalar();
+        return $padre;
     }
 
 }
