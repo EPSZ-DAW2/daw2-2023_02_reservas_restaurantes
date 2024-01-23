@@ -66,9 +66,13 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($numCategorias = 2)
+    public function actionIndex($numCategorias = NULL)
     {
 
+        if($numCategorias == NULL)
+        {
+            $numCategorias = Configuracion::findByNombreVariable('minCarruselesPortada') ? Configuracion::findByNombreVariable('minCarruselesPortada') : 2;
+        }
         // si venimos redirigidos del bloqueo de sesion
         if (Yii::$app->request->get('removeBlockedSession')) {
             Yii::$app->session->remove('loginBlockedUntil');
