@@ -24,6 +24,15 @@ class CategoriaRestaurante extends \yii\db\ActiveRecord
         return 'categoria_restaurante';
     }
 
+    //Es necesario sobreescribir primaryKey() porque la relación no tiene clave primaria
+    /**
+     * @inheritdoc
+     */
+    public static function primaryKey()
+    {
+        return ['id_categoria', 'id_restaurante'];
+    }
+
     /**
      * {@inheritdoc}
      */
