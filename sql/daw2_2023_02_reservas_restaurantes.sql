@@ -217,7 +217,8 @@ INSERT INTO `categoria_restaurante` (`id_categoria`, `id_restaurante`, `notas`) 
 
 CREATE TABLE `comentarios` (
   `id_comentario` int(12) NOT NULL COMMENT 'Identificador del comentario.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario que hace el comentario.',
+  `id_usuario` int(12) NULL COMMENT 'Identificador del usuario que hace el comentario.',
+  `comentario` TEXT NOT NULL COMMENT 'El comentario en sí',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para los comentarios.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -225,17 +226,17 @@ CREATE TABLE `comentarios` (
 -- Volcado de datos para la tabla `comentarios`
 --
 
-INSERT INTO `comentarios` (`id_comentario`, `id_usuario`, `notas`) VALUES
-(1, 4, NULL),
-(2, 7, NULL),
-(3, 4, NULL),
-(4, 6, NULL),
-(5, 7, NULL),
-(6, 1, NULL),
-(7, 9, NULL),
-(8, 6, NULL),
-(9, 5, NULL),
-(10, 8, NULL);
+INSERT INTO `comentarios` (`id_comentario`, `id_usuario`, `comentario`, `notas`) VALUES
+(1, 4, 'ayuda por favor', NULL),
+(2, 7, 'como me convierto en moderador', NULL),
+(3, 4, 'donde borro mi perfil', NULL),
+(4, 6, 'quiero reportar un evento', NULL),
+(5, 7, 'quiero ocultar una reseña, como lo hago', NULL),
+(6, 1, 'donde se puede modificar una reserva', NULL),
+(7, 9, 'que pasa si cancelo mi reserva', NULL),
+(8, 6, 'como cambio mi contraseña', NULL),
+(9, 5, 'cuantos restaurantes puedo tener como gestor', NULL),
+(10, 8, 'como agrego un gestor a mi restaurante', NULL);
 
 -- --------------------------------------------------------
 
@@ -258,6 +259,11 @@ INSERT INTO `configuraciones` (`nombre_variable`, `valor_variable`, `notas`) VAL
 ('loginBlockedUntil', '10', 'Tiempo que deberá essperar el usuario para que se le debloquee el login de nuevo.'),
 ('numElemsCONF', '10', 'Número de elementos que se mostrarán en la administración de configuraciones.'),
 ('numElemsBusquedaFiltrada', '8', 'Número de restaurantes que se mostrarán en la vista pública de búsqueda filtrada.'),
+('numElemsReservas', '10', 'Número de reserva que se mostrarán en la administración de reservas.'),
+('numElemsCAT', '10', 'Número de elementos que se mostrarán en la administración de categorías.'),
+('numElemsFAQ', '10', 'Número de elementos que se mostrarán en la administración de categorías.'),
+('numElemsIMG', '10', 'Número de elementos que se mostrarán en la administración de categorías.'),
+('minCarruselesPortada', '3', 'Número de carruseles que se muestran en la portada al entrar.'),
 ('along', 'firm', NULL),
 ('another', 'item', NULL),
 ('hair', 'two', NULL),
@@ -690,7 +696,8 @@ INSERT INTO `respuestas_faq` (`id_pregunta`, `pregunta`, `respuesta`, `notas`) V
 (7, 'Rather school other herself pick learn expect.', 'With or themselves care movie artist moment majority to several final eye.', NULL),
 (8, 'Sit entire watch pretty safe window plant cell official and notice weight establish.', 'Stage year one compare learn campaign various yes technology chair after must court particular under account.', NULL),
 (9, 'Reduce agent conference travel there floor institution threat rate.', 'Particularly size teacher as door reveal against condition science new example list spend group may more budget control wonder crime something daughter remember.', NULL),
-(10, 'Health nor me long out up late name view even for fall above.', 'Available though fish your base rise that political thing someone growth decision base language yes institution such bad chance result contain economic person vote.', NULL);
+(10, 'Health nor me long out up late name view even for fall above.', 'Available though fish your base rise that political thing someone growth decision base language yes institution such bad chance result contain economic person vote.', NULL),
+(11, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', NULL);
 
 -- --------------------------------------------------------
 

@@ -5,6 +5,7 @@
 
 /** @var app\models\RegistroForm $model */
 
+use app\models\BusquedaFiltrada;
 use app\widgets\FichaRestaurante;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -47,64 +48,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'inputOptions' => ['class' => 'col-lg-3 col-sm-12 form-control'],
                                 'errorOptions' => ['class' => 'col-lg-7 col-sm-12 invalid-feedback'],
                             ],
-                        ]); ?>
+                        ]);  ?>
                         <div class="row">
                             <div class="col-lg-6">
-
-                            <?php
-                            $categoriasDropDown = [];
-
-                            foreach($categoriasBD as $categoriaBD1)
-                            {
-                                // si es un padre lo añadimos
-                                if(empty($categoriaBD1['padre']))
-                                {
-                                    $categoriasDropDown[$categoriaBD1['cat']] = $categoriaBD1['cat'];
-                                    // buscamos sus hijos y los añadimos despues del padre con un *
-                                    foreach($categoriasBD as $categoriaBD2)
-                                    {
-                                        if($categoriaBD1['cat']==$categoriaBD2['padre'])
-                                        {
-                                            $categoriasDropDown[$categoriaBD2['cat']] = ' --- ' . $categoriaBD2['cat'] . ' --- ';
-                                        }
-                                    }
-                                }
-                            }
-
-                            ?>
-
+                                
                             <?= $form->field($model, 'categoria')
                                 ->label('Categoría Restaurante')
-                                ->dropDownList($categoriasDropDown, ['prompt' => 'Seleccionar Categoría del Restaurante']) ?>
+                                ->dropDownList($categoriasDropdown, ['prompt' => 'Seleccionar Categoría del Restaurante']) ?>
                             
                             </div>
                             <div class="col-lg-6">
 
-                            <?php
-                            $tiposDropDown = [];
-
-                            foreach($tiposBD as $tipoBD1)
-                            {
-                                // si es un padre lo añadimos
-                                if(empty($tipoBD1['padre']))
-                                {
-                                    $tiposDropDown[$tipoBD1['tipo']] = $tipoBD1['tipo'];
-                                    // buscamos sus hijos y los añadimos despues del padre con un *
-                                    foreach($tiposBD as $tipoBD2)
-                                    {
-                                        if($tipoBD1['tipo']==$tipoBD2['padre'])
-                                        {
-                                            $tiposDropDown[$tipoBD2['tipo']] = ' --- ' . $tipoBD2['tipo'] . ' --- ';
-                                        }
-                                    }
-                                }
-                            }
-
-                            ?>
-
                             <?= $form->field($model, 'tipoComida')
                                 ->label('Tipo Restaurante')
-                                ->dropDownList($tiposDropDown, ['prompt' => 'Seleccionar Tipo del Restaurante']) ?>
+                                ->dropDownList($tiposDropdown, ['prompt' => 'Seleccionar Tipo del Restaurante']) ?>
                             </div>
                         </div>
 
