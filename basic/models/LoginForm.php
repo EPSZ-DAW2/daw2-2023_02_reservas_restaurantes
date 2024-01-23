@@ -54,7 +54,7 @@ class LoginForm extends Model
                 if ($remainingAttempts <= 1)
                 {
                     //comprobamos si la configuracion esta activa y sino le damos un valor por defecto (10)
-                    $loginBlockedUntil = Configuracion::findByNombreVariable('maxLoginAttempts');
+                    $loginBlockedUntil = Configuracion::findByNombreVariable('loginBlockedUntil');
                     if($loginBlockedUntil)
                         Yii::$app->session->set('loginBlockedUntil', $loginBlockedUntil);
                     else
