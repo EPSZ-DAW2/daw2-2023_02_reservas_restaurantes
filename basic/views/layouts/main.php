@@ -110,13 +110,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             $nombreUsuario = Yii::$app->user->identity->nombre_usuario;
             $usuario = Usuario::findOne(['nombre_usuario' => $nombreUsuario]);
             $fotoUsuario = $usuario->getFotoUsuario();
+            $items3 = [];
+            $items3[] = ['label' => 'Mi Cuenta (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['site']];
+            if(isset($userRoles['cliente'])){
+                $items3[] = ['label' => 'Mi Perfil de Cliente (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/reservas/mostrar-reservas-usuario']];
+            }
+            $items3[] = ['label' => 'Logout', 'url' => ['/site/deslogin']];
             $items2[] = [
                 'label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Perfil', 'style' => 'width: 25px; height: 25px;']),
-                'items' => [
-                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/reservas/mostrar-reservas-usuario']],
-
-                    ['label' => 'Logout', 'url' => ['/site/deslogin']],
-                ],
+                'items' => $items3,
                 'linkOptions' => ['class' => 'nav-link'],
                 'encode' => false,
                 'dropdownOptions' => ['class' => 'dropdown-menu dropdown-menu-end'], //prevenir que salga de la página
