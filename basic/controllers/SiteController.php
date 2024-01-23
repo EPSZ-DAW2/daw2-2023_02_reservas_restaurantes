@@ -16,6 +16,7 @@ use app\models\ContactForm;
 use app\models\Categoria;
 use app\models\Configuracion;
 use yii\data\ActiveDataProvider;
+use app\models\RespuestasFaqSearch;
 
 use app\models\Imagen;
 
@@ -257,6 +258,19 @@ class SiteController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionFaq()
+    {
+        $searchModel = new RespuestasFaqSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = Configuracion::findByNombreVariable('numElemsFAQ') ? Configuracion::findByNombreVariable('numElemsFAQ') : 10;
+
+        return $this->render('faq', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     // /**
     //  * Displays contact page.
