@@ -177,5 +177,46 @@ class BusquedaFiltrada extends Model
         }
     }
 
+    public function generarCategoriasDropdown($categoriasBD, $padre = null, $nivel = 0)
+    {
+        $categoriasDropdown = [];
+
+        foreach ($categoriasBD as $categoriaBD) {
+            if ($categoriaBD['padre'] == $padre) {
+                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo = $prefijo . '|⎺⮑';
+                $categoriasDropdown[$categoriaBD['cat']] = ($nivel > 0 ? $prefijo . ' ' : '') . $categoriaBD['cat'];
+
+                // Llamada recursiva para obtener las subcategorías
+                $subcategorias = $this->generarCategoriasDropdown($categoriasBD, $categoriaBD['cat'], $nivel + 1);
+                $categoriasDropdown = array_merge($categoriasDropdown, $subcategorias);
+            }
+        }
+
+        return $categoriasDropdown;
+    }
+
+
+    public function generarTiposDropdown($tiposBD, $padre = null, $nivel = 0)
+    {
+        $TiposDropdown = [];
+
+        foreach ($tiposBD as $tipoBD) {
+            if ($tipoBD['padre'] == $padre) {
+                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo = $prefijo . '|⎺⮑';
+                $TiposDropdown[$tipoBD['tipo']] = ($nivel > 0 ? $prefijo . ' ' : '') . $tipoBD['tipo'];
+
+                // Llamada recursiva para obtener las subcategorías
+                $subtipos = $this->generarTiposDropdown($tiposBD, $tipoBD['tipo'], $nivel + 1);
+                $TiposDropdown = array_merge($TiposDropdown, $subtipos);
+            }
+        }
+
+        return $TiposDropdown;
+    }
+
+    
+
 
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\BuscarUsuario;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -69,9 +70,13 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($numCategorias = 2)
+    public function actionIndex($numCategorias = NULL)
     {
 
+        if($numCategorias == NULL)
+        {
+            $numCategorias = Configuracion::findByNombreVariable('minCarruselesPortada') ? Configuracion::findByNombreVariable('minCarruselesPortada') : 2;
+        }
         // si venimos redirigidos del bloqueo de sesion
         if (Yii::$app->request->get('removeBlockedSession')) {
             Yii::$app->session->remove('loginBlockedUntil');
@@ -167,7 +172,9 @@ class SiteController extends Controller
 
         //obtenemos las categorias y tipos disponibles de restaurantes en la app
         $categoriasConSubcategorias = Categoria::obtenerCategoriasConPadre();
+        $categoriasDropdown = $model->generarCategoriasDropdown($categoriasConSubcategorias);
         $tiposConSubtipos = TipoComida::obtenerTiposConPadre();
+        $tiposDropdown = $model->generarTiposDropdown($tiposConSubtipos);
 
         //obtenemos las comunidadesautonomas, ciudades y barrios de los distintos restaurantes
         $comunidades = Restaurante::getAllComunidadesAutonomas();
@@ -205,8 +212,8 @@ class SiteController extends Controller
 
                 return $this->render('busqueda-filtrada', [
                     'model' => $model,
-                    'categoriasBD' => $categoriasConSubcategorias,
-                    'tiposBD' => $tiposConSubtipos,
+                    'categoriasDropdown' => $categoriasDropdown,
+                    'tiposDropdown' => $tiposDropdown,
                     'comunidades' => $comunidades,
                     'ciudades' => $ciudades,
                     'barrios' => $barrios,
@@ -237,8 +244,8 @@ class SiteController extends Controller
 
                 return $this->render('busqueda-filtrada', [
                     'model' => $model,
-                    'categoriasBD' => $categoriasConSubcategorias,
-                    'tiposBD' => $tiposConSubtipos,
+                    'categoriasDropdown' => $categoriasDropdown,
+                    'tiposDropdown' => $tiposDropdown,
                     'comunidades' => $comunidades,
                     'ciudades' => $ciudades,
                     'barrios' => $barrios,
@@ -250,8 +257,8 @@ class SiteController extends Controller
 
         return $this->render('busqueda-filtrada', [
             'model' => $model,
-            'categoriasBD' => $categoriasConSubcategorias,
-            'tiposBD' => $tiposConSubtipos,
+            'categoriasDropdown' => $categoriasDropdown,
+            'tiposDropdown' => $tiposDropdown,
             'comunidades' => $comunidades,
             'ciudades' => $ciudades,
             'barrios' => $barrios,
