@@ -34,7 +34,7 @@ class AdminReservasController extends Controller
 
     /**
      * @inheritDoc
-     
+    */
     public function beforeAction($action)
     {
         $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
@@ -46,7 +46,7 @@ class AdminReservasController extends Controller
 
         return parent::beforeAction($action);
     }
-	*/
+	
 
     /**
      * Lists all Reserva models.
