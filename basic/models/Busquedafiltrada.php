@@ -40,7 +40,7 @@ class BusquedaFiltrada extends Model
         $horaDia = $this->horaDia;
 
         // Si se selecciona un día de la semana y la hora es 'abiertoAhora', muestra un error
-        if ($diaSemana !== null && $horaDia === 'abierto') {
+        if ($diaSemana != null && $horaDia === 'abierto') {
             $this->addError($attribute, 'No puedes seleccionar "Ahora mismo" si has elegido un día de la semana.');
         }
     }
