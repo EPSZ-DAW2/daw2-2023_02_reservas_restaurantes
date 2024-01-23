@@ -15,6 +15,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
+use app\models\Configuracion;
+
+use Yii;
+
 /**
  * AdminImagenesController implements the CRUD actions for Imagen model.
  */
@@ -47,6 +51,7 @@ class AdminImagenesController extends Controller
     {
         $searchModel = new ImagenSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = Configuracion::findByNombreVariable('numElemsIMG') ? Configuracion::findByNombreVariable('numElemsIMG') : 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -81,6 +86,8 @@ class AdminImagenesController extends Controller
                 $model->archivo = UploadedFile::getInstance($model, 'archivo'); //se agrega la imagen al modelo
                 if ($model->guardarImagen()) {
                     return $this->redirect(['view', 'id_imagen' => $model->id_imagen]);
+                }else{
+                    $model->delete();
                 }
             }
         } else {
@@ -104,7 +111,14 @@ class AdminImagenesController extends Controller
         $model = $this->findModel($id_imagen);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_imagen' => $model->id_imagen]);
+            //se elimina la imagen anterior
+            $model->eliminarImagen();
+            $model->archivo = UploadedFile::getInstance($model, 'archivo'); //se agrega la imagen al modelo
+            if ($model->guardarImagen()) {
+                return $this->redirect(['view', 'id_imagen' => $model->id_imagen]);
+            }else{
+                $model->delete();
+            }
         }
 
         return $this->render('update', [
@@ -121,10 +135,20 @@ class AdminImagenesController extends Controller
      */
     public function actionDelete($id_imagen)
     {
-        $this->findModel($id_imagen)->delete();
+        try {
+            //se crea una copia del modelo para eliminar la imagen
+            $model = $this->findModel($id_imagen);
+            $this->findModel($id_imagen)->delete();
+        } catch (\Throwable $e) {
+            Yii::$app->session->setFlash('error', 'No se puede eliminar esta imagen debido a que tiene relaciones activas.');
+            return $this->redirect(['index']);
+        }
 
+        $model->eliminarImagen(); //si se ha eliminado la imagen de la bbdd se elimina la imagen del servidor
         return $this->redirect(['index']);
     }
+
+
 
     /**
      * Finds the Imagen model based on its primary key value.

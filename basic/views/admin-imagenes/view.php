@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Imagen $model */
 
 $this->title = $model->id_imagen;
-$this->params['breadcrumbs'][] = ['label' => 'Imagens', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Imágenes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_imagen' => $model->id_imagen], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_imagen' => $model->id_imagen], [
+        <?= Html::a('Editar', ['update', 'id_imagen' => $model->id_imagen], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id_imagen' => $model->id_imagen], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
