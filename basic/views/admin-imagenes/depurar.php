@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         },
       ],
       [
-        'header' => 'Action',
+        'header' => 'Eliminar',
         'content' => function ($model) {
           return Html::a(
             'Eliminar',
@@ -56,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
           );
         }
       ],
+      
     ],
     'pager' => [
       'options' => ['class' => 'pagination justify-content-center'],
