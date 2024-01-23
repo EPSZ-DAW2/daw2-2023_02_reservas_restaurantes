@@ -183,7 +183,7 @@ class BusquedaFiltrada extends Model
 
         foreach ($categoriasBD as $categoriaBD) {
             if ($categoriaBD['padre'] == $padre) {
-                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo =  str_repeat('　', $nivel);
                 $prefijo = $prefijo . '|⎺⮑';
                 $categoriasDropdown[$categoriaBD['cat']] = ($nivel > 0 ? $prefijo . ' ' : '') . $categoriaBD['cat'];
 
@@ -203,7 +203,7 @@ class BusquedaFiltrada extends Model
 
         foreach ($tiposBD as $tipoBD) {
             if ($tipoBD['padre'] == $padre) {
-                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo =  str_repeat('　', $nivel);
                 $prefijo = $prefijo . '|⎺⮑';
                 $TiposDropdown[$tipoBD['tipo']] = ($nivel > 0 ? $prefijo . ' ' : '') . $tipoBD['tipo'];
 
