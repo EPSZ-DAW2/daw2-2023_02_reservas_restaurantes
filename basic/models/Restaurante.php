@@ -207,14 +207,19 @@ class Restaurante extends \yii\db\ActiveRecord
         //Se encuentran todos los tipos de comida asignados al restaurante
         $tipoRestaurante = TipoRestaurante::findAll(['id_restaurante' => $this->id_restaurante]);
         $tipos = [];
-        if($tipoRestaurante != null){
-            foreach($tipoRestaurante as $tipo){
+        if($tipoRestaurante != null)
+        {
+            foreach($tipoRestaurante as $tipo)
+            {
                 $tipoComida = TipoComida::findOne($tipo->id_tipo_comida);
                 $tipos[] = $tipoComida->nombre_tipo;
-                //se busca el tipo padre y de haberlo se agrega
-                $tipoPadre = TipoComida::findOne($tipoComida->id_tipo_padre);
-                if($tipoPadre != null){
-                    $tipos[] = $tipoPadre->nombre_tipo;
+                //se busca la ascendencia del tipo de comida y de haberla se agregan al array
+                $ascendencia = $tipoComida->ascendencia;
+                foreach($ascendencia as $asc)
+                {
+                    //se comprueba que no se haya agregado ya
+                    if(!in_array($asc->nombre_tipo, $tipos))
+                        $tipos[] = $asc->nombre_tipo;
                 }
             }
         }

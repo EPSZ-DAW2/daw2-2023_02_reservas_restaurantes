@@ -81,6 +81,19 @@ class TipoComida extends \yii\db\ActiveRecord
         return $this->hasOne(TipoComida::class, ['id_tipo_comida' => 'id_tipo_padre']);
     }
 
+    public function getAscendencia()
+    {
+        $ascendencia = [];
+        $tipo = $this;
+
+        while ($tipo->id_tipo_padre != null) {
+            $tipo = $tipo->padre;
+            $ascendencia[] = $tipo;
+        }
+
+        return $ascendencia;
+    }
+
 
     /**
      * Obtiene los nombres de todas los tipos y sus subtipos en la base de datos.
