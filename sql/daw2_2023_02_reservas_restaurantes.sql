@@ -217,7 +217,8 @@ INSERT INTO `categoria_restaurante` (`id_categoria`, `id_restaurante`, `notas`) 
 
 CREATE TABLE `comentarios` (
   `id_comentario` int(12) NOT NULL COMMENT 'Identificador del comentario.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario que hace el comentario.',
+  `id_usuario` int(12) NULL COMMENT 'Identificador del usuario que hace el comentario.',
+  `comentario` TEXT NOT NULL COMMENT 'El comentario en sí',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para los comentarios.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -225,17 +226,17 @@ CREATE TABLE `comentarios` (
 -- Volcado de datos para la tabla `comentarios`
 --
 
-INSERT INTO `comentarios` (`id_comentario`, `id_usuario`, `notas`) VALUES
-(1, 4, NULL),
-(2, 7, NULL),
-(3, 4, NULL),
-(4, 6, NULL),
-(5, 7, NULL),
-(6, 1, NULL),
-(7, 9, NULL),
-(8, 6, NULL),
-(9, 5, NULL),
-(10, 8, NULL);
+INSERT INTO `comentarios` (`id_comentario`, `id_usuario`, `comentario`, `notas`) VALUES
+(1, 4, 'ayuda por favor', NULL),
+(2, 7, 'como me convierto en moderador', NULL),
+(3, 4, 'donde borro mi perfil', NULL),
+(4, 6, 'quiero reportar un evento', NULL),
+(5, 7, 'quiero ocultar una reseña, como lo hago', NULL),
+(6, 1, 'donde se puede modificar una reserva', NULL),
+(7, 9, 'que pasa si cancelo mi reserva', NULL),
+(8, 6, 'como cambio mi contraseña', NULL),
+(9, 5, 'cuantos restaurantes puedo tener como gestor', NULL),
+(10, 8, 'como agrego un gestor a mi restaurante', NULL);
 
 -- --------------------------------------------------------
 
