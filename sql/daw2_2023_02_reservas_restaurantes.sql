@@ -35,7 +35,12 @@ USE `daw2_2023_02_reservas_restaurantes`;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
--- --------------------------------------------------------
+
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+-- -----------------------------   TABLAS GENERADAS POR EL SISTEMA RBAC  -----------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `auth_assignment`
@@ -135,7 +140,450 @@ CREATE TABLE `auth_rule` (
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+--
+-- Estructura de tabla para la tabla `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- --------------------------------------------------------
+
+--
+-- Volcado de datos para la tabla `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1705666193),
+('m140506_102106_rbac_init', 1705666583),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1705666583),
+('m180523_151638_rbac_updates_indexes_without_prefix', 1705666583),
+('m200409_110543_rbac_update_mssql_trigger', 1705666583);
+
+-- --------------------------------------------------------
+
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+
+
+
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(12) NOT NULL COMMENT 'Identificador de cada usuario.',
+  `nombre_usuario` varchar(50) NOT NULL COMMENT 'Nombre del usuario.',
+  `email` varchar(32) NOT NULL COMMENT 'Email de regitro del usuario.',
+  `password` varchar(200) NOT NULL COMMENT 'Contraseña de registro del usuario.',
+  `id_foto_usuario` int(12) DEFAULT NULL COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',
+  `rol` varchar(15) DEFAULT NULL COMMENT 'Tipo de rol del usuario.',
+  `bloqueado` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 normal, 1 bloqueado.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el usuario.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `rol`, `bloqueado`, `notas`) VALUES
+(1, 'cliente1', 'cliente1@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 61, 'cliente', 0, NULL),
+(2, 'cliente2', 'cliente2@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 62, 'cliente', 0, NULL),
+(3, 'cliente3', 'cliente3@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 63, 'cliente', 0, NULL),
+(4, 'cliente4', 'cliente4@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 64, 'cliente', 0, NULL),
+(5, 'cliente5', 'cliente5@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 65, 'cliente', 0, NULL),
+(6, 'cliente6', 'cliente6@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 66, 'cliente', 0, NULL),
+(7, 'cliente7', 'cliente7@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 67, 'cliente', 0, NULL),
+(8, 'cliente8', 'cliente8@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 68, 'cliente', 0, NULL),
+(9, 'cliente9', 'cliente9@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 69, 'cliente', 0, NULL),
+(10, 'cliente10', 'cliente10@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 70, 'cliente', 0, NULL),
+(11, 'propietario1', 'propietario1@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(12, 'propietario2', 'propietario2@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(13, 'propietario3', 'propietario3@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(14, 'propietario4', 'propietario4@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(15, 'propietario5', 'propietario5@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
+(16, 'gestor1', 'gestor1@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(17, 'gestor2', 'gestor2@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(18, 'gestor3', 'gestor3@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(19, 'gestor4', 'gestor4@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(20, 'gestor5', 'gestor5@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
+(21, 'moderador1', 'moderador1@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(22, 'moderador2', 'moderador2@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(23, 'moderador3', 'moderador3@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(24, 'moderador4', 'moderador4@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(25, 'moderador5', 'moderador5@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(26, 'moderador6', 'moderador6@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(27, 'moderador7', 'moderador7@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(28, 'moderador8', 'moderador8@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(29, 'moderador9', 'moderador9@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(30, 'moderador10', 'moderador10@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
+(31, 'administrador1', 'administrador1@prueba.com', '$2y$13$VcfOxmSbPsYZ0Gy46Vze4.fY3vcd26Q4Fi7.W1eu1oBGqAgNg0QIS', 1, 'administrador', 0, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `moderadores`
+--
+
+CREATE TABLE `moderadores` (
+  `id_moderador` int(12) NOT NULL COMMENT 'Identificador de cada moderador.',
+  `ciudad_moderador` varchar(100) DEFAULT NULL COMMENT 'Ciudad de residencia del moderador.',
+  `comunidad_autonoma_moderador` varchar(100) NOT NULL COMMENT 'Comunidad autónoma de residencia del moderador.',
+  `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el Moderador'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `moderadores`
+--
+
+INSERT INTO `moderadores` (`id_moderador`, `ciudad_moderador`, `comunidad_autonoma_moderador`, `id_usuario`, `notas`) VALUES
+(1, 'Madrid', 'Comunidad de Madrid', 21, NULL),
+(2, 'Zamora', 'Castilla y León', 22, NULL),
+(3, 'Cádiz', 'Andalucía', 23, NULL),
+(4, 'Sevilla', 'Andalucía', 24, NULL),
+(5, 'Zaragoza', 'Aragón', 25, NULL),
+(6, 'Badajoz', 'Extremadura', 26, NULL),
+(7, 'Bilbao', 'País Vasco', 27, NULL),
+(8, 'Vigo', 'Galicia', 28, NULL),
+(9, 'Valencia', 'Comunidad Valenciana', 29, NULL),
+(10, 'Barcelona', 'Cataluña', 30, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `restaurantes`
+--
+
+CREATE TABLE `restaurantes` (
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante.',
+  `nombre_restaurante` varchar(100) NOT NULL COMMENT 'Nombre del restaurante.',
+  `id_foto_restaurante` int(12) NOT NULL COMMENT 'ID de la foto de perfil del restaurante.',
+  `id_carta` int(12) NOT NULL COMMENT 'ID de la foto de la carta.',
+  `calle_restaurante` varchar(100) NOT NULL COMMENT 'Calle del restaurante.',
+  `barrio_restaurante` varchar(100) DEFAULT NULL COMMENT 'Barrio del restaurante.',
+  `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.',
+  `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.',
+  `precio_medio_comensal` float NOT NULL COMMENT 'Precio por persona medio.',
+  `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
+  `aforo_maximo`int(6) NOT NULL COMMENT 'Aforo máximo del restaurante.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el restaurante.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `restaurantes`
+--
+
+INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `aforo_maximo`, `notas`) VALUES
+(1, 'Savory Haven', 11, 60, 'Rúa Fonte dos Ranchos', 'Casco Vello', 'Vigo', 'Galicia', 15.5, 14, 35, NULL),
+(2, 'Culinary Oasis', 2, 60, 'Paseo de la Castellana', 'Chamartín', 'Madrid', 'Comunidad de Madrid', 21, 13, 35, NULL),
+(3, 'Spice Symphony', 3, 60, 'Calle del Doctor Gómez Ulla', 'Salamanca', 'Madrid', 'Comunidad de Madrid', 50, 12, 35, NULL),
+(4, 'Urban Palate', 4, 60, 'Carrer Aribau', 'Eixample', 'Barcelona', 'Cataluña', 15, 11, 70, NULL),
+(5, 'Gourmet Grove', 5, 60, 'Calle de Serrano', 'Recoletos', 'Madrid', 'Comunidad de Madrid', 25.5, 14, 22, NULL),
+(6, 'Fusion Junction', 6, 60, 'Carrer de Muntaner', 'Sant Gervasi - Galvany', 'Barcelona', 'Cataluña', 32.5, 11, 50, NULL),
+(7, 'Epicurean Elegance', 7, 60, 'Avinguda Diagonal', 'Les Corts', 'Barcelona', 'Cataluña', 9, 14, 35, NULL),
+(8, 'Sizzling Bites', 8, 60, 'Calle de Alcalá', 'El Viso', 'Madrid', 'Comunidad de Madrid', 8.5, 13, 35, NULL),
+(9, 'Bistro Bliss', 9, 60, 'Carrer Gran de Gràcia', 'Gràcia', 'Barcelona', 'Cataluña', 30, 15, 35, NULL),
+(10, 'Gastronomy Galore', 10, 60, 'Rúa Fonte dos Ranchos', 'Casco Vello', 'Vigo', 'Galicia', 14.5, 13, 35, NULL),
+(11, 'Flavor Fiesta', 12, 60, 'Paseo de la Castellana', 'Chamartín', 'Madrid', 'Comunidad de Madrid', 16, 13, 40, NULL),
+(12, 'Tantalizing Tastes', 13, 60, 'Carrer de Muntaner', 'Sant Gervasi - Galvany', 'Barcelona', 'Cataluña', 10, 13, 35, NULL),
+(13, 'Amborisa Alley', 14, 60, 'Paseo de la Castellana', 'Chamartín', 'Madrid', 'Comunidad de Madrid', 21.5, 13, 35, NULL),
+(14, 'Whisk & Whimsy', 15, 60, 'Calle de Serrano', 'Recoletos', 'Madrid', 'Comunidad de Madrid', 25, 13, 35, NULL),
+(15, 'Heart & Harvest', 16, 60, 'Rúa Fonte dos Ranchos', 'Casco Vello', 'Vigo', 'Galicia', 17.5, 13, 35, NULL),
+(16, 'Panorama Plates', 17, 60, 'Carrer Gran de Gràcia', 'Gràcia', 'Barcelona', 'Cataluña', 80, 13, 35, NULL),
+(17, 'Mosaic Munch', 18, 60, 'Carrer de Muntaner', 'Sant Gervasi - Galvany', 'Barcelona', 'Cataluña', 58, 13, 35, NULL),
+(18, 'Zenith Zest', 19, 60, 'Paseo de la Castellana', 'Chamartín', 'Madrid', 'Comunidad de Madrid', 18, 13, 35, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `eventos`
+--
+
+CREATE TABLE `eventos` (
+  `id_evento` int(12) NOT NULL COMMENT 'Identificador de cada evento de restaurante.',
+  `titulo_evento` varchar(100) NOT NULL COMMENT 'Título del evento organizado.',
+  `descripcion_evento` varchar(500) NOT NULL COMMENT 'Descripción del evento organizado.',
+  `fecha_evento` date NOT NULL COMMENT 'Fecha de celebración del evento.',
+  `id_imagen_promocional` int(12) NOT NULL COMMENT 'ID del la imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).',
+  `incidencia_evento` tinyint(1) DEFAULT NULL COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada',
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante asociada a la imagen.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el evento.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `eventos`
+--
+
+INSERT INTO `eventos` (`id_evento`, `titulo_evento`, `descripcion_evento`, `fecha_evento`, `id_imagen_promocional`, `incidencia_evento`, `id_restaurante`, `notas`) VALUES
+(1, 'Noche de Cata de Vinos', 'Una velada dedicada a degustar una selección de vinos de alta calidad. Los comensales pueden disfrutar de maridajes de vino con platos especialmente preparados para realzar la experiencia.', '2023-12-22', 20, 0, 1, NULL),
+(2, 'Noche Temática Culinary Around the World', 'Una experiencia gastronómica que transporta a los comensales a diferentes partes del mundo cada mes. El restaurante presenta platos auténticos de diversas culturas con música y decoración temática.', '2024-01-16', 21, 1, 2, NULL),
+(3, 'Show de Cocina en Vivo', 'Un chef invitado o el chef principal realiza una demostración de cocina en vivo, compartiendo técnicas y secretos culinarios mientras prepara platos del menú. Los comensales pueden interactuar y hacer preguntas.', '2024-01-15', 22, 2, 3, NULL),
+(4, 'Brunch Dominical con Entretenimiento en Vivo', 'Un brunch relajado con música en vivo, creando un ambiente animado. Ofrece una variedad de opciones de desayuno y almuerzo para satisfacer todos los gustos.', '2024-01-10', 23, 0, 4, NULL),
+(5, 'Fiesta de Degustación de Tapas', 'Una celebración de la cocina española con una amplia variedad de tapas. Los comensales pueden probar pequeñas porciones de diferentes platos para compartir y experimentar una explosión de sabores.', '2024-01-05', 24, 0, 5, NULL),
+(6, 'Noche de Mariscos Frescos', 'Un evento que destaca los productos del mar más frescos disponibles. Incluye una variedad de platillos de mariscos, como ostras, langostinos y cangrejos, preparados de diversas maneras.', '2023-12-22', 25, 0, 6, NULL),
+(7, 'Festival de Cerveza y Comida', 'Una celebración que combina cervezas artesanales con deliciosos platillos. Se ofrecen maridajes específicos de cervezas con cada plato, resaltando la diversidad de sabores.', '2024-01-14', 26, 0, 7, NULL),
+(8, 'Noche de Música en Vivo y Cena Romántica', 'Una velada especial con música en vivo que crea un ambiente romántico. Ofrece un menú exclusivo para parejas que desean disfrutar de una cena íntima.', '2023-12-28', 27, 0, 8, NULL),
+(9, 'Clase de Cocina para Niños', 'Una actividad educativa donde los niños pueden aprender a preparar platos sencillos y saludables. Fomenta la participación activa y el interés por la cocina desde temprana edad.', '2023-12-29', 28, 0, 9, NULL),
+(10, 'Fiesta de Celebración de Temporada', 'Un evento que celebra festividades o cambios de temporada con un menú especial y decoración temática. Puede incluir actividades y entretenimiento relacionados con la temporada, como música, juegos o espectáculos.', '2024-01-08', 29, 0, 10, NULL)
+(11, 'Noche de Sushi y Sake', 'Una experiencia culinaria japonesa con una selección de sushi fresco y sake. Los comensales podrán disfrutar de la maestría de los chefs preparando deliciosos rollos.', '2024-02-05', 30, 0, 11, NULL),
+(12, 'Cena con Estrellas Michelin', 'Una exclusiva cena donde el chef presenta platillos inspirados en la alta cocina con una clasificación Michelin. Los ingredientes de calidad se combinan para una experiencia gastronómica excepcional.', '2024-02-14', 31, 0, 12, NULL),
+(13, 'Fiesta del Grill y BBQ', 'Un evento al aire libre dedicado a la parrilla y al barbecue. Ofrece una amplia variedad de carnes, marinadas y guarniciones para los amantes de los sabores ahumados.', '2024-02-21', 32, 0, 13, NULL),
+(14, 'Noche de Jazz y Cócteles', 'Una velada sofisticada con música de jazz en vivo y una selección de cócteles artesanales. Ideal para aquellos que buscan una experiencia relajada y elegante.', '2024-02-28', 33, 0, 14, NULL),
+(15, 'Festival Vegetariano', 'Un evento dedicado a la cocina vegetariana, presentando platos creativos y saludables. Incluye opciones veganas y destaca la versatilidad de los ingredientes vegetales.', '2024-03-08', 34, 0, 15, NULL),
+(16, 'Noche de Pasta Fresca', 'Un banquete centrado en la pasta fresca hecha a mano. Los comensales pueden disfrutar de una variedad de salsas y rellenos, preparados por chefs expertos.', '2024-03-15', 35, 0, 16, NULL),
+(17, 'Fiesta de la Trufa Negra', 'Un festín dedicado a la trufa negra, un manjar gourmet. Los platos están realzados con la delicada y distintiva trufa, ofreciendo una experiencia culinaria única.', '2024-03-22', 36, 0, 17, NULL),
+(18, 'Noche de Cócteles Creativos', 'Una celebración de la coctelería creativa con mixólogos expertos. Ofrece cócteles únicos y creativos que complementan los sabores de la comida.', '2024-04-02', 37, 0, 18, NULL),
+(19, 'Festival del Chocolate', 'Un evento dulce que destaca el chocolate en diversas formas. Desde postres extravagantes hasta bebidas especiales, los amantes del chocolate se deleitarán.', '2024-04-10', 38, 0, 1, NULL),
+(20, 'Noche de Comida Picante', 'Una experiencia culinaria para los amantes de los sabores intensos. El menú presenta platos picantes de diferentes cocinas del mundo, desafiando los paladares.', '2024-04-18', 39, 0, 2, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `control_restaurantes`
+--
+
+CREATE TABLE `control_restaurantes` (
+  `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado al restaurante.',
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado al gestor.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el control de restaurantes.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `control_restaurantes`
+--
+
+INSERT INTO `control_restaurantes` (`id_usuario`, `id_restaurante`, `notas`) VALUES
+(14, 1, NULL),
+(13, 2, NULL),
+(12, 3, NULL),
+(11, 4, NULL),
+(14, 5, NULL),
+(11, 6, NULL),
+(11, 7, NULL),
+(11, 8, NULL),
+(13, 9, NULL),
+(15, 10, NULL),
+(13, 11, NULL),
+(13, 12, NULL),
+(13, 13, NULL),
+(13, 14, NULL),
+(13, 15, NULL),
+(13, 16, NULL),
+(13, 17, NULL),
+(13, 18, NULL),
+(13, 19, NULL),
+(13, 20, NULL),
+(16, 1, NULL),
+(16, 2, NULL),
+(16, 3, NULL),
+(17, 4, NULL),
+(17, 5, NULL),
+(17, 6, NULL),
+(18, 7, NULL),
+(18, 8, NULL),
+(18, 9, NULL),
+(19, 10, NULL),
+(19, 11, NULL),
+(19, 12, NULL),
+(20, 13, NULL),
+(20, 14, NULL),
+(20, 15, NULL),
+(20, 16, NULL),
+(20, 17, NULL),
+(20, 18, NULL),
+(20, 19, NULL),
+(20, 20, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `favoritos`
+--
+
+CREATE TABLE `favoritos` (
+  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario.',
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el favorito.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `favoritos`
+--
+
+INSERT INTO `favoritos` (`id_usuario`, `id_restaurante`, `notas`) VALUES
+(1, 6, NULL),
+(2, 4, NULL),
+(3, 9, NULL),
+(4, 1, NULL),
+(5, 3, NULL),
+(6, 1, NULL),
+(7, 5, NULL),
+(8, 6, NULL),
+(9, 1, NULL),
+(10, 10, NULL),
+(1, 12, NULL),
+(2, 11, NULL),
+(3, 13, NULL),
+(4, 14, NULL),
+(5, 15, NULL),
+(6, 16, NULL),
+(7, 17, NULL),
+(8, 18, NULL),
+(9, 18, NULL),
+(10, 15, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imagenes`
+--
+
+CREATE TABLE `imagenes` (
+  `id_imagen` int(12) NOT NULL COMMENT 'Identificador de imagen.',
+  `descripcion` varchar(500) DEFAULT NULL COMMENT 'Texto que describe la imagen y se muestra como pié de foto (opcional).',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para la imagen.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `imagenes`
+--
+
+INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
+(1, 'foto de usuario default', NULL),
+(2, 'Foto principal restaurante: Savory Haven', NULL),
+(3, 'Foto principal restaurante: Culinary Oasis', NULL),
+(4, 'Foto principal restaurante: Spice Symphony', NULL),
+(5, 'Foto principal restaurante: Urban Palate', NULL),
+(6, 'Foto principal restaurante: Gourmet Grove', NULL),
+(7, 'Foto principal restaurante: Fusion Junction', NULL),
+(8, 'Foto principal restaurante: Epicurean Elegance', NULL),
+(9, 'Foto principal restaurante: Sizzling Bites', NULL),
+(10, 'Foto principal restaurante: Bistro Bliss', NULL),
+(11, 'Foto principal restaurante: Gastronomy Galore', NULL),
+(12, 'Foto principal restaurante: Flavor Fiesta', NULL),
+(13, 'Foto principal restaurante: Tantalizing Tastes', NULL),
+(14, 'Foto principal restaurante: Amborisa Alley', NULL),
+(15, 'Foto principal restaurante: Whisk & Whimsy', NULL),
+(16, 'Foto principal restaurante: Heart & Harvest', NULL),
+(17, 'Foto principal restaurante: Panorama Plates', NULL),
+(18, 'Foto principal restaurante: Mosaic Munch', NULL),
+(19, 'Foto principal restaurante: Zenith Zest', NULL);
+(20, 'Imagen evento: Noche de Cata de Vinos', NULL),
+(21, 'Imagen evento: Noche Temática Culinary Around the World', NULL),
+(22, 'Imagen evento: Show de Cocina en Vivo', NULL),
+(23, 'Imagen evento: Brunch Dominical con Entretenimiento en Vivo', NULL),
+(24, 'Imagen evento: Fiesta de Degustación de Tapas', NULL),
+(25, 'Imagen evento: Noche de Mariscos Frescos', NULL),
+(26, 'Imagen evento: Festival de Cerveza y Comida', NULL),
+(27, 'Imagen evento: Noche de Música en Vivo y Cena Romántica', NULL),
+(28, 'Imagen evento: Clase de Cocina para Niños', NULL),
+(29, 'Imagen evento: Fiesta de Celebración de Temporada', NULL),
+(30, 'Imagen evento: Noche de Sushi y Sake', NULL),
+(31, 'Imagen evento: Cena con Estrellas Michelin', NULL),
+(32, 'Imagen evento: Fiesta del Grill y BBQ', NULL),
+(33, 'Imagen evento: Noche de Jazz y Cócteles', NULL),
+(34, 'Imagen evento: Festival Vegetariano', NULL),
+(35, 'Imagen evento: Noche de Pasta Fresca', NULL),
+(36, 'Imagen evento: Fiesta de la Trufa Negra', NULL),
+(37, 'Imagen evento: Noche de Cócteles Creativos', NULL),
+(38, 'Imagen evento: Festival del Chocolate', NULL),
+(39, 'Imagen evento: Noche de Comida Picante', NULL);
+(40, 'Imagen reseña', NULL),
+(41, 'Imagen reseña', NULL),
+(42, 'Imagen reseña', NULL),
+(43, 'Imagen reseña', NULL),
+(44, 'Imagen reseña', NULL),
+(45, 'Imagen reseña', NULL),
+(46, 'Imagen reseña', NULL),
+(47, 'Imagen reseña', NULL),
+(48, 'Imagen reseña', NULL),
+(49, 'Imagen reseña', NULL),
+(50, 'Imagen restaurante', NULL);
+(51, 'Imagen restaurante', NULL),
+(52, 'Imagen restaurante', NULL),
+(53, 'Imagen restaurante', NULL),
+(54, 'Imagen restaurante', NULL),
+(55, 'Imagen restaurante', NULL),
+(56, 'Imagen restaurante', NULL),
+(57, 'Imagen restaurante', NULL),
+(58, 'Imagen restaurante', NULL),
+(59, 'Imagen restaurante', NULL),
+(60, 'Imagen Carta Restaurantes General', NULL);
+(61, 'Imagen usuario: cliente1', NULL),
+(62, 'Imagen usuario: cliente2', NULL),
+(63, 'Imagen usuario: cliente3', NULL),
+(64, 'Imagen usuario: cliente4', NULL),
+(65, 'Imagen usuario: cliente5', NULL),
+(66, 'Imagen usuario: cliente6', NULL),
+(67, 'Imagen usuario: cliente7', NULL),
+(68, 'Imagen usuario: cliente8', NULL),
+(69, 'Imagen usuario: cliente9', NULL),
+(70, 'Imagen usuario: cliente10', NULL);
+
+--
+-- Estructura de tabla para la tabla `imagenes_resenas`
+--
+
+CREATE TABLE `imagenes_resenas` (
+  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada imagen de resena.',
+  `id_imagen` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la imagen.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relación imagen de resena.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `imagenes_resenas`
+--
+
+INSERT INTO `imagenes_resenas` (`id_resena`, `id_imagen`, `notas`) VALUES
+(10, 40, NULL),
+(8, 41, NULL),
+(3, 42, NULL),
+(2, 43, NULL),
+(3, 44, NULL),
+(8, 45, NULL),
+(8, 46, NULL),
+(9, 47, NULL),
+(8, 48, NULL),
+(10, 49, NULL);
+
+--
+-- Estructura de tabla para la tabla `imagenes_restaurantes`
+--
+
+CREATE TABLE `imagenes_restaurantes` (
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada imagen aportada por el restaurante.',
+  `id_imagen` int(12) NOT NULL COMMENT 'Identificador la imagen.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relación imagen del restaurante.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `imagenes_restaurantes`
+--
+
+INSERT INTO `imagenes_restaurantes` (`id_restaurante`, `id_imagen`, `notas`) VALUES
+(4, 50, NULL),
+(2, 51, NULL),
+(3, 52, NULL),
+(4, 53, NULL),
+(4, 54, NULL),
+(2, 55, NULL),
+(9, 56, NULL),
+(4, 57, NULL),
+(9, 58, NULL),
+(6, 59, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `categorias`
@@ -163,8 +611,6 @@ INSERT INTO `categorias` (`id_categoria`, `id_categoria_padre`, `nombre_categori
 (8, 6, 'Cena romántica', NULL),
 (9, NULL, 'Premiado', NULL),
 (10, 1, 'Sin Gluten económicos', NULL);
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `categoria_restaurante`
@@ -208,8 +654,62 @@ INSERT INTO `categoria_restaurante` (`id_categoria`, `id_restaurante`, `notas`) 
 (10, 10, NULL),
 (7, 10, NULL);
 
+-- ---------------------------------------------------------------------------------------------------------------
 
--- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `tipos_comida`
+--
+
+CREATE TABLE `tipos_comida` (
+  `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador de cada tipo de comida de restaurante.',
+  `id_tipo_padre` int(12) DEFAULT NULL COMMENT 'Identificador del tipo de comida padre NULL si no tiene',
+  `nombre_tipo` varchar(200) NOT NULL COMMENT 'Nombre del tipo de comida.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el tipo.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipos_comida`
+--
+
+INSERT INTO `tipos_comida` (`id_tipo_comida`, `id_tipo_padre`, `nombre_tipo`, `notas`) VALUES
+(1, NULL, 'Asiática', NULL),
+(2, 5, 'Sushi', NULL),
+(3, NULL, 'Americana', NULL),
+(4, 3, 'Hamburguesería', NULL),
+(5, 1, 'Japonesa', NULL),
+(6, 3, 'Tex-Mex', NULL),
+(7, 1, 'India', NULL),
+(8, 7, 'Picante', NULL),
+(9, 1, 'China', NULL),
+(10, 5, 'Ramen', NULL);
+
+--
+-- Estructura de tabla para la tabla `tipo_restaurante`
+--
+
+CREATE TABLE `tipo_restaurante` (
+  `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador del tipo de comida.',
+  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relacion.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipo_restaurante`
+--
+
+INSERT INTO `tipo_restaurante` (`id_tipo_comida`, `id_restaurante`, `notas`) VALUES
+(3, 1, NULL),
+(10, 10, NULL),
+(7, 3, NULL),
+(5, 2, NULL),
+(1, 9, NULL),
+(5, 8, NULL),
+(6, 4, NULL),
+(8, 8, NULL),
+(8, 10, NULL),
+(10, 9, NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `comentarios`
@@ -238,7 +738,36 @@ INSERT INTO `comentarios` (`id_comentario`, `id_usuario`, `comentario`, `notas`)
 (9, 5, 'cuantos restaurantes puedo tener como gestor', NULL),
 (10, 8, 'como agrego un gestor a mi restaurante', NULL);
 
--- --------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas_faq`
+--
+
+CREATE TABLE `respuestas_faq` (
+  `id_pregunta` int(12) NOT NULL COMMENT 'Identificador de la pregunta FAQ.',
+  `pregunta` varchar(500) NOT NULL COMMENT 'Pregunta a responder.',
+  `respuesta` varchar(500) NOT NULL COMMENT 'Respuesta dada.',
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para las preguntas FAQ.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `respuestas_faq`
+--
+
+INSERT INTO `respuestas_faq` (`id_pregunta`, `pregunta`, `respuesta`, `notas`) VALUES
+(1, '¿Cómo puedo hacer una reserva en su sitio web?', 'Para hacer una reserva, simplemente visita nuestra página de reservas en línea. Selecciona la fecha, hora y número de personas, y ¡listo!', NULL),
+(2, '¿Ofrecen opciones de entrega a domicilio?', 'Sí, ofrecemos servicio de entrega a domicilio. Puedes realizar tu pedido directamente desde nuestra página web y recibir deliciosos platillos en la comodidad de tu hogar.', NULL),
+(3, '¿Cómo puedo encontrar eventos y promociones actuales?', 'Consulta nuestra sección de "Eventos y Promociones" en la página principal. Allí encontrarás información actualizada sobre eventos especiales, promociones y ofertas exclusivas.', NULL),
+(4, '¿Tienen un programa de lealtad o membresía?', 'Sí, ofrecemos un programa de lealtad. Regístrate en nuestra web para obtener beneficios exclusivos, acumular puntos con cada visita y disfrutar de descuentos especiales.', NULL),
+(5, '¿Dónde puedo encontrar el menú actualizado del restaurante?', 'Encuentra nuestro menú más reciente en la sección "Menú" de nuestra web. Actualizamos regularmente nuestras ofertas y platos para ofrecerte lo mejor.', NULL),
+(6, '¿Puedo solicitar alimentos especiales o personalizar mi pedido?', 'Sí, puedes personalizar tu pedido según tus preferencias. Utiliza la función de personalización en línea o comunícate con nuestro equipo a través de la sección de "Contacto" para solicitudes especiales.', NULL),
+(7, '¿Cómo puedo dejar comentarios o reseñas sobre mi experiencia?', 'Apreciamos tus comentarios. Visita la sección "Opiniones" en nuestra web para dejar tus comentarios y reseñas. Tu retroalimentación es fundamental para mejorar nuestros servicios.', NULL),
+(8, '¿Ofrecen opciones vegetarianas o para dietas especiales?', 'Sí, contamos con opciones vegetarianas y platos adaptados a diversas dietas. Explora nuestra sección de "Menú Especial" para descubrir nuestras opciones saludables y deliciosas.', NULL),
+(9, '¿Tienen un servicio de asistencia en línea?', 'Sí, ofrecemos soporte en línea a través de nuestro chat en vivo. Puedes hacer preguntas, resolver problemas o recibir asistencia instantánea durante tu visita a nuestra web.', NULL),
+(10, '¿Cómo puedo recibir notificaciones sobre nuevas ofertas y eventos?', 'Regístrate para recibir nuestro boletín informativo. Mantente al tanto de las últimas noticias, ofertas exclusivas y eventos emocionantes al suscribirte a través de nuestra web.', NULL);
+
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `configuraciones`
@@ -264,231 +793,9 @@ INSERT INTO `configuraciones` (`nombre_variable`, `valor_variable`, `notas`) VAL
 ('numElemsFAQ', '10', 'Número de elementos que se mostrarán en la administración de categorías.'),
 ('numElemsIMG', '10', 'Número de elementos que se mostrarán en la administración de categorías.'),
 ('minCarruselesPortada', '3', 'Número de carruseles que se muestran en la portada al entrar.'),
-('along', 'firm', NULL),
-('another', 'item', NULL),
-('hair', 'two', NULL),
-('mind', 'skill', NULL),
-('Mr', 'law', NULL),
-('organization', 'understand', NULL),
-('project', 'recently', NULL),
-('require', 'performance', NULL),
-('traditional', 'all', NULL),
-('without', 'receive', NULL);
+('prueba', '123', NULL);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `control_restaurantes`
---
-
-CREATE TABLE `control_restaurantes` (
-  `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado al restaurante.',
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado al gestor.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el control de restaurantes.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `control_restaurantes`
---
-
-INSERT INTO `control_restaurantes` (`id_usuario`, `id_restaurante`, `notas`) VALUES
-(11, 1, NULL),
-(12, 6, NULL),
-(13, 8, NULL),
-(14, 2, NULL),
-(15, 2, NULL),
-(16, 7, NULL),
-(17, 6, NULL),
-(18, 9, NULL),
-(19, 2, NULL),
-(20, 4, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `eventos`
---
-
-CREATE TABLE `eventos` (
-  `id_evento` int(12) NOT NULL COMMENT 'Identificador de cada evento de restaurante.',
-  `titulo_evento` varchar(100) NOT NULL COMMENT 'Título del evento organizado.',
-  `descripcion_evento` varchar(500) NOT NULL COMMENT 'Descripción del evento organizado.',
-  `fecha_evento` date NOT NULL COMMENT 'Fecha de celebración del evento.',
-  `id_imagen_promocional` int(12) NOT NULL COMMENT 'ID del la imagen aportada por el restaurante (Será la ruta+nombreArchivo de la imagen).',
-  `incidencia_evento` tinyint(1) DEFAULT NULL COMMENT 'Marca de incidencia en una resena: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada',
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante asociada a la imagen.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el evento.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `eventos`
---
-
-INSERT INTO `eventos` (`id_evento`, `titulo_evento`, `descripcion_evento`, `fecha_evento`, `id_imagen_promocional`, `incidencia_evento`, `id_restaurante`, `notas`) VALUES
-(1, 'Evento 1', 'Free social hard they keep catch. Arm worker term with my rise. Record teacher whole sell truth.\nAt decade anyone. Throw include feeling win participant.\nResult power yard. Security personal call population. Focus I may.\nPattern read give like result baby hundred public. Thank imagine shake station design focus. Dark figure free view everybody.\nMean season piece case attorney often difference. Word why case feeling decade.', '2023-12-22', 21, NULL, 1, NULL),
-(2, 'Evento 2', 'Author them yeah test director how wonder hotel. So choose have cause receive fund lawyer.\nFire condition chance. Believe focus door must forget at financial machine. Measure health memory all scene action.\nProbably student turn in without. Like onto them animal week detail change why.\nOut else evening on pretty maintain. Half next itself throw. Sense term garden gun nice challenge left.\nEverything magazine road respond stand message.\nPurpose choose company fall. May generation wide skin.', '2024-01-16', 22, 0, 1, NULL),
-(3, 'Evento 3', 'Which school close soon week smile. Often situation present magazine as.\nWhen participant listen. Radio politics cause son.\nFive although customer view that turn. Our one black from beat several. Soldier town fund today deep.\nRecent capital record song. Number interest fear result.\nWhole save world approach he cultural. Billion ok chair think.\nAround consumer through yet wide option. Capital place consider attorney positive seek positive. When treat public raise southern remember.', '2024-01-15', 23, NULL, 6, NULL),
-(4, 'Evento 4', 'Improve prepare bank simply not occur health. Better military our fish treatment page blue.\nNumber national several thank be shoulder newspaper. Power husband natural letter safe.\nEffort nearly east participant early allow. Million process herself eight medical easy.\nParticularly bit laugh technology lay put join. Now something certainly resource alone. Sit actually without production.\nMedical blood air science. Career pay begin since director. From detail matter already true few attorney.', '2024-01-10', 24, 0, 5, NULL),
-(5, 'Evento 5', 'Figure forget know determine. Gun experience camera board order likely film. Baby treatment mention level beat fire.\nPlan human owner impact. Executive nor age spend lose under. Chance send choice hour human manage ground.\nCoach impact with key moment. East machine often cut data subject control.\nEmployee recently imagine prepare scientist. Sell wish receive run sea improve less. Far read pick finally ahead whom sign physical. Truth tree skin.', '2024-01-05', 25, NULL, 8, NULL),
-(6, 'Evento 6', 'White shoulder adult campaign expert chance.\nBase according pay fear who. Amount there concern worker pretty part base him. Subject evening movie help television particularly.\nProduce drive ever miss election song. Generation same tree phone city natural. Hospital professor research.\nOfficer strong two network. Happen technology their both short easy.\nAt everybody fast especially Congress stuff improve. Chair accept without hospital minute old.', '2023-12-22', 26, 0, 1, NULL),
-(7, 'Evento 7', 'Represent kid surface simple three impact myself black. Discover small until treatment customer whose today of. Dream gun stage attorney anyone look travel.\nRead move it then class. Beat building fight reflect. Want so western.\nTrade heavy year me their second. Late hear adult thing light main. Same everyone force part reveal simply foot.\nGreen avoid yet stand. Day member describe condition.', '2024-01-14', 27, NULL, 3, NULL),
-(8, 'Evento 8', 'Surface fine activity have. Total go student.\nFact season message. Wear own leader here. Detail large change music exist senior.\nIdentify realize result smile remember small. Them save over international final matter office evening.\nAllow police free building old age. Police share mouth whether soldier past.\nMean answer at arm enter threat.\nNorth be thank identify watch cup environment court. History enjoy skin building.', '2023-12-28', 28, 2, 7, NULL),
-(9, 'Evento 9', 'Fast wide law high. Matter avoid social. Live without situation call may page.\nMay central other house majority model. Know both share.\nWhy notice pull explain. Everybody question unit set way three consumer. Method professional blood experience oil might. Way seat article time travel.\nFire federal half defense. Consumer floor brother take beyond line. Seven new upon vote face.', '2023-12-29', 29, NULL, 1, NULL),
-(10, 'Evento 10', 'High season main music person drop. Close recognize improve within room kind.\nPrepare gas speak then despite life smile sense. Catch between present affect.\nBusiness wonder few land. Culture material mouth responsibility watch discuss buy. Media tend military provide challenge nearly bring.\nSmile Mrs both school run much. Recent society or worry hundred start when.\nGreen price police discussion another east recent choose. Street ball read tend.', '2024-01-08', 30, 2, 10, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `favoritos`
---
-
-CREATE TABLE `favoritos` (
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario.',
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el favorito.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `favoritos`
---
-
-INSERT INTO `favoritos` (`id_usuario`, `id_restaurante`, `notas`) VALUES
-(1, 6, NULL),
-(2, 4, NULL),
-(3, 9, NULL),
-(4, 1, NULL),
-(5, 3, NULL),
-(6, 1, NULL),
-(7, 5, NULL),
-(8, 6, NULL),
-(9, 1, NULL),
-(10, 10, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `imagenes`
---
-
-CREATE TABLE `imagenes` (
-  `id_imagen` int(12) NOT NULL COMMENT 'Identificador de imagen.',
-  `descripcion` varchar(500) DEFAULT NULL COMMENT 'Texto que describe la imagen y se muestra como pié de foto (opcional).',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para la imagen.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `imagenes`
---
-
-INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
-(1, 'foto de usuario default', NULL),
-(2, NULL, NULL),
-(3, NULL, NULL),
-(4, NULL, NULL),
-(5, NULL, NULL),
-(6, NULL, NULL),
-(7, NULL, NULL),
-(8, NULL, NULL),
-(9, NULL, NULL),
-(10, NULL, NULL),
-(11, NULL, NULL),
-(12, NULL, NULL),
-(13, NULL, NULL),
-(14, NULL, NULL),
-(15, NULL, NULL),
-(16, NULL, NULL),
-(17, NULL, NULL),
-(18, NULL, NULL),
-(19, NULL, NULL),
-(20, NULL, NULL),
-(21, NULL, NULL),
-(22, NULL, NULL),
-(23, NULL, NULL),
-(24, NULL, NULL),
-(25, NULL, NULL),
-(26, NULL, NULL),
-(27, NULL, NULL),
-(28, NULL, NULL),
-(29, NULL, NULL),
-(30, NULL, NULL),
-(31, NULL, NULL),
-(32, NULL, NULL),
-(33, NULL, NULL),
-(34, NULL, NULL),
-(35, NULL, NULL),
-(36, NULL, NULL),
-(37, NULL, NULL),
-(38, NULL, NULL),
-(39, NULL, NULL),
-(40, NULL, NULL),
-(41, NULL, NULL),
-(42, NULL, NULL),
-(43, NULL, NULL),
-(44, NULL, NULL),
-(45, NULL, NULL),
-(46, NULL, NULL),
-(47, NULL, NULL),
-(48, NULL, NULL),
-(49, NULL, NULL),
-(50, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `imagenes_resenas`
---
-
-CREATE TABLE `imagenes_resenas` (
-  `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada imagen de resena.',
-  `id_imagen` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la imagen.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relación imagen de resena.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `imagenes_resenas`
---
-
-INSERT INTO `imagenes_resenas` (`id_resena`, `id_imagen`, `notas`) VALUES
-(10, 41, NULL),
-(8, 42, NULL),
-(3, 43, NULL),
-(2, 44, NULL),
-(3, 45, NULL),
-(8, 46, NULL),
-(8, 47, NULL),
-(9, 48, NULL),
-(8, 49, NULL),
-(10, 50, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `imagenes_restaurantes`
---
-
-CREATE TABLE `imagenes_restaurantes` (
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada imagen aportada por el restaurante.',
-  `id_imagen` int(12) NOT NULL COMMENT 'Identificador la imagen.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relación imagen del restaurante.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `imagenes_restaurantes`
---
-
-INSERT INTO `imagenes_restaurantes` (`id_restaurante`, `id_imagen`, `notas`) VALUES
-(4, 31, NULL),
-(2, 32, NULL),
-(3, 33, NULL),
-(4, 34, NULL),
-(4, 35, NULL),
-(2, 36, NULL),
-(9, 37, NULL),
-(4, 38, NULL),
-(9, 39, NULL),
-(6, 40, NULL);
-
--- --------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `logs`
@@ -518,59 +825,7 @@ INSERT INTO `logs` (`id_log`, `tipo_log`, `texto_log`, `fecha_hora`, `notas`) VA
 (9, 'LOG_TIPO 9', 'After one fall race international between see back miss anyone already reveal compare bit vote.', '2011-10-08 15:36:51', NULL),
 (10, 'LOG_TIPO 10', 'Hear above commercial safe peace plant thousand lose figure practice generation cold station enough beautiful like.', '1971-12-25 09:17:23', NULL);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `migration`
---
-
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `migration`
---
-
-INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1705666193),
-('m140506_102106_rbac_init', 1705666583),
-('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1705666583),
-('m180523_151638_rbac_updates_indexes_without_prefix', 1705666583),
-('m200409_110543_rbac_update_mssql_trigger', 1705666583);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `moderadores`
---
-
-CREATE TABLE `moderadores` (
-  `id_moderador` int(12) NOT NULL COMMENT 'Identificador de cada moderador.',
-  `ciudad_moderador` varchar(100) DEFAULT NULL COMMENT 'Ciudad de residencia del moderador.',
-  `comunidad_autonoma_moderador` varchar(100) NOT NULL COMMENT 'Comunidad autónoma de residencia del moderador.',
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador asociado a cada usuario.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el Moderador'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `moderadores`
---
-
-INSERT INTO `moderadores` (`id_moderador`, `ciudad_moderador`, `comunidad_autonoma_moderador`, `id_usuario`, `notas`) VALUES
-(1, 'Cooperland', 'Georgia', 21, NULL),
-(2, 'Turnerport', 'West Virginia', 22, NULL),
-(3, 'East Lindsay', 'Oregon', 23, NULL),
-(4, 'East Donna', 'Nevada', 24, NULL),
-(5, 'Williamsfurt', 'New Mexico', 25, NULL),
-(6, 'West Timothyfurt', 'Massachusetts', 26, NULL),
-(7, 'Stantonport', 'Louisiana', 27, NULL),
-(8, 'Hesterville', 'New Mexico', 28, NULL),
-(9, 'Lake Michael', 'Iowa', 29, NULL),
-(10, 'Carlosberg', 'New Jersey', 30, NULL);
-
--- --------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `resenas`
@@ -594,18 +849,18 @@ CREATE TABLE `resenas` (
 --
 
 INSERT INTO `resenas` (`id_resena`, `titulo_resena`, `cuerpo_resena`, `puntuacion`, `precio_x_persona`, `incidencia_resena`, `fecha_resena`, `id_usuario`, `id_restaurante`, `notas`) VALUES
-(1, 'Reseña 1', 'Four reality dark parent two there you. Throughout song join wide himself brother. Shoulder prevent shake three prove special structure.\nTest room adult agree beyond offer his.\nCertain necessary ok culture itself maintain. Fact born information toward season.\nReveal number true easy deep. Improve anyone interview value. Score not again identify respond center product.\nMouth every significant tough she. Father suffer establish him floor value behavior expert.\nHope only start. Set foot tough.', 3, NULL, NULL, '2023-12-26', 1, 1, NULL),
-(2, 'Reseña 2', 'Reach individual candidate want. Cold number family TV later whom. Eat item assume. Pressure choose perform or including home foreign.\nEnd share read reason machine. Agency may through reveal along create what. Cell federal wife.\nEat treatment statement million wide.\nPm night source computer town at share. Avoid current finally its policy choice I.\nControl sing tonight player walk even day. Become east oil. Federal language tell trip day head.', 4, 14.68, 1, '2024-01-05', 2, 9, NULL),
-(3, 'Reseña 3', 'Process network sometimes. Use opportunity show walk down right compare.\nNot similar decide huge you rate family. Improve significant left side country similar cold. If would leader every.\nData today room family official. Fire finish center start. Its recent theory anyone choose could.\nLearn high son responsibility industry light bring party. World like long go nature. Memory dinner already other song manager will data.', 1, NULL, NULL, '2024-01-03', 3, 1, NULL),
-(4, 'Reseña 4', 'Pattern kind cup. None exactly church side seek. Next leader deep remember country eat cultural her. Marriage out us seven trade black church.\nProbably what statement project. Money cost painting what.\nCoach study military indeed police. Specific scene dinner dog. Decide Congress beat contain.\nGood around south likely American professional skin. Where push part moment Mr. Once forward present write reduce cost. Lead drop run by.', 3, 31.57, 1, '2024-01-11', 4, 6, NULL),
-(5, 'Reseña 5', 'Agent evening property him my author board world. Bring player performance should. Day nor know seat really. Bring myself customer respond focus.\nYoung between anyone certain store turn it. So perhaps gun do north.\nResult court back certainly lead grow whose. Meet hotel wrong rather military.\nCell poor protect piece reflect. Full chance accept produce good. Performance heavy effort similar night support.\nAhead ahead better.', 3, NULL, NULL, '2023-12-24', 5, 10, NULL),
-(6, 'Reseña 6', 'Site protect game prepare score remember. Land term bit forward side able rise.\nGeneration once whose yard activity really report I. Including lawyer call your store before.\nRecent minute someone though between join visit.\nEvidence identify pick court organization Republican manage. Little international believe.\nPositive stuff tonight learn picture phone herself. Woman apply else card. Threat section about feeling hospital action car. Weight role wide most trade design he south.', 5, 66.4, 0, '2024-01-17', 6, 8, NULL),
-(7, 'Reseña 7', 'Them range hand understand moment. Speak benefit war election.\nLawyer piece stage manage these stage allow. Performance catch player certain whether. Likely material company card.\nAddress start cost identify. Onto green maybe decade production fill process notice.\nPower myself enough side. Hour give give church tough account meeting. On better military rather test. Need benefit test member seat vote.', 2, NULL, NULL, '2024-01-10', 7, 6, NULL),
-(8, 'Reseña 8', 'From its claim who break and during. South class candidate. In should key apply realize there. Chair early business idea.\nFill assume song personal success goal. Market on society far door save.\nPicture life there record five brother join. Develop interest money assume billion end.\nLong turn measure while reason gas foot.\nThousand ball though ready writer establish huge. Human sign include defense beat be sea. Pick activity today enough admit.', 0, 81.8, 1, '2024-01-16', 8, 5, NULL),
-(9, 'Reseña 9', 'Lose race actually including. Care old strong goal arm hospital it nor. Let sure sort college two.\nParticularly partner point could theory cut. Above democratic society those participant.\nModern law safe. Give student can which safe if.\nCell easy school small. Cup two weight identify education my say. Even single loss field professor simply music.\nApply bar particularly bank popular answer system. Plan imagine song citizen give rest professional less. Hot human protect field successful.', 1, NULL, NULL, '2024-01-18', 9, 2, NULL),
-(10, 'Reseña 10', 'Interesting under likely you red. Evidence air thank structure tend loss east identify.\nMuch list few past. Anything candidate authority easy career task stock. Agreement hair girl project over professional generation.\nSociety choice pass one possible Mr world pass. News reveal international. Fish certain lead statement better.\nExplain add cut pretty woman involve save. Market improve senior.\nHistory event too society. Movie send PM plant.', 5, 76.08, 2, '2024-01-10', 10, 8, NULL);
+(1, 'Experiencia Aceptable', 'Tuve una experiencia aceptable en el restaurante. La comida estaba bien, pero creo que hay áreas en las que podrían mejorar. El ambiente era agradable y el servicio fue amable.', 3, NULL, 0, '2023-12-26', 1, 1, NULL),
+(2, 'Buena Relación Calidad-Precio', 'Me pareció que la relación calidad-precio era justa. Los precios estaban acorde con la calidad de la comida y el servicio ofrecido. Pagué alrededor de $14.68 por persona.', 4, 14.5, 0, '2024-01-05', 2, 9, NULL),
+(3, 'Servicio Excelente', 'El servicio fue excelente. El personal fue amable y atento, haciendo que mi experiencia fuera agradable. Sin duda, volvería a visitar este restaurante.', 1, NULL, NULL, '2024-01-03', 3, 0, NULL),
+(4, 'Comida Bien, Precio Elevado', 'La comida estuvo bien, pero sentí que el precio por persona era un poco elevado para lo que recibí. Pagué alrededor de $31 y esperaba más por ese precio.', 3, 31, 0, '2024-01-11', 4, 6, NULL),
+(5, 'Atención al Cliente Destacada', 'El personal fue muy atento y la atención al cliente fue destacada. Me sentí bien atendido durante toda mi visita. El restaurante tiene un buen servicio al cliente.', 3, NULL, 0, '2023-12-24', 5, 10, NULL),
+(6, 'Deliciosa Comida', 'La comida estaba deliciosa y bien preparada. Los sabores eran sorprendentes, y la presentación también era atractiva. Definitivamente, recomendaría probar sus platos.', 5, 26, 0, '2024-01-17', 6, 8, NULL),
+(7, 'Visita Sin Incidencias', 'No hubo ninguna incidencia durante mi visita. Todo transcurrió sin problemas, y la experiencia fue positiva en general.', 2, NULL, 0, '2024-01-10', 7, 6, NULL),
+(8, 'Experiencia General Positiva', 'Mi experiencia general fue positiva. Disfruté de la comida, el ambiente y el servicio. Sin embargo, creo que siempre hay áreas en las que pueden mejorar.', 0, 8, 0, '2024-01-16', 8, 5, NULL),
+(9, 'Visita Sin Problemas', 'Durante mi visita, no tuve problemas específicos. Todo fue bien, y la experiencia fue agradable. El restaurante brindó un servicio satisfactorio.', 1, NULL, 0, '2024-01-18', 9, 2, NULL),
+(10, 'Excelente Calidad de Comida', 'La calidad de la comida fue excelente. Los sabores eran intensos y bien equilibrados. Considero que la comida justificó el precio pagado, que fue alrededor de $7.5 por persona.', 5, 7.5, 0, '2024-01-10', 10, 8, NULL);
 
--- --------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `reservas`
@@ -627,18 +882,36 @@ CREATE TABLE `reservas` (
 --
 
 INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_reserva`, `hora_reserva`, `id_usuario`, `id_restaurante`, `notas`) VALUES
-(1, 'Tarjeta 502030733906', 2, '2024-01-19', '21:00', 1, 2, NULL),
-(2, 'Tarjeta 343030311814761', 6, '2024-02-15', '21:00', 2, 8, NULL),
-(3, 'Tarjeta 4521750392861607', 4, '2024-01-20', '21:00', 3, 7, NULL),
-(4, 'Tarjeta 38550649830650', 2, '2024-02-13', '21:00', 4, 2, NULL),
-(5, 'Tarjeta 341877916231698', 1, '2024-01-28', '21:00', 5, 5, NULL),
-(6, 'Tarjeta 2461887601090978', 9, '2024-02-15', '21:00', 6, 5, NULL),
-(7, 'Tarjeta 36803166952205', 2, '2024-02-16', '21:00', 7, 8, NULL),
-(8, 'Tarjeta 213190454290463', 9, '2024-02-11', '21:00', 8, 2, NULL),
-(9, 'Tarjeta 676195221467', 5, '2024-02-15', '21:00', 9, 8, NULL),
-(10, 'Tarjeta 341511082668611', 3, '2024-02-15', '21:00', 10, 1, NULL);
+(1, 'Tarjeta 502030733906', 2, '2024-01-19', '21:00', 1, 1, NULL),
+(2, 'Tarjeta 343030311814761', 6, '2024-02-15', '11:00', 2, 2, NULL),
+(3, 'Tarjeta 4521750392861607', 4, '2024-01-20', '20:00', 3, 3, NULL),
+(4, 'Tarjeta 38550649830650', 2, '2024-02-13', '10:00', 4, 4, NULL),
+(5, 'Tarjeta 341877916231698', 1, '2024-01-28', '15:00', 5, 5, NULL),
+(6, 'Tarjeta 2461887601090978', 9, '2024-02-15', '12:00', 6, 6, NULL),
+(7, 'Tarjeta 36803166952205', 2, '2024-02-16', '21:00', 7, 7, NULL),
+(8, 'Tarjeta 213190454290463', 9, '2024-02-11', '11:00', 8, 8, NULL),
+(9, 'Tarjeta 676195221467', 5, '2024-02-15', '22:00', 9, 9, NULL),
+(10, 'Tarjeta 341511082668611', 3, '2024-02-15', '21:30', 10, 10, NULL),
+(11, 'Tarjeta 502030733906', 2, '2024-01-19', '11:30', 1, 11, NULL),
+(12, 'Tarjeta 343030311814761', 6, '2024-02-15', '9:00', 2, 12, NULL),
+(13, 'Tarjeta 4521750392861607', 4, '2024-01-20', '8:00', 3, 13, NULL),
+(14, 'Tarjeta 38550649830650', 2, '2024-02-13', '20:30', 4, 14, NULL),
+(15, 'Tarjeta 341877916231698', 1, '2024-01-28', '13:30', 5, 15, NULL),
+(16, 'Tarjeta 2461887601090978', 9, '2024-02-15', '14:00', 6, 16, NULL),
+(17, 'Tarjeta 36803166952205', 2, '2024-02-16', '15:30', 7, 17, NULL),
+(18, 'Tarjeta 213190454290463', 9, '2024-02-11', '22:00', 8, 18, NULL),
+(19, 'Tarjeta 676195221467', 5, '2024-02-15', '12:00', 9, 1, NULL),
+(20, 'Tarjeta 502030733906', 3, '2022-02-15', '21:00', 10, 2, NULL),
+(21, 'Tarjeta 502030733906', 4, '2022-02-15', '11:00', 1, 3, NULL),
+(22, 'Tarjeta 502030733906', 5, '2022-12-05', '10:30', 1, 4, NULL),
+(23, 'Tarjeta 502030733906', 3, '2024-01-01', '22:00', 1, 5, NULL),
+(24, 'Tarjeta 502030733906', 2, '2024-03-10', '21:30', 1, 6, NULL),
+(25, 'Tarjeta 502030733906', 1, '2021-05-15', '15:00', 1, 7, NULL),
+(26, 'Tarjeta 502030733906', 2, '2021-10-25', '14:00', 1, 8, NULL),
+(27, 'Tarjeta 502030733906', 3, '2020-08-30', '13:30', 1, 8, NULL);
 
--- --------------------------------------------------------
+
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `respuestas`
@@ -658,203 +931,18 @@ CREATE TABLE `respuestas` (
 --
 
 INSERT INTO `respuestas` (`id_respuesta`, `id_respuesta_padre`, `texto_respuesta`, `incidencia_respuesta`, `id_resena`, `notas`) VALUES
-(1, NULL, 'Morning hand entire responsibility opportunity white. Notice inside value identify operation nature record degree.\nPresent describe suggest none simple. Whole structure tree plant sort.', NULL, 10, NULL),
-(2, NULL, 'Information coach my toward soon someone doctor. Court almost ten hour long. Manage team shoulder.\nSkin into people play study develop. Alone can understand.', 2, 3, NULL),
-(3, NULL, 'Project develop standard interest apply. Factor final most alone rock nor letter power.\nEspecially ever notice want star. Pretty own crime piece financial product.', NULL, 9, NULL),
-(4, NULL, 'Any least church body star. Give near western large career usually including.\nMedia building suffer present later message. Five I others may teach. Part around improve structure.', 2, 10, NULL),
-(5, NULL, 'Traditional peace three. Student person simple home together. Little even my station. Those you and southern glass tonight.', NULL, 2, NULL),
-(6, NULL, 'Minute accept body.\nToward without probably manage peace suddenly risk. Share however beyond moment. While lawyer concern country something pretty.', 1, 4, NULL),
-(7, 2, 'Public lot future again face. Throw management rate car approach although.\nSign walk ever same box list. Tonight relate end forward bank whether.', NULL, 6, NULL),
-(8, 2, 'Billion reason age see parent bed. Adult floor science collection have station.\nAnimal already candidate then. Memory though sport form.', 1, 8, NULL),
-(9, 1, 'Spring sure lose trip treatment cell. Over discussion seek check.\nFight color sit its decide indicate rule.\nWall article total practice item. Single turn stuff.', NULL, 2, NULL),
-(10, 3, 'Hospital whole soon option program through painting. Knowledge actually watch.\nDegree include parent risk wish respond. Turn magazine garden maybe nature force.', 0, 7, NULL);
+(1, NULL, '¡Iré a probarlo!', 0, 10, NULL),
+(2, NULL, 'Gracias por la recomendación.', 0, 3, NULL),
+(3, NULL, '¡Interesante! Tomaré en cuenta esa sugerencia.', 0, 9, NULL),
+(4, NULL, 'Buena observación. Estoy de acuerdo contigo.', 0, 10, NULL),
+(5, NULL, '¡Eso suena genial! ¿Hay algún plato que recomiendes especialmente?', 0, 2, NULL),
+(6, NULL, '¡Definitivamente lo consideraré en mi próxima visita!', 0, 4, NULL),
+(7, 2, '¿Fuiste a probar?.', 0, 6, NULL),
+(8, 2, 'Cómo fue tu experiencia', 0, 8, NULL),
+(9, 5, '¿Qué plato elegiste?', 0, 2, NULL),
+(10, 3, 'Deja tu reseña cunado vayas.', 0, 7, NULL);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `respuestas_faq`
---
-
-CREATE TABLE `respuestas_faq` (
-  `id_pregunta` int(12) NOT NULL COMMENT 'Identificador de la pregunta FAQ.',
-  `pregunta` varchar(500) NOT NULL COMMENT 'Pregunta a responder.',
-  `respuesta` varchar(500) NOT NULL COMMENT 'Respuesta dada.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para las preguntas FAQ.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `respuestas_faq`
---
-
-INSERT INTO `respuestas_faq` (`id_pregunta`, `pregunta`, `respuesta`, `notas`) VALUES
-(1, 'About recently simply ground subject cut will possible.', 'Reveal everybody ok move no price source civil amount just American lay up he think oil true toward item investment.', NULL),
-(2, 'Common always thus pretty south whose within memory threat anything into southern brother.', 'Thought center maybe laugh lawyer possible floor believe carry market perform short teach protect describe organization role adult surface task believe summer now him step college.', NULL),
-(3, 'Such think current require capital concern race sea available look.', 'Seven democratic eye consumer study describe onto song give environmental allow ahead he tend politics political lot single degree include foreign.', NULL),
-(4, 'Dog each himself campaign seven social.', 'Clear fill line want certainly hotel trade your anyone image result wear democratic new.', NULL),
-(5, 'Fast great each today make knowledge organization radio news.', 'Large season red authority scene or pull growth somebody detail public art perhaps fund detail yes political rather group he.', NULL),
-(6, 'Important economic down suddenly public difference include foreign minute themselves already.', 'Control tend do event company culture class stock character enjoy maybe cold various guy likely notice foot four top.', NULL),
-(7, 'Rather school other herself pick learn expect.', 'With or themselves care movie artist moment majority to several final eye.', NULL),
-(8, 'Sit entire watch pretty safe window plant cell official and notice weight establish.', 'Stage year one compare learn campaign various yes technology chair after must court particular under account.', NULL),
-(9, 'Reduce agent conference travel there floor institution threat rate.', 'Particularly size teacher as door reveal against condition science new example list spend group may more budget control wonder crime something daughter remember.', NULL),
-(10, 'Health nor me long out up late name view even for fall above.', 'Available though fish your base rise that political thing someone growth decision base language yes institution such bad chance result contain economic person vote.', NULL),
-(11, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `restaurantes`
---
-
-CREATE TABLE `restaurantes` (
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador de cada restaurante.',
-  `nombre_restaurante` varchar(100) NOT NULL COMMENT 'Nombre del restaurante.',
-  `id_foto_restaurante` int(12) NOT NULL COMMENT 'ID de la foto de perfil del restaurante.',
-  `id_carta` int(12) NOT NULL COMMENT 'ID de la foto de la carta.',
-  `calle_restaurante` varchar(100) NOT NULL COMMENT 'Calle del restaurante.',
-  `barrio_restaurante` varchar(100) DEFAULT NULL COMMENT 'Barrio del restaurante.',
-  `ciudad_restaurante` varchar(100) NOT NULL COMMENT 'Ciudad del restaurante.',
-  `comunidad_autonoma_restaurante` varchar(100) NOT NULL COMMENT 'Comunidad autónoma del restaurante.',
-  `precio_medio_comensal` float NOT NULL COMMENT 'Precio por persona medio.',
-  `id_propietario` int(12) NOT NULL COMMENT 'ID del propietario del restaurante.',
-  `aforo_maximo`int(6) NOT NULL COMMENT 'Aforo máximo del restaurante.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el restaurante.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `restaurantes`
---
-
-INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_restaurante`, `id_carta`, `calle_restaurante`, `barrio_restaurante`, `ciudad_restaurante`, `comunidad_autonoma_restaurante`, `precio_medio_comensal`, `id_propietario`, `aforo_maximo` ,`notas`) VALUES
-(1, 'Savory Haven', 11, 11, 'Brian Roads', '123 Maple Street', 'Clintonchester', 'Maine', 55.72, 14, 35, NULL),
-(2, 'Culinary Oasis', 2, 12, 'Lee Port', '456 Willow Avenue', 'East Tinafurt', 'Virginia', 81.73, 13, 35, NULL),
-(3, 'Spice Symphony', 3, 13, 'Kidd Radial', '789 Elm Lane', 'Christensenfurt', 'Tennessee', 55.72, 12, 35, NULL),
-(4, 'Urban Palate', 4, 14, 'Desiree Circles', '101 Pine Boulevard', 'North Gabrielview', 'Kentucky', 16.66, 11, 70, NULL),
-(5, 'Gourmet Grove', 5, 15, 'Brown Roads', '234 Cedar Court', 'Hayesshire', 'Wyoming', 55.72, 14, 22, NULL),
-(6, 'Fusion Junction', 6, 16, 'Chad Lodge', '567 Birch Drive', 'Brownmouth', 'Nebraska', 95.71, 11, 50, NULL),
-(7, 'Epicurean Elegance', 7, 17, 'Tyler Spur', '890 Oak Circle', 'Sethton', 'North Carolina', 55.72, 14, 35, NULL),
-(8, 'Sizzling Bites', 8, 18, 'Robert Pine', '112 Spruce Way', 'Annehaven', 'Connecticut', 82.36, 13, 35, NULL),
-(9, 'Bistro Bliss', 9, 19, 'Mendoza Corner', '345 Sycamore Lane', 'South Raymondfort', 'North Carolina', 55.72, 15, 35, NULL),
-(10, 'Gastronomy Galore', 10, 20, 'Brian Roads', '678 Pinecrest Avenue', 'Camachoville', 'Texas', 74.53, 13, 35, NULL),
-(11, 'Flavor Fiesta', 12, 21, 'Dennis Flat', '901 Magnolia Street', 'Camachoville', 'Connecticut', 16, 13, 40, NULL),
-(12, 'Tantalizing Tastes', 13, 22, 'Chad Lodge', '234 Redwood Road', 'Camachoville', 'Wyoming', 10, 13, 35, NULL),
-(13, 'Amborisa Alley', 14, 23, 'Dennis Flat', '567 Willow Way', 'Camachoville', 'Kentuchy', 21.5, 13, 35, NULL),
-(14, 'Whisk & Whimsy', 15, 24, 'Robert Pine', '890 Elm Grove', 'Camachoville', 'Maine', 25, 13, 35, NULL),
-(15, 'Heart & Harvest', 16, 25, 'Brian Roads', '123 Cedar Avenue', 'Camachoville', 'Maine', 17.8, 13, 35, NULL),
-(16, 'Panorama Plates', 17, 26, 'Mendoza Corner', '456 Birch Boulevard', 'Camachoville', 'Virginia', 250, 13, 35, NULL),
-(17, 'Mosaic Munch', 18, 27, 'Dennis Flat', '789 Oak Lane', 'Camachoville', 'North Carolina', 58.3, 13, 35, NULL),
-(18, 'Zenith Zest', 19, 28, 'Lee Port', '101 Pinecrest Court', 'Camachoville', 'Tennessee', 18, 13, 35, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipos_comida`
---
-
-CREATE TABLE `tipos_comida` (
-  `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador de cada tipo de comida de restaurante.',
-  `id_tipo_padre` int(12) DEFAULT NULL COMMENT 'Identificador del tipo de comida padre NULL si no tiene',
-  `nombre_tipo` varchar(200) NOT NULL COMMENT 'Nombre del tipo de comida.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el tipo.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `tipos_comida`
---
-
-INSERT INTO `tipos_comida` (`id_tipo_comida`, `id_tipo_padre`, `nombre_tipo`, `notas`) VALUES
-(1, NULL, 'Asiática', NULL),
-(2, 5, 'Sushi', NULL),
-(3, NULL, 'Americana', NULL),
-(4, 3, 'Hamburguesería', NULL),
-(5, 1, 'Japonesa', NULL),
-(6, 3, 'Tex-Mex', NULL),
-(7, 1, 'India', NULL),
-(8, 7, 'Picante', NULL),
-(9, 1, 'China', NULL),
-(10, 5, 'Ramen', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_restaurante`
---
-
-CREATE TABLE `tipo_restaurante` (
-  `id_tipo_comida` int(12) NOT NULL COMMENT 'Identificador del tipo de comida.',
-  `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para la relacion.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `tipo_restaurante`
---
-
-INSERT INTO `tipo_restaurante` (`id_tipo_comida`, `id_restaurante`, `notas`) VALUES
-(3, 1, NULL),
-(10, 10, NULL),
-(7, 3, NULL),
-(5, 2, NULL),
-(1, 9, NULL),
-(5, 8, NULL),
-(6, 4, NULL),
-(8, 8, NULL),
-(8, 10, NULL),
-(10, 9, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `id_usuario` int(12) NOT NULL COMMENT 'Identificador de cada usuario.',
-  `nombre_usuario` varchar(50) NOT NULL COMMENT 'Nombre del usuario.',
-  `email` varchar(32) NOT NULL COMMENT 'Email de regitro del usuario.',
-  `password` varchar(200) NOT NULL COMMENT 'Contraseña de registro del usuario.',
-  `id_foto_usuario` int(12) DEFAULT NULL COMMENT 'ID de la foto de perfil del usuario. NULL si no tiene.',
-  `rol` varchar(15) DEFAULT NULL COMMENT 'Tipo de rol del usuario.',
-  `bloqueado` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 normal, 1 bloqueado.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el usuario.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `password`, `id_foto_usuario`, `rol`, `bloqueado`, `notas`) VALUES
-(1, 'cliente1', 'cliente1@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(2, 'cliente2', 'cliente2@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(3, 'cliente3', 'cliente3@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(4, 'cliente4', 'cliente4@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(5, 'cliente5', 'cliente5@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(6, 'cliente6', 'cliente6@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(7, 'cliente7', 'cliente7@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(8, 'cliente8', 'cliente8@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(9, 'cliente9', 'cliente9@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(10, 'cliente10', 'cliente10@prueba.com', '$2y$13$qgJvfpEzmyNjbxaQy4c1Q.jOPhdqFN1ydD6At0X2FRPZ2w3W.Ln0e', 1, 'cliente', 0, NULL),
-(11, 'propietario1', 'propietario1@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
-(12, 'propietario2', 'propietario2@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
-(13, 'propietario3', 'propietario3@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
-(14, 'propietario4', 'propietario4@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
-(15, 'propietario5', 'propietario5@prueba.com', '$2y$13$U8rfkTZJKE4toJ5S3s3u3u7olBvRwcXtwddYe2HkXaBQ7g72Odym6', 1, 'propietario', 0, NULL),
-(16, 'gestor1', 'gestor1@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
-(17, 'gestor2', 'gestor2@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
-(18, 'gestor3', 'gestor3@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
-(19, 'gestor4', 'gestor4@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
-(20, 'gestor5', 'gestor5@prueba.com', '$2y$13$aQDTaChAD1GdPqfcTw5kQ.0siizNfMTKR5j8.0q.0TAPMMZFB2YlS', 1, 'gestor', 0, NULL),
-(21, 'moderador1', 'moderador1@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(22, 'moderador2', 'moderador2@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(23, 'moderador3', 'moderador3@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(24, 'moderador4', 'moderador4@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(25, 'moderador5', 'moderador5@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(26, 'moderador6', 'moderador6@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(27, 'moderador7', 'moderador7@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(28, 'moderador8', 'moderador8@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(29, 'moderador9', 'moderador9@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(30, 'moderador10', 'moderador10@prueba.com', '$2y$13$Sed0Vf7aRoX1ewB19n77RObyn8Cfgo4c7taFrCPoIB8KVvvli6HBi', 1, 'moderador', 0, NULL),
-(31, 'administrador1', 'administrador1@prueba.com', '$2y$13$VcfOxmSbPsYZ0Gy46Vze4.fY3vcd26Q4Fi7.W1eu1oBGqAgNg0QIS', 1, 'administrador', 0, NULL);
-
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Estructura para la tabla horario
@@ -983,8 +1071,49 @@ INSERT INTO `horario` (`id_horario`,`id_restaurante`, `hora_apertura`, `hora_cie
 (107, 10, '20:00', '23:00', 'martes', NULL),
 (108, 10, '9:00', '16:30', 'miércoles', NULL),
 (109, 10, '20:00', '23:00', 'miércoles', NULL),
-(110, 10, '9:00', '16:30', 'jueves', NULL);
+(110, 10, '9:00', '16:30', 'jueves', NULL),
+(111, 11, '9:00', '16:30', 'martes', NULL),
+(112, 11, '20:00', '23:00', 'martes', NULL),
+(113, 11, '9:00', '16:30', 'miércoles', NULL),
+(114, 11, '20:00', '23:00', 'miércoles', NULL),
+(115, 11, '9:00', '16:30', 'jueves', NULL),
+(116, 12, '9:00', '16:30', 'martes', NULL),
+(117, 12, '20:00', '23:00', 'martes', NULL),
+(118, 12, '9:00', '16:30', 'miércoles', NULL),
+(119, 12, '20:00', '23:00', 'miércoles', NULL),
+(120, 12, '9:00', '16:30', 'jueves', NULL),
+(121, 13, '9:00', '16:30', 'martes', NULL),
+(122, 13, '20:00', '23:00', 'martes', NULL),
+(123, 13, '9:00', '16:30', 'miércoles', NULL),
+(124, 13, '20:00', '23:00', 'miércoles', NULL),
+(125, 13, '9:00', '16:30', 'jueves', NULL),
+(126, 14, '9:00', '16:30', 'martes', NULL),
+(127, 14, '20:00', '23:00', 'martes', NULL),
+(128, 14, '9:00', '16:30', 'miércoles', NULL),
+(129, 14, '20:00', '23:00', 'miércoles', NULL),
+(130, 14, '9:00', '16:30', 'jueves', NULL),
+(131, 15, '9:00', '16:30', 'martes', NULL),
+(132, 15, '20:00', '23:00', 'martes', NULL),
+(133, 15, '9:00', '16:30', 'miércoles', NULL),
+(134, 15, '20:00', '23:00', 'miércoles', NULL),
+(135, 15, '9:00', '16:30', 'jueves', NULL),
+(136, 16, '9:00', '16:30', 'martes', NULL),
+(137, 16, '20:00', '23:00', 'martes', NULL),
+(138, 16, '9:00', '16:30', 'miércoles', NULL),
+(139, 16, '20:00', '23:00', 'miércoles', NULL),
+(140, 16, '9:00', '16:30', 'jueves', NULL),
+(141, 17, '9:00', '16:30', 'martes', NULL),
+(142, 17, '20:00', '23:00', 'martes', NULL),
+(143, 17, '9:00', '16:30', 'miércoles', NULL),
+(144, 17, '20:00', '23:00', 'miércoles', NULL),
+(145, 17, '9:00', '16:30', 'jueves', NULL),
+(146, 18, '9:00', '16:30', 'martes', NULL),
+(147, 18, '20:00', '23:00', 'martes', NULL),
+(148, 18, '9:00', '16:30', 'miércoles', NULL),
+(149, 18, '20:00', '23:00', 'miércoles', NULL),
+(150, 18, '9:00', '16:30', 'jueves', NULL);
 
+-- ---------------------------------------------------------------------------------------------------------------
 
 --
 -- Índices para tablas volcadas
