@@ -85,13 +85,13 @@ class CategoriaSearch extends Categoria
         // grid filtering conditions
         $query->andFilterWhere([
             'id_categoria' => $this->id_categoria,
-            'id_categoria_padre' => $this->id_categoria_padre,
+            'categorias.id_categoria_padre' => $this->id_categoria_padre,
         ]);
-
+        
         $query->andFilterWhere(['like', 'nombre_categoria', $this->nombre_categoria])
             ->andFilterWhere(['like', 'notas', $this->notas])
             ->andFilterWhere(['like', 'padre.nombre_categoria', $this->nombre_categoria_padre]);
-
+        
         $query->andFilterHaving(['num_restaurantes' => $this->num_restaurantes]);
 
         return $dataProvider;
