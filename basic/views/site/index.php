@@ -33,7 +33,7 @@ $this->title = 'La Cuchara - Inicio';
 
         <hr>
         <!-- Registra tu restaurante -->
-        <div style="background-image: url('<?= $imagenPropietario->urlImagen ?>'); background-size: cover; height: 250px;">
+        <div style="<?php if($imagenPropietario){ echo "background-image: url('$imagenPropietario->urlImagen'); background-size: cover; "; }?>height: 250px;">
             <div class="text-center" style="background-color: rgba(0, 0, 0, 0.5); padding: 20px; height: 100%;">
                 <h1 class="text-white">¿Quieres registrar tu restaurante?</h1>
                 <?= Html::a('Registrate como propietario', ['/site/registro', 'registrogp'=>1], ['class' => 'btn btn-primary']) ?>
