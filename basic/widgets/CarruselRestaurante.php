@@ -38,36 +38,38 @@ class CarruselRestaurante extends Widget
 
     //obtiene una instancia de la categoria por el nombre
     $categoria = Categoria::find()->where(['id_categoria' => $this->idCategoria])->one();
-    $this->nombreCategoria = $categoria->nombre_categoria;
-    $descendientes = [];
-    $descendientes = $categoria->getDescendientes($descendientes);
-
-    //se agrega la categoria padre y sus descendientes a un array
-    $categorias = [];
-    $categorias[] = $categoria;
-    foreach ($descendientes as $descendiente) 
+    if($categoria != NULL)
     {
-      $categorias[] = $descendiente;
-    }
+      $this->nombreCategoria = $categoria->nombre_categoria;
+      $descendientes = [];
+      $descendientes = $categoria->getDescendientes($descendientes);
 
-    foreach($categorias as $categoria)
-    {
-      //se obtiene la relacion
-      $restaurantesCategoria = CategoriaRestaurante::find()->where(['id_categoria' => $categoria->id_categoria])->all();
-      if ($restaurantesCategoria != NULL)
+      //se agrega la categoria padre y sus descendientes a un array
+      $categorias = [];
+      $categorias[] = $categoria;
+      foreach ($descendientes as $descendiente) 
       {
-        foreach ($restaurantesCategoria as $relacion) 
+        $categorias[] = $descendiente;
+      }
+
+      foreach($categorias as $categoria)
+      {
+        //se obtiene la relacion
+        $restaurantesCategoria = CategoriaRestaurante::find()->where(['id_categoria' => $categoria->id_categoria])->all();
+        if ($restaurantesCategoria != NULL)
         {
-          $restaurante = Restaurante::findOne($relacion->id_restaurante);
-          //si el restaurante no está en la lista de restaurantes, se agrega
-          if (!in_array($restaurante, $this->models)) 
+          foreach ($restaurantesCategoria as $relacion) 
           {
-            $this->models[] = $restaurante;
+            $restaurante = Restaurante::findOne($relacion->id_restaurante);
+            //si el restaurante no está en la lista de restaurantes, se agrega
+            if (!in_array($restaurante, $this->models)) 
+            {
+              $this->models[] = $restaurante;
+            }
           }
         }
       }
     }
-
   }
 
   public function run()
