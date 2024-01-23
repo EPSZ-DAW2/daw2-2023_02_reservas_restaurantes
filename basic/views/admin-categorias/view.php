@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Eliminar', ['delete', 'id_categoria' => $model->id_categoria], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Está seguro de que desea eliminar esta categoría?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Estás seguro de que quieres eliminar este restaurante de la categoría?',
+                                    'confirm' => 'Está seguro de que desea eliminar este restaurante de la categoría?',
                                     'method' => 'post',
                                 ],
                             ]
@@ -98,6 +98,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+    </div>
+
+    <div>
+        <h2>Arbol de la categoría</h2>
+        <?php
+            $raiz = $model->raiz;
+            $arbol = $raiz->arbolDescendientes;
+            echo "<pre>".$arbol."</pre>";
+
+        ?>
     </div>
 
 </div>

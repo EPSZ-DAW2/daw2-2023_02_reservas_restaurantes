@@ -115,6 +115,34 @@ class Categoria extends \yii\db\ActiveRecord
         return $categorias;
     }
 
+    public function getRaiz(){
+        $padre = $this->padre;
+        if($padre){
+            return $padre->getRaiz();
+        }else{
+            return $this;
+        }
+    }
+
+    //devuelve las categorías que son hijos o descendientes de esta
+    public function getArbolDescendientes($nivel = 0, $categorias = [])
+    {
+        $arbol = "";
+
+        if ($nivel == 0)
+        {
+            $arbol .= '- ' . $this->nombre_categoria . "\n"; //se agrega la categoria actual
+        }
+
+        $hijos = $this->hijos;
+        
+        foreach ($hijos as $hijo) {
+            $arbol .= str_repeat('| ', $nivel + 1) . '- ' . $hijo->nombre_categoria . "\n";
+            $arbol .= $hijo->getArbolDescendientes($nivel + 1, $categorias);
+        }
+        
+        return $arbol;
+    }
 
     /**
      * Obtiene los nombres de todas las categorías y sus subcategorías en la base de datos.
