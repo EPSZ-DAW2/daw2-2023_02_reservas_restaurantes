@@ -53,6 +53,15 @@ $this->params['breadcrumbs'][] = $this->title;
         }
       ],
     ],
+    'pager' => [
+      'options' => ['class' => 'pagination justify-content-center'],
+      'prevPageLabel' => '<',
+      'nextPageLabel' => '>',
+      'prevPageCssClass' => 'page-item',
+      'nextPageCssClass' => 'page-item',
+      'linkOptions' => ['class' => 'page-link'],
+      'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
+  ],
   ]); ?>
 
 

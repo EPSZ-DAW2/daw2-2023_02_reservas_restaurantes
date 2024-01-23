@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use Yii;
+use app\models\Configuracion;
 
 /**
  * AdminCategoriasController implements the CRUD actions for Categoria model.
@@ -25,7 +26,7 @@ class AdminCategoriasController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -44,6 +45,7 @@ class AdminCategoriasController extends Controller
     {
         $searchModel = new CategoriaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = Configuracion::findByNombreVariable('numElemsCAT') ? Configuracion::findByNombreVariable('numElemsCAT') : 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
