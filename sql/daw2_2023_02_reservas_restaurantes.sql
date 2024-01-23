@@ -529,7 +529,9 @@ INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
 (67, 'Imagen usuario: cliente7', NULL),
 (68, 'Imagen usuario: cliente8', NULL),
 (69, 'Imagen usuario: cliente9', NULL),
-(70, 'Imagen usuario: cliente10', NULL);
+(70, 'Imagen usuario: cliente10', NULL),
+(71, 'Imagen registro propietarios index', NULL);
+
 
 --
 -- Estructura de tabla para la tabla `imagenes_resenas`
