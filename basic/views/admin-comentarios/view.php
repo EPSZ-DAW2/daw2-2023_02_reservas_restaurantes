@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\RespuestasFaq $model */
+/** @var app\models\Comentario $model */
 
-$this->title = $model->id_pregunta;
-$this->params['breadcrumbs'][] = ['label' => 'Preguntas Frecuentes', 'url' => ['index']];
+$this->title = $model->id_comentario;
+$this->params['breadcrumbs'][] = ['label' => 'Comentarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="respuestas-faq-view">
+<div class="comentario-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Editar', ['update', 'id_pregunta' => $model->id_pregunta], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Eliminar', ['delete', 'id_pregunta' => $model->id_pregunta], [
+        <?= Html::a('Update', ['update', 'id_comentario' => $model->id_comentario], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id_comentario' => $model->id_comentario], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,12 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_pregunta',
-            'pregunta',
-            'respuesta',
+            'id_comentario',
+            'id_usuario',
+            'comentario:ntext',
             'notas:ntext',
         ],
-        
     ]) ?>
 
 </div>
