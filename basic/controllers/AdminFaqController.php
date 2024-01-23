@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Configuracion;
+use Yii;
 
 /**
  * AdminFaqController implements the CRUD actions for RespuestasFaq model.
@@ -32,6 +33,21 @@ class AdminFaqController extends Controller
                 ],
             ]
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function beforeAction($action)
+    {
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+        // Verificar si el usuario tiene el rol de administrador
+        if (!isset($userRoles['administrador'])) {
+            return $this->goHome();
+        }
+
+        return parent::beforeAction($action);
     }
 
     /**

@@ -35,6 +35,21 @@ class AdminCategoriasController extends Controller
         );
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function beforeAction($action)
+    {
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+        // Verificar si el usuario tiene el rol de administrador
+        if (!isset($userRoles['administrador'])) {
+            return $this->goHome();
+        }
+
+        return parent::beforeAction($action);
+    }
+
 
     /**
      * Lists all Categoria models.
