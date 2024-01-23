@@ -183,12 +183,8 @@ class BusquedaFiltrada extends Model
 
         foreach ($categoriasBD as $categoriaBD) {
             if ($categoriaBD['padre'] == $padre) {
-                if($nivel==1)
-                    $prefijo = '⎺⮑';
-                else {
-                    $prefijo =  str_repeat('⎺⎺⎺⎺', $nivel);
-                    $prefijo = $prefijo . '⮑';
-                }
+                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo = $prefijo . '|⎺⮑';
                 $categoriasDropdown[$categoriaBD['cat']] = ($nivel > 0 ? $prefijo . ' ' : '') . $categoriaBD['cat'];
 
                 // Llamada recursiva para obtener las subcategorías
@@ -207,12 +203,8 @@ class BusquedaFiltrada extends Model
 
         foreach ($tiposBD as $tipoBD) {
             if ($tipoBD['padre'] == $padre) {
-                if($nivel==1)
-                    $prefijo = '⎺⮑';
-                else {
-                    $prefijo =  str_repeat('⎺⎺⎺⎺', $nivel);
-                    $prefijo = $prefijo . '⮑';
-                }
+                $prefijo =  str_repeat('ㅤ', $nivel);
+                $prefijo = $prefijo . '|⎺⮑';
                 $TiposDropdown[$tipoBD['tipo']] = ($nivel > 0 ? $prefijo . ' ' : '') . $tipoBD['tipo'];
 
                 // Llamada recursiva para obtener las subcategorías

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);  ?>
                         <div class="row">
                             <div class="col-lg-6">
-                            
+                                
                             <?= $form->field($model, 'categoria')
                                 ->label('Categoría Restaurante')
                                 ->dropDownList($categoriasDropdown, ['prompt' => 'Seleccionar Categoría del Restaurante']) ?>
