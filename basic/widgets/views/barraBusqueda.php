@@ -5,7 +5,7 @@ use yii\helpers\Url;
 
 <div class="row">
   <div class="d-flex justify-content-center">
-    <div class="col-lg-6 text-center">
+    <div class="col-lg-6 text-center mt-3 mb-3">
       <h2>Encuentra tu próxima reserva: </h2>
       <?= Html::beginForm(Url::to(['busqueda-filtrada']), 'get'); ?>
         <div class="input-group">
