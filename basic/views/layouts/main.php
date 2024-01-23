@@ -91,6 +91,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     $itemsGestion[] = ['label' => 'Reservas', 'url' => ['/admin-reservas']];
                     $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
                     $itemsGestion[] = ['label' => 'Usuarios', 'url' => ['/usuarios']];
+					$itemsGestion[] = ['label' => 'Logs', 'url' => ['/logs']];
                 }
 
                 //se agregan los items de gestión al nav
