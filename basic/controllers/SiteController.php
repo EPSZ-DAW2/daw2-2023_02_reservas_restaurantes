@@ -18,6 +18,8 @@ use app\models\Categoria;
 use app\models\Configuracion;
 use yii\data\ActiveDataProvider;
 
+use app\models\Imagen;
+
 class SiteController extends Controller
 {
     /**
@@ -81,9 +83,12 @@ class SiteController extends Controller
 
         //Se obtiene el id de la última categoría en la bbdd
         $maxCategoria = Categoria::find()->max('id_categoria');
+        //Se obtiene la imagen del propietario
+        $imagenPropietario = Imagen::find()->where(['id_imagen' => 51])->one();
         return $this->render('index', [
             'maxCategoria' => $maxCategoria,
-            'numCategorias' => $numCategorias
+            'numCategorias' => $numCategorias,
+            'imagenPropietario' => $imagenPropietario
         ]);
     }
 

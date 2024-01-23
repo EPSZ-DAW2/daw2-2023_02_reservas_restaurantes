@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\RespuestasFaqSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Respuestas Faqs';
+$this->title = 'Preguntas Frecuentes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="respuestas-faq-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Respuestas Faq', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Agregar FAQ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,20 +27,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id_pregunta',
             'pregunta',
             'respuesta',
             'notas:ntext',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, RespuestasFaq $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_pregunta' => $model->id_pregunta]);
                  }
             ],
         ],
+        'pager' => [
+            'options' => ['class' => 'pagination justify-content-center'],
+            'prevPageLabel' => '<',
+            'nextPageLabel' => '>',
+            'prevPageCssClass' => 'page-item',
+            'nextPageCssClass' => 'page-item',
+            'linkOptions' => ['class' => 'page-link'],
+            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
+        ],
     ]); ?>
-
 
 </div>
