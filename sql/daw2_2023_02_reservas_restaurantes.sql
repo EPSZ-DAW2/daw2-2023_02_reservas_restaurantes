@@ -335,7 +335,7 @@ INSERT INTO `eventos` (`id_evento`, `titulo_evento`, `descripcion_evento`, `fech
 (7, 'Festival de Cerveza y Comida', 'Una celebración que combina cervezas artesanales con deliciosos platillos. Se ofrecen maridajes específicos de cervezas con cada plato, resaltando la diversidad de sabores.', '2024-01-14', 26, 0, 7, NULL),
 (8, 'Noche de Música en Vivo y Cena Romántica', 'Una velada especial con música en vivo que crea un ambiente romántico. Ofrece un menú exclusivo para parejas que desean disfrutar de una cena íntima.', '2023-12-28', 27, 0, 8, NULL),
 (9, 'Clase de Cocina para Niños', 'Una actividad educativa donde los niños pueden aprender a preparar platos sencillos y saludables. Fomenta la participación activa y el interés por la cocina desde temprana edad.', '2023-12-29', 28, 0, 9, NULL),
-(10, 'Fiesta de Celebración de Temporada', 'Un evento que celebra festividades o cambios de temporada con un menú especial y decoración temática. Puede incluir actividades y entretenimiento relacionados con la temporada, como música, juegos o espectáculos.', '2024-01-08', 29, 0, 10, NULL)
+(10, 'Fiesta de Celebración de Temporada', 'Un evento que celebra festividades o cambios de temporada con un menú especial y decoración temática. Puede incluir actividades y entretenimiento relacionados con la temporada, como música, juegos o espectáculos.', '2024-01-08', 29, 0, 10, NULL),
 (11, 'Noche de Sushi y Sake', 'Una experiencia culinaria japonesa con una selección de sushi fresco y sake. Los comensales podrán disfrutar de la maestría de los chefs preparando deliciosos rollos.', '2024-02-05', 30, 0, 11, NULL),
 (12, 'Cena con Estrellas Michelin', 'Una exclusiva cena donde el chef presenta platillos inspirados en la alta cocina con una clasificación Michelin. Los ingredientes de calidad se combinan para una experiencia gastronómica excepcional.', '2024-02-14', 31, 0, 12, NULL),
 (13, 'Fiesta del Grill y BBQ', 'Un evento al aire libre dedicado a la parrilla y al barbecue. Ofrece una amplia variedad de carnes, marinadas y guarniciones para los amantes de los sabores ahumados.', '2024-02-21', 32, 0, 13, NULL),
@@ -478,7 +478,7 @@ INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
 (16, 'Foto principal restaurante: Heart & Harvest', NULL),
 (17, 'Foto principal restaurante: Panorama Plates', NULL),
 (18, 'Foto principal restaurante: Mosaic Munch', NULL),
-(19, 'Foto principal restaurante: Zenith Zest', NULL);
+(19, 'Foto principal restaurante: Zenith Zest', NULL),
 (20, 'Imagen evento: Noche de Cata de Vinos', NULL),
 (21, 'Imagen evento: Noche Temática Culinary Around the World', NULL),
 (22, 'Imagen evento: Show de Cocina en Vivo', NULL),
@@ -498,7 +498,7 @@ INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
 (36, 'Imagen evento: Fiesta de la Trufa Negra', NULL),
 (37, 'Imagen evento: Noche de Cócteles Creativos', NULL),
 (38, 'Imagen evento: Festival del Chocolate', NULL),
-(39, 'Imagen evento: Noche de Comida Picante', NULL);
+(39, 'Imagen evento: Noche de Comida Picante', NULL),
 (40, 'Imagen reseña', NULL),
 (41, 'Imagen reseña', NULL),
 (42, 'Imagen reseña', NULL),
@@ -509,7 +509,7 @@ INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
 (47, 'Imagen reseña', NULL),
 (48, 'Imagen reseña', NULL),
 (49, 'Imagen reseña', NULL),
-(50, 'Imagen restaurante', NULL);
+(50, 'Imagen restaurante', NULL),
 (51, 'Imagen restaurante', NULL),
 (52, 'Imagen restaurante', NULL),
 (53, 'Imagen restaurante', NULL),
@@ -519,7 +519,7 @@ INSERT INTO `imagenes` (`id_imagen`, `descripcion`, `notas`) VALUES
 (57, 'Imagen restaurante', NULL),
 (58, 'Imagen restaurante', NULL),
 (59, 'Imagen restaurante', NULL),
-(60, 'Imagen Carta Restaurantes General', NULL);
+(60, 'Imagen Carta Restaurantes General', NULL),
 (61, 'Imagen usuario: cliente1', NULL),
 (62, 'Imagen usuario: cliente2', NULL),
 (63, 'Imagen usuario: cliente3', NULL),
