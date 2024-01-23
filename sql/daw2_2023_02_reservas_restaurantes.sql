@@ -816,16 +816,16 @@ CREATE TABLE `logs` (
 --
 
 INSERT INTO `logs` (`id_log`, `tipo_log`, `texto_log`, `fecha_hora`, `notas`) VALUES
-(1, 'LOG_TIPO 1', 'Detail while weight speech some for tough concern know room lose huge image.', '2015-08-27 14:59:04', NULL),
-(2, 'LOG_TIPO 2', 'Significant his candidate usually father current one seat worker letter on rest plant above allow the.', '1982-03-11 10:45:27', NULL),
-(3, 'LOG_TIPO 3', 'Shoulder change face upon tax we government yourself real wonder important interest book question toward baby dinner ahead theory.', '1987-06-22 23:04:26', NULL),
-(4, 'LOG_TIPO 4', 'Mother sure project those painting toward create firm politics somebody lot ahead entire painting discuss TV lose carry nor.', '1982-11-11 23:21:36', NULL),
-(5, 'LOG_TIPO 5', 'Center on need friend thousand difficult staff point world this list stuff us performance entire forward know term more.', '1985-03-25 13:09:22', NULL),
-(6, 'LOG_TIPO 6', 'Role involve vote size even notice factor make stay opportunity.', '2004-07-09 06:03:03', NULL),
-(7, 'LOG_TIPO 7', 'Shoulder catch agent thing on upon vote commercial mouth kind up pretty democratic remain moment religious right.', '2006-06-15 03:26:09', NULL),
-(8, 'LOG_TIPO 8', 'After painting country very never west dream create south news difference issue price single treat wrong sense.', '2017-05-12 13:00:22', NULL),
-(9, 'LOG_TIPO 9', 'After one fall race international between see back miss anyone already reveal compare bit vote.', '2011-10-08 15:36:51', NULL),
-(10, 'LOG_TIPO 10', 'Hear above commercial safe peace plant thousand lose figure practice generation cold station enough beautiful like.', '1971-12-25 09:17:23', NULL);
+(1, 'LOG_TIPO 1', '', '2015-08-27 14:59:04', NULL),
+(2, 'LOG_TIPO 2', '', '1982-03-11 10:45:27', NULL),
+(3, 'LOG_TIPO 3', '', '1987-06-22 23:04:26', NULL),
+(4, 'LOG_TIPO 4', '', '1982-11-11 23:21:36', NULL),
+(5, 'LOG_TIPO 5', '', '1985-03-25 13:09:22', NULL),
+(6, 'LOG_TIPO 6', '', '2004-07-09 06:03:03', NULL),
+(7, 'LOG_TIPO 7', '', '2006-06-15 03:26:09', NULL),
+(8, 'LOG_TIPO 8', '', '2017-05-12 13:00:22', NULL),
+(9, 'LOG_TIPO 9', '', '2011-10-08 15:36:51', NULL),
+(10, 'LOG_TIPO 10', '', '1971-12-25 09:17:23', NULL);
 
 -- ---------------------------------------------------------------------------------------------------------------
 
@@ -902,7 +902,7 @@ INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_res
 (16, 'Tarjeta 2461887601090978', 9, '2024-02-15', '14:00', 6, 16, NULL),
 (17, 'Tarjeta 36803166952205', 2, '2024-02-16', '15:30', 7, 17, NULL),
 (18, 'Tarjeta 213190454290463', 9, '2024-02-11', '22:00', 8, 18, NULL),
-(19, 'Tarjeta 676195221467', 5, '2024-02-15', '12:00', 9, 1, NULL),
+(19, 'Tarjeta 676195221467', 5, '2024-04-15', '12:00', 9, 1, NULL),
 (20, 'Tarjeta 502030733906', 3, '2022-02-15', '21:00', 10, 2, NULL),
 (21, 'Tarjeta 502030733906', 4, '2022-02-15', '11:00', 1, 3, NULL),
 (22, 'Tarjeta 502030733906', 5, '2022-12-05', '10:30', 1, 4, NULL),
@@ -910,7 +910,18 @@ INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_res
 (24, 'Tarjeta 502030733906', 2, '2024-03-10', '21:30', 1, 6, NULL),
 (25, 'Tarjeta 502030733906', 1, '2021-05-15', '15:00', 1, 7, NULL),
 (26, 'Tarjeta 502030733906', 2, '2021-10-25', '14:00', 1, 8, NULL),
-(27, 'Tarjeta 502030733906', 3, '2020-08-30', '13:30', 1, 8, NULL);
+(27, 'Tarjeta 502030733906', 3, '2020-08-30', '13:30', 1, 8, NULL),
+(28, 'Tarjeta 502030733906', 3, '2024-01-30', '13:30', 1, 8, NULL),
+(29, 'Tarjeta 343030311814761', 3, '2022-02-15', '21:00', 2, 2, NULL),
+(30, 'Tarjeta 343030311814761', 4, '2022-02-15', '11:00', 2, 3, NULL),
+(31, 'Tarjeta 343030311814761', 5, '2022-12-05', '10:30', 2, 4, NULL),
+(32, 'Tarjeta 343030311814761', 3, '2024-01-01', '22:00', 2, 5, NULL),
+(33, 'Tarjeta 343030311814761', 2, '2024-03-10', '21:30', 2, 6, NULL),
+(34, 'Tarjeta 343030311814761', 1, '2021-05-15', '15:00', 2, 7, NULL),
+(35, 'Tarjeta 343030311814761', 2, '2021-10-25', '14:00', 2, 8, NULL),
+(36, 'Tarjeta 343030311814761', 3, '2020-08-30', '13:30', 2, 8, NULL),
+(37, 'Tarjeta 343030311814761', 3, '2024-01-30', '13:30', 2, 8, NULL);
+
 
 
 -- ---------------------------------------------------------------------------------------------------------------
