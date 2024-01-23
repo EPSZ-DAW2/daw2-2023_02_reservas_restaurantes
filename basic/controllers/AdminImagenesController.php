@@ -18,6 +18,8 @@ use yii\web\UploadedFile;
 use app\models\Configuracion;
 
 use Yii;
+use yii\data\ArrayDataProvider;
+use yii\helpers\Url;
 
 /**
  * AdminImagenesController implements the CRUD actions for Imagen model.
@@ -180,4 +182,64 @@ class AdminImagenesController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    //muestra la lista de imágenes 'sueltas' para depurar
+    public function actionListaDepurar()
+    {
+        //obtener el url de todas las imágenes en web/multimedia
+        $imagenesSistema = glob(Yii::getAlias('@app/web/multimedia/*'));
+        //obtener todas las imágenes en la bbdd
+        $imagenes = Imagen::find()->all();
+        $imagenesBaseDatos = [];
+        foreach ($imagenes as $imagen)
+        {
+            $imagenesBaseDatos[] = $imagen->urlSistema;
+        }
+        //obtener las imágenes que no están en la bbdd
+        $imagenesSueltas = array_diff($imagenesSistema, $imagenesBaseDatos);
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $imagenesSueltas,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('depurar', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public static function actionEliminar($url)
+    {
+        //se elimina la url
+        try{
+            unlink($url);
+        }catch(\Throwable $e){
+            Yii::$app->session->setFlash('error', 'No se ha podido eliminar la imagen: ' . $e->getMessage());
+        }
+        return Yii::$app->getResponse()->redirect(Url::to(['lista-depurar']));
+
+    }
+
+    //elimina todas las imágenes 'sueltas' 
+    public function actionDepurar()
+    {
+        //obtener el url de todas las imágenes en web/multimedia
+        $imagenesSistema = glob(Yii::getAlias('@app/web/multimedia/*'));
+        //obtener todas las imágenes en la bbdd
+        $imagenes = Imagen::find()->all();
+        $imagenesBaseDatos = [];
+        foreach ($imagenes as $imagen)
+        {
+            $imagenesBaseDatos[] = $imagen->urlSistema;
+        }
+        //obtener las imágenes que no están en la bbdd
+        $imagenesSueltas = array_diff($imagenesSistema, $imagenesBaseDatos);
+        foreach($imagenesSueltas as $img)
+        {
+            AdminImagenesController::actionEliminar($img);
+        }
+    }
+
 }

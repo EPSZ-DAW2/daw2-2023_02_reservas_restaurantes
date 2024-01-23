@@ -185,5 +185,16 @@ class Imagen extends \yii\db\ActiveRecord
         return null;
     }
 
+    //función que devuelve el url de un archivo para ser mostrado
+    public function getUrlSistema()
+    {
+
+        $extension = $this->getExtension();
+        if ($extension) {
+            return Yii::getAlias('@app/web/multimedia/' . $this->id_imagen . '-' . $extension . '.' . $extension);
+        }
+        return null;
+    }
+
 }
 
