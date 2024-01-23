@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'confirm' => 'Estás seguro de que quieres eliminar este restaurante de la categoría?',
                                     'method' => 'post',
                                 ],
                             ]
