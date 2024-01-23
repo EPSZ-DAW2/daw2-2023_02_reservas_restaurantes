@@ -113,7 +113,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             $items2[] = [
                 'label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Perfil', 'style' => 'width: 25px; height: 25px;']),
                 'items' => [
-                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/admin-reservas/mostrar-reservas-usuario']],
+                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/reservas/mostrar-reservas-usuario']],
 
                     ['label' => 'Logout', 'url' => ['/site/deslogin']],
                 ],

@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 	    <div class="row">
         <div class="col-md-12">
-            <?= Html::a('Volver atrás', ['/admin-reservas/mostrar-reservas-usuario'], ['class' => 'btn btn-default']) ?>
+            <?= Html::a('Volver atrás', ['/reservas/mostrar-reservas-usuario'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
 

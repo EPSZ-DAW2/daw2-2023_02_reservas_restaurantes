@@ -12,7 +12,7 @@ use Yii;
 /**
  * ReservasController implements the CRUD actions for Reserva model.
  */
-class AdminReservasController extends Controller
+class ReservasController extends Controller
 {
     /**
      * @inheritDoc
@@ -34,7 +34,7 @@ class AdminReservasController extends Controller
 
     /**
      * @inheritDoc
-    */
+     
     public function beforeAction($action)
     {
         $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
@@ -46,7 +46,7 @@ class AdminReservasController extends Controller
 
         return parent::beforeAction($action);
     }
-	
+	*/
 
     /**
      * Lists all Reserva models.
@@ -140,17 +140,7 @@ public function actionUpdate($id_reserva)
     }
 }
 
-
-
-
-
-
-	
-
-
-
-
-    /**
+ /**
      * Deletes an existing Reserva model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id_reserva Identificador de cada reserva.

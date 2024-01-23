@@ -3,31 +3,21 @@
 use app\models\Reserva;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var Reserva[] $reservas */
 
-$this->title = Yii::t('app', 'Mi Perfil');
+$this->title = Yii::t('app', 'Mis Reservas');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reserva-mostrar-usuario">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-<?php
-    echo Html::a('Historial de Reservas', ['mostrar-reservas-usuario-historial'], ['class' => 'btn btn-primary btn-lg mr-2']);
-	echo "   ";
-    echo Html::a('Mis Reseñas', ['usuarios/mis-resenas'], ['class' => 'btn btn-success btn-lg']);
-	echo "   ";
-	echo Html::a('Mis Favoritos', ['favoritos/mis-favoritos'], ['class' => 'btn btn-warning btn-lg']);
-
-
-?>
-
-<br><br>
- <h3>Reservas activas</h3>
+    <?php
+    echo Html::a('Historial de Reservas', ['mostrar-reservas-usuario-historial'], ['class' => 'btn btn-primary']);
+    ?>
 
     <?= GridView::widget([
     'dataProvider' => new \yii\data\ArrayDataProvider(['allModels' => $reservas]),
@@ -60,13 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'notas',
             'label' => 'Notas', 
         ],
-        [
-            'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, Reserva $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'id_reserva' => $model->id_reserva]);
-            },
-            'header' => 'Acciones', 
-        ],
+        // Eliminar este bloque para quitar los botones de acciones
+        // [
+        //     'class' => ActionColumn::className(),
+        //     'urlCreator' => function ($action, Reserva $model, $key, $index, $column) {
+        //         return Url::toRoute([$action, 'id_reserva' => $model->id_reserva]);
+        //     },
+        //     'header' => 'Acciones', 
+        // ],
     ],
     'pager' => [
         'options' => ['class' => 'pagination justify-content-center'],
@@ -80,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]); ?>
     <div class="row">
         <div class="col-md-12">
-            <?= Html::a('Volver atrás', ['/admin-reservas/mostrar-reservas-usuario'], ['class' => 'btn btn-default']) ?>
+            <?= Html::a('Volver atrás', ['/reservas/mostrar-reservas-usuario'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
 
