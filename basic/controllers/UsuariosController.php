@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\UsuariosMantenimiento;
 use app\models\BuscarUsuario;
+use yii\data\ActiveDataProvider;
+use app\models\Resena;
 use yii\web\Controller;
 use app\models\Imagen;
 use yii\web\NotFoundHttpException;
@@ -34,17 +36,27 @@ class UsuariosController extends Controller
         );
     }
 	
-	public function beforeAction($action)
-    {
-        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+public function beforeAction($action)
+{
+    // Acciones permitidas para cualquier usuario
+    $allowedActions = ['mis-resenas'];
 
-        // Verificar si el usuario tiene el rol de administrador
-        if (!isset($userRoles['administrador'])) {
-            return $this->goHome();
-        }
-
+    // Verificar si la acción actual está permitida para todos los usuarios
+    if (in_array($action->id, $allowedActions)) {
         return parent::beforeAction($action);
     }
+
+    // Verificar si el usuario tiene el rol de administrador
+    $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+    if (!isset($userRoles['administrador'])) {
+        Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
+        return $this->goHome();
+    }
+
+    return parent::beforeAction($action);
+}
+
 	
 
     /**
@@ -187,13 +199,6 @@ public function actionAsignarRol($id_usuario) {
 }
 
 
-
-
-	
-
-
-
-	
 	//Accion para bloquear ususarios ponemos a 1 en la base de datos
 	public function actionBloquearUsuario($id_usuario)
 	{
@@ -210,6 +215,33 @@ public function actionAsignarRol($id_usuario) {
         'model' => $model,
     ]);
 	}
+	
+	public function actionMisResenas()
+    {
+        // Obtener el ID del usuario logueado
+        $userId = Yii::$app->user->identity->id;
+
+        // Obtener las reseñas del usuario con paginación
+        $dataProvider = new ActiveDataProvider([
+            'query' => Resena::find()->where(['id_usuario' => $userId])->orderBy(['fecha_resena' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 10, // Ajusta el tamaño de la página según tus necesidades
+            ],
+        ]);
+
+        return $this->render('misResenas', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+public function actionMisFavoritos()
+{
+    // ...
+    return $this->render('mis-favoritos', [
+        'dataProvider' => $dataProvider,
+    ]);
+}
+
 
 
 

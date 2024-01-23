@@ -34,7 +34,7 @@ class AdminReservasController extends Controller
 
     /**
      * @inheritDoc
-     */
+     
     public function beforeAction($action)
     {
         $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
@@ -46,6 +46,7 @@ class AdminReservasController extends Controller
 
         return parent::beforeAction($action);
     }
+	*/
 
     /**
      * Lists all Reserva models.
@@ -105,18 +106,49 @@ class AdminReservasController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_reserva)
-    {
-        $model = $this->findModel($id_reserva);
+public function actionUpdate($id_reserva)
+{
+    $model = $this->findModel($id_reserva);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_reserva' => $model->id_reserva]);
+    // Verificar si el usuario tiene el rol de "administrador"
+    $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+    if (isset($userRoles['administrador'])) {
+        // Si es administrador, mostrar la vista 'update'
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                // Validar el modelo y, si es válido, realizar la actualización
+                $model->save();
+                return $this->redirect(['view', 'id_reserva' => $model->id_reserva]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
+    } else {
+        // Si no es administrador, mostrar la vista 'updateClientes'
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                // Validar el modelo y, si es válido, realizar la actualización
+                $model->save();
+                return $this->redirect(['view', 'id_reserva' => $model->id_reserva]);
+            }
+        }
+        return $this->render('updateClientes', [
+            'model' => $model,
+        ]);
     }
+}
+
+
+
+
+
+
+	
+
+
+
 
     /**
      * Deletes an existing Reserva model.
@@ -147,4 +179,55 @@ class AdminReservasController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+	
+	  // Acción para mostrar las reservas del usuario logueado
+// ...
+public function actionMostrarReservasUsuarioHistorial()
+{
+    // Obtener el ID del usuario logueado
+    $userId = Yii::$app->user->identity->id;
+
+    // Obtener todas las reservas del usuario sin importar el rol
+    $reservas = Reserva::find()
+        ->with('restaurante') // Cargar la relación con el restaurante
+        ->where(['id_usuario' => $userId])
+        ->all();
+
+    // Luego, pasas las reservas a tu vista o realizas las acciones necesarias
+    return $this->render('mostrarReservasUsuarioHistorial', [
+        'reservas' => $reservas,
+    ]);
+}
+
+
+
+	public function actionMostrarReservasUsuario()
+{
+    // Obtener el ID del usuario logueado
+    $userId = Yii::$app->user->identity->id;
+
+    // Obtener todas las reservas del usuario sin importar el rol
+    // Obtener la fecha actual
+    $fechaActual = date('Y-m-d');
+
+    // Filtrar las reservas por el ID del usuario y por la fecha activa
+    $reservas = Reserva::find()
+        ->with('restaurante') // Cargar la relación con el restaurante
+        ->where(['id_usuario' => $userId])
+        ->andWhere(['>=', 'fecha_reserva', $fechaActual])
+        ->all();
+
+    // Luego, pasas las reservas a tu vista o realizas las acciones necesarias
+    return $this->render('mostrarReservasUsuario', [
+        'reservas' => $reservas,
+    ]);
+}
+
+
+
+
+
+
+
 }

@@ -112,7 +112,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             $items2[] = [
                 'label' => Html::img($fotoUsuario, ['class' => 'img-fluid rounded-circle', 'alt' => 'Perfil', 'style' => 'width: 25px; height: 25px;']),
                 'items' => [
-                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/site/verperfil']],
+                    ['label' => 'Mi Perfil (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/admin-reservas/mostrar-reservas-usuario']],
+
                     ['label' => 'Logout', 'url' => ['/site/deslogin']],
                 ],
                 'linkOptions' => ['class' => 'nav-link'],
@@ -164,7 +165,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </a>
 
         <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="<?= Url::to(['/site/faq']) ?>" class="nav-link px-2 text-muted">FAQ</a></li>
+        <li class="nav-item"><a href="<?= Url::to(['/admin-faq']) ?>" class="nav-link px-2 text-muted">FAQ</a></li>
         <li class="nav-item"><a href="<?= Url::to(['/site/contacto']) ?>" class="nav-link px-2 text-muted">Contacto</a></li>
         </ul>
     </footer>

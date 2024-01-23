@@ -113,4 +113,17 @@ class Reserva extends \yii\db\ActiveRecord
 
         return $reservas;
     }
+const SCENARIO_UPDATE_CLIENTE = 'update_cliente';
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        // Agrega un nuevo escenario llamado 'update_cliente' y especifica los atributos permitidos
+        $scenarios[self::SCENARIO_UPDATE_CLIENTE] = ['fecha_reserva', 'hora_reserva', 'num_comensales'];
+
+        return $scenarios;
+    }
+
+
 }
