@@ -72,7 +72,7 @@ class Imagen extends \yii\db\ActiveRecord
      */
     public function getImagenesResenas()
     {
-        return $this->hasMany(ImagenesResena::class, ['id_imagen' => 'id_imagen']);
+        return $this->hasMany(ImagenResena::class, ['id_imagen' => 'id_imagen']);
     }
 
     /**
@@ -139,9 +139,34 @@ class Imagen extends \yii\db\ActiveRecord
         return false;
     }
 
+    //función para eliminar una imagen
+    public function eliminarImagen()
+    {
+        $extension = $this->getExtension();
+        if ($extension) {
+            $fichero = Yii::getAlias('@app/web/multimedia/' . $this->id_imagen . '-' . $extension . '.' . $extension);
+            if (file_exists($fichero)) {
+                try {
+                    unlink($fichero);
+                } catch (\Throwable $e) {
+                    Yii::$app->session->setFlash('error', "No se ha podido eliminar el fichero: " . $e->getMessage());
+                    return false;
+                }
+            } else {
+                Yii::$app->session->setFlash('error', "No existe: " . $fichero);
+                return false;
+            }
+        } else {
+            Yii::$app->session->setFlash('error', "Extension invalida");
+            return false;
+        }
+        return true;
+    }
+
     //función para extraer la extensión de un archivo de su nombre
     private function getExtension()
     {
+
         $files = glob(Yii::getAlias('@app/web/multimedia/' . $this->id_imagen . '-*'));
         if ($files) {
             return pathinfo($files[0], PATHINFO_EXTENSION);
@@ -152,6 +177,7 @@ class Imagen extends \yii\db\ActiveRecord
     //función que devuelve el url de un archivo para ser mostrado
     public function getUrlImagen()
     {
+
         $extension = $this->getExtension();
         if ($extension) {
             return Yii::getAlias('@web/multimedia/' . $this->id_imagen . '-' . $extension . '.' . $extension);

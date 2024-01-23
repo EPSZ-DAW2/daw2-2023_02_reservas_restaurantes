@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id_imagen',
             'descripcion',
@@ -38,6 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id_imagen' => $model->id_imagen]);
                  }
             ],
+        ],
+        'pager' => [
+            'options' => ['class' => 'pagination justify-content-center'],
+            'prevPageLabel' => '<',
+            'nextPageLabel' => '>',
+            'prevPageCssClass' => 'page-item',
+            'nextPageCssClass' => 'page-item',
+            'linkOptions' => ['class' => 'page-link'],
+            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
         ],
     ]); ?>
 

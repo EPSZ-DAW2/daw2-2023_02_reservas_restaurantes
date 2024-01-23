@@ -102,7 +102,8 @@ class Categoria extends \yii\db\ActiveRecord
         return Categoria::find()->where(['id_categoria_padre' => $this->id_categoria])->all();
     }
 
-    public function getDescendientes($categorias)
+    //devuelve las categorías que son hijos o descendientes de esta
+    public function getDescendientes($categorias = [])
     {
         $hijos = $this->hijos;
         
