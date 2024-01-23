@@ -4,6 +4,7 @@ use app\models\RespuestasFaq;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use yii\grid\ActionColumn;
 
 /** @var yii\web\View $this */
 /** @var app\models\RespuestasFaqSearch $searchModel */
@@ -34,7 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'respuesta',
             'notas:ntext',
             [
-                'class' => ActionColumn::class,
+                // ...
+
+                                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, RespuestasFaq $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_pregunta' => $model->id_pregunta]);
                  }

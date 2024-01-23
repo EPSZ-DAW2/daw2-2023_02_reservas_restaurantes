@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Configuracion as ModelsConfiguracion;
 use app\models\RespuestasFaq;
 use app\models\RespuestasFaqSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use app\models\Configuracion;
 
 /**
  * AdminFaqController implements the CRUD actions for RespuestasFaq model.
@@ -22,7 +25,7 @@ class AdminFaqController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -40,6 +43,7 @@ class AdminFaqController extends Controller
     {
         $searchModel = new RespuestasFaqSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = Configuracion::findByNombreVariable('numElemsFAQ') ? Configuracion::findByNombreVariable('numElemsFAQ') : 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
