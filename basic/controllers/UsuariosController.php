@@ -36,35 +36,41 @@ class UsuariosController extends Controller
         );
     }
 	
-public function beforeAction($action)
-{
-    // Acciones permitidas para cualquier usuario
-    $allowedActions = ['mis-resenas'];
+    public function beforeAction($action)
+    {
+        // Verificar si el usuario tiene el rol de moderador
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
-    // Verificar si la acción actual está permitida para todos los usuarios
-    if (in_array($action->id, $allowedActions)) {
+        if (!isset($userRoles['administrador']) && !isset($userRoles['moderador']) && isset($userRoles['cliente'])) {
+            Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
+            return $this->goHome();
+        }
+    
+        if (isset($userRoles['moderador'])) {
+            // Acciones permitidas para moderadores
+            $allowedActions = ['view', 'update', 'index']; // Acciones específicas permitidas para moderadores
+    
+            // Verificar si la acción actual está permitida para el moderador
+            if (!in_array($action->id, $allowedActions)) {
+                Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
+                return $this->redirect(Yii::$app->getRequest()->getReferrer());
+            }
+        }
+        if (isset($userRoles['cliente'])) {
+            // Acciones permitidas para clientes
+            $allowedActions = ['mis-resenas']; // Acciones permitidas para clientes
+    
+            // Verificar si la acción actual está permitida para todos los clientes
+            if (!in_array($action->id, $allowedActions)) {
+                Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
+                return $this->redirect(Yii::$app->getRequest()->getReferrer());
+            }
+        }
+    
+    
         return parent::beforeAction($action);
     }
-
-    // Verificar si el usuario tiene el rol de administrador
-    $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
-
-    if (!isset($userRoles['administrador']) && !isset($userRoles['moderador'])) {
-        Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
-        return $this->goHome();
-    }
-
-    // Denegar acceso a las acciones de eliminar y crear usuarios para los moderadores
-    if ($action->id === 'delete' || $action->id === 'create') {
-        if (isset($userRoles['moderador'])) {
-            Yii::$app->session->setFlash('error', 'No tienes permiso para realizar esta acción.');
-            return $this->goHome();
-        }
-        }
-
-    return parent::beforeAction($action);
-}
-
+    
 	
 
     /**
@@ -125,32 +131,30 @@ public function beforeAction($action)
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_usuario)
-    {
-        $model = $this->findModel($id_usuario);
-    
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            // Verificar si se ha proporcionado una nueva contraseña en texto plano
-            if (!empty($model->plain_password)) {
-                // Generar un nuevo hash de contraseña
-                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->plain_password);
-            }
-    
-            // Guardar el modelo
-            if ($model->save()) {
-                // Redireccionar a la vista
-                return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
-            } else {
-                // Imprimir errores de validación
-                Yii::error('Error al guardar el modelo: ' . print_r($model->getErrors(), true));
-            }
+
+	public function actionUpdate($id_usuario)
+{
+    $model = $this->findModel($id_usuario);
+
+    if ($this->request->isPost && $model->load($this->request->post())) {
+        // Asignar el valor del rol al modelo
+        $model->rol = $this->request->post('UsuariosMantenimiento')['rol'];
+
+        // Guardar el modelo
+        if ($model->save()) {
+            // Llamar a la acción para asignar roles
+            Yii::$app->runAction('roles/asignar-roles');
+
+            // Redireccionar a la vista
+            return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
         }
-    
-        // Renderizar la vista de actualización con el modelo (y posibles errores de validación)
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
+
+    return $this->render('update', [
+        'model' => $model,
+    ]);
+}
+
 	
 
     /**
@@ -162,9 +166,16 @@ public function beforeAction($action)
      */
     public function actionDelete($id_usuario)
     {
-        $this->findModel($id_usuario)->delete();
+        // Verificar si el usuario tiene el rol de moderador
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+    
+        if (!isset($userRoles['moderador'])) {
+            $this->findModel($id_usuario)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            return false;
+        }
     }
 
     /**
