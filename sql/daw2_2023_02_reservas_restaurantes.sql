@@ -1126,6 +1126,38 @@ INSERT INTO `horario` (`id_horario`,`id_restaurante`, `hora_apertura`, `hora_cie
 (149, 18, '20:00', '23:00', 'miércoles', NULL),
 (150, 18, '9:00', '16:30', 'jueves', NULL);
 
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias`
+--
+
+CREATE TABLE incidencias (
+  id_incidencia INT(12) PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador de cada incidencia.',
+  tipo ENUM('reseña/respuesta', 'evento', 'comentario') NOT NULL COMMENT 'Tipo de incidencia.',
+  descripcion TEXT COMMENT 'Descripción de la incidencia.',
+  id_usuario INT COMMENT 'Identificador del usuario que reporta la incidencia.',
+  id_restaurante INT COMMENT 'Identificador del restaurante asociado a la incidencia.',
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación de la incidencia.',
+  fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de actualización de la incidencia.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `incidencias`
+--
+
+INSERT INTO incidencias (tipo, descripcion, id_usuario, id_restaurante) VALUES
+('reseña/respuesta', 'La comida estaba fría', 1, 1),
+('evento', 'Hubo un evento sin previo aviso', 2, 1),
+('comentario', 'El servicio fue lento', 3, 2),
+('reseña/respuesta', 'Excelente atención al cliente', 4, 3),
+('evento', 'Hubo una fiesta ruidosa', 5, 3),
+('comentario', 'La música estaba muy alta', 6, 4),
+('reseña/respuesta', 'La comida estaba deliciosa', 7, 4),
+('evento', 'Hubo una promoción no anunciada', 8, 5),
+('comentario', 'El lugar estaba muy limpio', 9, 5);
+
 -- ---------------------------------------------------------------------------------------------------------------
 
 --
@@ -1313,6 +1345,14 @@ ALTER TABLE `usuarios`
 ALTER TABLE `horario`
   ADD PRIMARY KEY (`id_horario`);
 
+--
+-- Indices de la tabla `incidencias`
+--
+ALTER TABLE `incidencias`
+--  ADD PRIMARY KEY (`id_incidencia`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_restaurante` (`id_restaurante`);
+
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -1398,6 +1438,12 @@ ALTER TABLE `usuarios`
 
 ALTER TABLE `horario`
   MODIFY `id_horario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada horario.', AUTO_INCREMENT=11;	
+
+--
+-- AUTO_INCREMENT de la tabla `incidencias`
+--
+-- ALTER TABLE `incidencias`
+--  MODIFY `id_incidencia` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada incidencia.';	
 
 --
 -- Restricciones para tablas volcadas
@@ -1523,6 +1569,14 @@ COMMIT;
 --
 ALTER TABLE `horario`
   ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurantes` (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `incidencias`
+--
+ALTER TABLE `incidencias`
+  ADD CONSTRAINT `incidencias_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `incidencias_ibfk_2` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurantes` (`id_restaurante`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

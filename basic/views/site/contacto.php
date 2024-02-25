@@ -6,7 +6,6 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-use yii\captcha\Captcha;
 
 $this->title = 'Contacto';
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,16 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                    <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label('Nombre') ?>
 
                     <?= $form->field($model, 'email') ?>
 
-                    <?= $form->field($model, 'subject') ?>
+                    <?= $form->field($model, 'subject')->label('Asunto')?>
 
-                    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
+                    <?= $form->field($model, 'body')->textarea(['rows' => 6])->label('Mensaje') ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
 
                 <?php ActiveForm::end(); ?>
