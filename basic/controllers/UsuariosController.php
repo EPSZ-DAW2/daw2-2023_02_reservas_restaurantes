@@ -54,6 +54,14 @@ public function beforeAction($action)
         return $this->goHome();
     }
 
+    // Denegar acceso a las acciones de eliminar y crear usuarios para los moderadores
+    if ($action->id === 'delete' || $action->id === 'create') {
+        if (isset($userRoles['moderador'])) {
+            Yii::$app->session->setFlash('error', 'No tienes permiso para realizar esta acción.');
+            return $this->goHome();
+        }
+        }
+
     return parent::beforeAction($action);
 }
 
