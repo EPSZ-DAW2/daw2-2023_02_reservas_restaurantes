@@ -39,14 +39,14 @@ class Resena extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['puntuacion', 'fecha_resena', 'id_cliente', 'id_restaurante'], 'required'],
-            [['puntuacion', 'incidencia_resena', 'id_cliente', 'id_restaurante'], 'integer'],
+            [['puntuacion', 'fecha_resena', 'id_usuario', 'id_restaurante'], 'required'],
+            [['puntuacion', 'incidencia_resena', 'id_usuario', 'id_restaurante'], 'integer'],
             [['precio_x_persona'], 'number'],
             [['fecha_resena'], 'safe'],
             [['notas'], 'string'],
             [['titulo_resena'], 'string', 'max' => 100],
             [['cuerpo_resena'], 'string', 'max' => 500],
-            [['id_cliente'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::class, 'targetAttribute' => ['id_cliente' => 'id_cliente']],
+            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
             [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
         ];
     }
@@ -64,7 +64,7 @@ class Resena extends \yii\db\ActiveRecord
             'precio_x_persona' => 'Precio X Persona',
             'incidencia_resena' => 'Incidencia Resena',
             'fecha_resena' => 'Fecha Resena',
-            'id_cliente' => 'Id Cliente',
+            'id_usuario' => 'Id Cliente',
             'id_restaurante' => 'Id Restaurante',
             'notas' => 'Notas',
         ];
@@ -77,7 +77,7 @@ class Resena extends \yii\db\ActiveRecord
      */
     public function getCliente()
     {
-        return $this->hasOne(Cliente::class, ['id_cliente' => 'id_cliente']);
+        return $this->hasOne(Usuario::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**
