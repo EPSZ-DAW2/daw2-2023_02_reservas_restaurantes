@@ -50,7 +50,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 if ($model->rol !== 'cliente') {
                     return ['style' => 'display:none'];
                 }
-            },
+            },  
+            'pager' => [
+                'options' => ['class' => 'pagination justify-content-center'],
+                'prevPageLabel' => '<',
+                'nextPageLabel' => '>',
+                'prevPageCssClass' => 'page-item',
+                'nextPageCssClass' => 'page-item',
+                'linkOptions' => ['class' => 'page-link'],
+                'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
+            ],
         ]); ?>
 
     <?php } else { ?>
@@ -81,6 +90,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Url::toRoute([$action, 'id_usuario' => $model->id_usuario]);
                     }
                 ],
+            ],
+            'pager' => [
+                'options' => ['class' => 'pagination justify-content-center'],
+                'prevPageLabel' => '<',
+                'nextPageLabel' => '>',
+                'prevPageCssClass' => 'page-item',
+                'nextPageCssClass' => 'page-item',
+                'linkOptions' => ['class' => 'page-link'],
+                'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
             ],
         ]); ?>
 
