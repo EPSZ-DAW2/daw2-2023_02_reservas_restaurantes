@@ -10,43 +10,81 @@ use yii\grid\GridView;
 /** @var app\models\BuscarUsuario $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Usuarios Mantenimientos';
+if(isset($_GET['cli']))
+    $this->title = 'Mantenimiento Clientes';
+else
+    $this->title = 'Mantenimiento Usuarios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarios-mantenimiento-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if(isset($_GET['cli'])) { ?>
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Crear nuevo usuario', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Listar Roles', ['listar-roles'], ['class' => 'btn btn-info']) ?>
-        
-    </p>
+        <p>
+            <?= Html::a('Crear nuevo cliente', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
 
-    <?php // Resto del código ... ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_usuario',
-            'nombre_usuario',
-            'email:email',
-            'password',
-            'id_foto_usuario',
-			'rol',
-			'bloqueado',
-            //'notas:ntext',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, UsuariosMantenimiento $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_usuario' => $model->id_usuario]);
-                }
+                'id_usuario',
+                'nombre_usuario',
+                'email:email',
+                'password',
+                'id_foto_usuario',
+                'rol',
+                'bloqueado',
+                //'notas:ntext',
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, UsuariosMantenimiento $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id_usuario' => $model->id_usuario]);
+                    }
+                ],
             ],
-        ],
-    ]); ?>
+            'rowOptions' => function ($model, $key, $index, $grid) {
+                if ($model->rol !== 'cliente') {
+                    return ['style' => 'display:none'];
+                }
+            },
+        ]); ?>
+
+    <?php } else { ?>
+        <h1><?= Html::encode($this->title) ?></h1>
+
+        <p>
+            <?= Html::a('Crear nuevo usuario', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Listar Roles', ['listar-roles'], ['class' => 'btn btn-info']) ?>
+        </p>
+
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+
+                'id_usuario',
+                'nombre_usuario',
+                'email:email',
+                'password',
+                'id_foto_usuario',
+                'rol',
+                'bloqueado',
+                //'notas:ntext',
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, UsuariosMantenimiento $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id_usuario' => $model->id_usuario]);
+                    }
+                ],
+            ],
+        ]); ?>
+
+    <?php } ?>
 
 
 

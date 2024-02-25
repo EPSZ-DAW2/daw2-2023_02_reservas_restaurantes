@@ -73,7 +73,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 $itemsGestion = [];
                 if(isset($userRoles['moderador']) && !isset($userRoles['administrador'])){
                     //Si es moderador, solo puede acceder a Restaurantes, Reseñas/Respuestas, Clientes, Incidencias
-                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/usuarios','cli'=> True]];
                     $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/incidencias']];
                     $itemsGestion[] = ['label' => 'Reseñas/Respuestas', 'url' => ['/admin-resenas']];
                     $itemsGestion[] = ['label' => 'Restaurantes', 'url' => ['/admin-restaurantes']];
@@ -82,7 +82,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     //Si es administrador, puede acceder a todo
                     $itemsGestion[] = ['label' => 'Backups', 'url' => ['/admin-backups']];
                     $itemsGestion[] = ['label' => 'Categorías', 'url' => ['/admin-categorias']];
-                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/admin-clientes']];
+                    $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/usuarios','cli'=> True]];
                     $itemsGestion[] = ['label' => 'Configuraciones', 'url' => ['/admin-configuracion']];
                     $itemsGestion[] = ['label' => 'FAQ', 'url' => ['/admin-faq']];
                     $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/incidencias']];
