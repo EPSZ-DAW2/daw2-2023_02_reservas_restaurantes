@@ -23,6 +23,7 @@ use Yii;
  */
 class UsuariosMantenimiento extends \yii\db\ActiveRecord
 {
+    public $plain_password;
     /**
      * {@inheritdoc}
      */
@@ -41,7 +42,8 @@ class UsuariosMantenimiento extends \yii\db\ActiveRecord
             [['bloqueado', 'id_foto_usuario'], 'integer'],
             [['notas'], 'string'],
             [['nombre_usuario', 'rol'], 'string', 'max' => 50],
-            [['email', 'password'], 'string', 'max' => 32],
+            [['email'], 'string', 'max' => 32],
+            [['password'], 'string', 'max' => 255],
             [['id_foto_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Imagen::class, 'targetAttribute' => ['id_foto_usuario' => 'id_imagen']],
         ];
     }

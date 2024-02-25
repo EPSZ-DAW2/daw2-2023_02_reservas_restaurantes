@@ -117,30 +117,32 @@ public function beforeAction($action)
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-
-	public function actionUpdate($id_usuario)
-{
-    $model = $this->findModel($id_usuario);
-
-    if ($this->request->isPost && $model->load($this->request->post())) {
-        // Asignar el valor del rol al modelo
-        $model->rol = $this->request->post('UsuariosMantenimiento')['rol'];
-
-        // Guardar el modelo
-        if ($model->save()) {
-            // Llamar a la acción para asignar roles
-            Yii::$app->runAction('roles/asignar-roles');
-
-            // Redireccionar a la vista
-            return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
+    public function actionUpdate($id_usuario)
+    {
+        $model = $this->findModel($id_usuario);
+    
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // Verificar si se ha proporcionado una nueva contraseña en texto plano
+            if (!empty($model->plain_password)) {
+                // Generar un nuevo hash de contraseña
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->plain_password);
+            }
+    
+            // Guardar el modelo
+            if ($model->save()) {
+                // Redireccionar a la vista
+                return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
+            } else {
+                // Imprimir errores de validación
+                Yii::error('Error al guardar el modelo: ' . print_r($model->getErrors(), true));
+            }
         }
+    
+        // Renderizar la vista de actualización con el modelo (y posibles errores de validación)
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
-
-    return $this->render('update', [
-        'model' => $model,
-    ]);
-}
-
 	
 
     /**

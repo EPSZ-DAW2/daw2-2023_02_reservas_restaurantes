@@ -111,7 +111,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             $usuario = Usuario::findOne(['nombre_usuario' => $nombreUsuario]);
             $fotoUsuario = $usuario->getFotoUsuario();
             $items3 = [];
-            $items3[] = ['label' => 'Mi Cuenta (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['site']];
+            $items3[] = ['label' => 'Mi Cuenta (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['usuarios/view', 'id_usuario' => Yii::$app->user->id]];
             if(isset($userRoles['cliente'])){
                 $items3[] = ['label' => 'Mi Perfil de Cliente (' . Yii::$app->user->identity->nombre_usuario . ')', 'url' => ['/reservas/mostrar-reservas-usuario']];
             }
