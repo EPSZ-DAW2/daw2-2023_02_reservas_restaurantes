@@ -24,9 +24,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fecha_resena')->textInput() ?>
 
-    <?= $form->field($model, 'id_restaurante')->textInput() ?>
-    
     <?= $form->field($model, 'id_usuario')->textInput() ?>
+
+    <?= $form->field($model, 'id_restaurante')->textInput() ?>
 
     <?= $form->field($model, 'notas')->textarea(['rows' => 6]) ?>
 

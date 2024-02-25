@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\models\resena $model */
+/** @var app\models\Favoritos $model */
 
-$this->title = Yii::t('app', 'Crear Resena');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Reseñas'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Crear Favoritos');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Favoritos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="resena-create">
+<div class="favoritos-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

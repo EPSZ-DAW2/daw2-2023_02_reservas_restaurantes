@@ -2,17 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\resena;
-use app\models\ResenaSearch;
+use app\models\Favoritos;
+use app\models\FavoritosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 
 /**
- * AdminResenaController implements the CRUD actions for resena model.
+ * AdminFavoritosController implements the CRUD actions for Favoritos model.
  */
-class AdminResenaController extends Controller
+class AdminFavoritosController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,8 +32,7 @@ class AdminResenaController extends Controller
         );
     }
 
-
-    /**
+      /**
      * @inheritDoc
      */
     public function beforeAction($action)
@@ -49,13 +48,13 @@ class AdminResenaController extends Controller
     }
 
     /**
-     * Lists all resena models.
+     * Lists all Favoritos models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ResenaSearch();
+        $searchModel = new FavoritosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -65,30 +64,31 @@ class AdminResenaController extends Controller
     }
 
     /**
-     * Displays a single resena model.
-     * @param int $id_resena Id Resena
+     * Displays a single Favoritos model.
+     * @param int $id_usuario Id Usuario
+     * @param int $id_restaurante Id Restaurante
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_resena)
+    public function actionView($id_usuario, $id_restaurante)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_resena),
+            'model' => $this->findModel($id_usuario, $id_restaurante),
         ]);
     }
 
     /**
-     * Creates a new resena model.
+     * Creates a new Favoritos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new resena();
+        $model = new Favoritos();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_resena' => $model->id_resena]);
+                return $this->redirect(['view', 'id_usuario' => $model->id_usuario, 'id_restaurante' => $model->id_restaurante]);
             }
         } else {
             $model->loadDefaultValues();
@@ -100,18 +100,19 @@ class AdminResenaController extends Controller
     }
 
     /**
-     * Updates an existing resena model.
+     * Updates an existing Favoritos model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_resena Id Resena
+     * @param int $id_usuario Id Usuario
+     * @param int $id_restaurante Id Restaurante
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_resena)
+    public function actionUpdate($id_usuario, $id_restaurante)
     {
-        $model = $this->findModel($id_resena);
+        $model = $this->findModel($id_usuario, $id_restaurante);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_resena' => $model->id_resena]);
+            return $this->redirect(['view', 'id_usuario' => $model->id_usuario, 'id_restaurante' => $model->id_restaurante]);
         }
 
         return $this->render('update', [
@@ -120,29 +121,31 @@ class AdminResenaController extends Controller
     }
 
     /**
-     * Deletes an existing resena model.
+     * Deletes an existing Favoritos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_resena Id Resena
+     * @param int $id_usuario Id Usuario
+     * @param int $id_restaurante Id Restaurante
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_resena)
+    public function actionDelete($id_usuario, $id_restaurante)
     {
-        $this->findModel($id_resena)->delete();
+        $this->findModel($id_usuario, $id_restaurante)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the resena model based on its primary key value.
+     * Finds the Favoritos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_resena Id Resena
-     * @return resena the loaded model
+     * @param int $id_usuario Id Usuario
+     * @param int $id_restaurante Id Restaurante
+     * @return Favoritos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_resena)
+    protected function findModel($id_usuario, $id_restaurante)
     {
-        if (($model = resena::findOne(['id_resena' => $id_resena])) !== null) {
+        if (($model = Favoritos::findOne(['id_usuario' => $id_usuario, 'id_restaurante' => $id_restaurante])) !== null) {
             return $model;
         }
 
