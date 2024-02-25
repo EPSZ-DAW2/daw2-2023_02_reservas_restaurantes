@@ -49,7 +49,7 @@ public function beforeAction($action)
     // Verificar si el usuario tiene el rol de administrador
     $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
-    if (!isset($userRoles['administrador'])) {
+    if (!isset($userRoles['administrador']) && !isset($userRoles['moderador'])) {
         Yii::$app->session->setFlash('error', 'No tienes permiso para acceder a esta página.');
         return $this->goHome();
     }
