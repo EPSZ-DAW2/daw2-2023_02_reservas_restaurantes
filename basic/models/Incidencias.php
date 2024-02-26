@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+
 use Yii;
 
 /**
@@ -15,8 +16,8 @@ use Yii;
  * @property string $fecha_creacion Fecha de creación de la incidencia.
  * @property string $fecha_actualizacion Fecha de actualización de la incidencia.
  *
- * @property Restaurantes $restaurante
- * @property Usuarios $usuario
+ * @property Restaurante $restaurante
+ * @property Usuario $usuario
  */
 class Incidencias extends \yii\db\ActiveRecord
 {
@@ -38,8 +39,8 @@ class Incidencias extends \yii\db\ActiveRecord
             [['tipo', 'descripcion'], 'string'],
             [['id_usuario', 'id_restaurante'], 'integer'],
             [['fecha_creacion', 'fecha_actualizacion'], 'safe'],
-            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
-            [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurantes::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
+            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
+            [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
         ];
     }
 
@@ -66,7 +67,7 @@ class Incidencias extends \yii\db\ActiveRecord
      */
     public function getRestaurante()
     {
-        return $this->hasOne(Restaurantes::class, ['id_restaurante' => 'id_restaurante']);
+        return $this->hasOne(Restaurante::class, ['id_restaurante' => 'id_restaurante']);
     }
 
     /**
@@ -76,6 +77,6 @@ class Incidencias extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasOne(Usuario::class, ['id_usuario' => 'id_usuario']);
     }
 }

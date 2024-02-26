@@ -933,27 +933,29 @@ INSERT INTO `reservas` (`id_reserva`, `datos_pago`, `num_comensales`, `fecha_res
 CREATE TABLE `respuestas` (
   `id_respuesta` int(12) NOT NULL COMMENT 'Identificador de cada respuesta de resena.',
   `id_respuesta_padre` int(12) DEFAULT NULL COMMENT 'Identificador de la respuesta padre NULL si no tiene',
+  `id_usuario` int(12) NOT NULL COMMENT 'Identificador del usuario que hizo la respuesta.',
   `texto_respuesta` varchar(200) NOT NULL COMMENT 'Texto de la respuesta.',
   `incidencia_respuesta` tinyint(1) DEFAULT NULL COMMENT 'Marca de incidencia en una respuesta: 0-Correcta, 1-Pendiente de Revisión 2-Eliminada.',
   `id_resena` int(12) NOT NULL COMMENT 'Identificador de cada resena asociada a la respuesta.',
   `notas` text DEFAULT NULL COMMENT 'Notas internas para la respuesta de resena.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 --
 -- Volcado de datos para la tabla `respuestas`
 --
 
-INSERT INTO `respuestas` (`id_respuesta`, `id_respuesta_padre`, `texto_respuesta`, `incidencia_respuesta`, `id_resena`, `notas`) VALUES
-(1, NULL, '¡Iré a probarlo!', 0, 10, NULL),
-(2, NULL, 'Gracias por la recomendación.', 0, 3, NULL),
-(3, NULL, '¡Interesante! Tomaré en cuenta esa sugerencia.', 0, 9, NULL),
-(4, NULL, 'Buena observación. Estoy de acuerdo contigo.', 0, 10, NULL),
-(5, NULL, '¡Eso suena genial! ¿Hay algún plato que recomiendes especialmente?', 0, 2, NULL),
-(6, NULL, '¡Definitivamente lo consideraré en mi próxima visita!', 0, 4, NULL),
-(7, 2, '¿Fuiste a probar?.', 0, 6, NULL),
-(8, 2, 'Cómo fue tu experiencia', 0, 8, NULL),
-(9, 5, '¿Qué plato elegiste?', 0, 2, NULL),
-(10, 3, 'Deja tu reseña cunado vayas.', 0, 7, NULL);
+INSERT INTO `respuestas` (`id_respuesta`, `id_respuesta_padre`, `id_usuario`, `texto_respuesta`, `incidencia_respuesta`, `id_resena`, `notas`) VALUES
+(1, NULL, 1,'¡Iré a probarlo!', 0, 10, NULL),
+(2, NULL, 2,'Gracias por la recomendación.', 0, 3, NULL),
+(3, NULL, 1,'¡Interesante! Tomaré en cuenta esa sugerencia.', 0, 9, NULL),
+(4, NULL, 4,'Buena observación. Estoy de acuerdo contigo.', 0, 10, NULL),
+(5, NULL, 3,'¡Eso suena genial! ¿Hay algún plato que recomiendes especialmente?', 0, 2, NULL),
+(6, NULL, 2,'¡Definitivamente lo consideraré en mi próxima visita!', 0, 4, NULL),
+(7, 2, 1,'¿Fuiste a probar?.', 0, 6, NULL),
+(8, 2, 4,'Cómo fue tu experiencia', 0, 8, NULL),
+(9, 5, 1,'¿Qué plato elegiste?', 0, 2, NULL),
+(10, 3, 2,'Deja tu reseña cunado vayas.', 0, 7, NULL);
 
 -- ---------------------------------------------------------------------------------------------------------------
 
@@ -1161,6 +1163,27 @@ INSERT INTO incidencias (tipo, descripcion, id_usuario, id_restaurante) VALUES
 -- ---------------------------------------------------------------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+-- CREATE TABLE `respuestas` (
+--  `id_respuesta` INT(11) PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador de cada respuesta.',
+--  `cuerpo_respuesta` VARCHAR(500) NOT NULL COMMENT 'Cuerpo de la respuesta.',
+--  `fecha_respuesta` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT 'Fecha de la respuesta.',
+--  `id_usuario` INT(11) NOT NULL COMMENT 'Identificador del usuario que responde.',
+--  `id_resena` INT(11) NOT NULL COMMENT 'Identificador de la reseña asociada a la respuesta.'
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+
+
+
+-- ---------------------------------------------------------------------------------------------------------------
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -1300,7 +1323,8 @@ ALTER TABLE `reservas`
 --
 ALTER TABLE `respuestas`
   ADD PRIMARY KEY (`id_respuesta`),
-  ADD KEY `id_resena` (`id_resena`);
+  ADD KEY `id_resena` (`id_resena`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `respuestas_faq`
@@ -1439,11 +1463,6 @@ ALTER TABLE `usuarios`
 ALTER TABLE `horario`
   MODIFY `id_horario` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada horario.', AUTO_INCREMENT=11;	
 
---
--- AUTO_INCREMENT de la tabla `incidencias`
---
--- ALTER TABLE `incidencias`
---  MODIFY `id_incidencia` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada incidencia.';	
 
 --
 -- Restricciones para tablas volcadas
@@ -1540,7 +1559,9 @@ ALTER TABLE `reservas`
 -- Filtros para la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_resena`) REFERENCES `resenas` (`id_resena`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_resena`) REFERENCES `resenas` (`id_resena`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `respuestas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
 
 --
 -- Filtros para la tabla `restaurantes`

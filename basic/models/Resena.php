@@ -20,7 +20,7 @@ use Yii;
  *
  * @property Cliente $cliente
  * @property ImagenesResena[] $imagenesResenas
- * @property Respuesta[] $respuestas
+ * @property Respuestas[] $respuestas
  * @property Restaurante $restaurante
  */
 class Resena extends \yii\db\ActiveRecord
@@ -97,7 +97,7 @@ class Resena extends \yii\db\ActiveRecord
      */
     public function getRespuestas()
     {
-        return $this->hasMany(Respuesta::class, ['id_resena' => 'id_resena']);
+        return $this->hasMany(Respuestas::class, ['id_resena' => 'id_resena']);
     }
 
     /**
