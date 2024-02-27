@@ -12,27 +12,30 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="resena-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="resena-details">
+    <h2><?= Html::encode($model->titulo_resena) ?></h2>
+    <p><?= Html::encode($model->cuerpo_resena) ?></p>
+    <p>Puntuación: <?= Html::encode($model->puntuacion) ?></p>
+    <p>Precio por persona: <?= Html::encode($model->precio_x_persona) ?></p>
+    <p>Fecha de la reseña: <?= Html::encode($model->fecha_resena) ?></p>
+    <p>Restaurante: <?= $model->restaurante ? Html::encode($model->restaurante->nombre_restaurante) : 'Desconocido  ' ?></p></div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'titulo_resena',
-            'cuerpo_resena',
-            'puntuacion',
-            'precio_x_persona',
-            'fecha_resena',
-            'id_restaurante',
-        ],
-    ]) ?>
+<h2>Respuestas</h2>
 
-    <h2>Respuestas</h2>
+<?php
+function displayRespuestas($respuestas) {
+    foreach ($respuestas as $respuesta) {
+        echo '<div class="respuesta" style="border: 1px solid #000; margin: 10px; padding: 10px;">';
+        echo '<h3>Respuesta de ' . ($respuesta->usuario ? Html::encode($respuesta->usuario->nombre_usuario) : 'anónimo') . '</h3>';
+        echo '<p>' . Html::encode($respuesta->texto_respuesta) . '</p>';
+        if (!empty($respuesta->respuestasHijas)) {
+            displayRespuestas($respuesta->respuestasHijas);
+        }
+        echo '</div>';
+    }
+}
 
-    <?php foreach ($model->respuestas as $respuesta): ?>
-        <div class="respuesta" style="border: 1px solid #000; margin: 10px; padding: 10px;">
-            <h3>Respuesta de <?= Html::encode($respuesta->usuario->nombre_usuario) ?></h3>
-            <p><?= Html::encode($respuesta->texto_respuesta) ?></p>
-        </div>
-    <?php endforeach; ?>
+displayRespuestas($model->respuestas);
+?>
 
 </div>

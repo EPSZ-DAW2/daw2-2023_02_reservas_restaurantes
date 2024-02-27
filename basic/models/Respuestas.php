@@ -54,6 +54,11 @@ class Respuestas extends \yii\db\ActiveRecord
 
     public function getUsuario()
     {
-        return $this->hasOne(Usuario::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasOne(Usuario::class, ['id_usuario' => 'id_usuario'])->viaTable('resenas', ['id_resena' => 'id_resena']);
     }
+
+    public function getRespuestasHijas()
+{
+    return $this->hasMany(Respuestas::class, ['id_respuesta_padre' => 'id_respuesta']);
+}
 }
