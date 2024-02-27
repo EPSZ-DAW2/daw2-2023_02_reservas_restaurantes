@@ -35,7 +35,7 @@ function displayRespuestas($respuestas) {
     }
 }
 
-displayRespuestas($model->respuestas);
+displayRespuestas($respuestas);
 ?>
 
 </div>
