@@ -33,8 +33,8 @@ class ControlRestaurantes extends \yii\db\ActiveRecord
             [['id_usuario', 'id_restaurante'], 'required'],
             [['id_usuario', 'id_restaurante'], 'integer'],
             [['notas'], 'string'],
-            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
-            [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
+            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
+            [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurantes::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
         ];
     }
 
@@ -44,9 +44,9 @@ class ControlRestaurantes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_usuario' => Yii::t('app', 'Referencia del usuario asociado al restaurante.'),
-            'id_restaurante' => Yii::t('app', 'Identificador del restaurante asociado al gestor.'),
-            'notas' => Yii::t('app', 'Notas internas para el control de restaurantes.'),
+            'id_usuario' => Yii::t('app', 'Id Usuario'),
+            'id_restaurante' => Yii::t('app', 'Id Restaurante'),
+            'notas' => Yii::t('app', 'Notas'),
         ];
     }
 
@@ -57,7 +57,7 @@ class ControlRestaurantes extends \yii\db\ActiveRecord
      */
     public function getRestaurante()
     {
-        return $this->hasOne(Restaurante::class, ['id_restaurante' => 'id_restaurante']);
+        return $this->hasOne(Restaurantes::class, ['id_restaurante' => 'id_restaurante']);
     }
 
     /**
@@ -67,7 +67,7 @@ class ControlRestaurantes extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuario::class, ['id_usuario' => 'id_usuario']);
+        return $this->hasOne(Usuarios::class, ['id_usuario' => 'id_usuario']);
     }
 
     /**

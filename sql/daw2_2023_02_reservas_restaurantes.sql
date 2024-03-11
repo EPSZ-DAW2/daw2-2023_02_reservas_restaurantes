@@ -358,7 +358,8 @@ INSERT INTO `eventos` (`id_evento`, `titulo_evento`, `descripcion_evento`, `fech
 CREATE TABLE `control_restaurantes` (
   `id_usuario` int(12) NOT NULL COMMENT 'Referencia del usuario asociado al restaurante.',
   `id_restaurante` int(12) NOT NULL COMMENT 'Identificador del restaurante asociado al gestor.',
-  `notas` text DEFAULT NULL COMMENT 'Notas internas para el control de restaurantes.'
+  `notas` text DEFAULT NULL COMMENT 'Notas internas para el control de restaurantes.',
+   PRIMARY KEY (`id_usuario`, `id_restaurante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1243,12 +1244,6 @@ ALTER TABLE `comentarios`
 ALTER TABLE `configuraciones`
   ADD PRIMARY KEY (`nombre_variable`);
 
---
--- Indices de la tabla `control_restaurantes`
---
-ALTER TABLE `control_restaurantes`
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_restaurante` (`id_restaurante`);
 
 --
 -- Indices de la tabla `eventos`
