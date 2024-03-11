@@ -306,6 +306,8 @@ INSERT INTO `restaurantes` (`id_restaurante`, `nombre_restaurante`, `id_foto_res
 
 -- ---------------------------------------------------------------------------------------------------------------
 
+
+
 --
 -- Estructura de tabla para la tabla `eventos`
 --
