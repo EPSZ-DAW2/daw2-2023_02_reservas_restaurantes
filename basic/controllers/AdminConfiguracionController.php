@@ -32,7 +32,6 @@ class AdminConfiguracionController extends Controller
         );
     }
 
-
     /**
      * @inheritDoc
      */
@@ -40,13 +39,14 @@ class AdminConfiguracionController extends Controller
     {
         $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
 
-        // Verificar si el usuario tiene el rol de administrador
-        if (!isset($userRoles['administrador'])) {
+        // Verificar si el usuario tiene el rol de administrador y gestor
+        if (!isset($userRoles['administrador']) && !isset($userRoles['propietario'])) {
             return $this->goHome();
         }
 
         return parent::beforeAction($action);
     }
+
 
     /**
      * Lists all Configuracion models.

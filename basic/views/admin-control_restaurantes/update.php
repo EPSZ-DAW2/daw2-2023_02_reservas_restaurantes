@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Update Control Restaurantes: {name}', [
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Control Restaurantes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_usuario, 'url' => ['view', 'id_usuario' => $model->id_usuario, 'id_restaurante' => $model->id_restaurante]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Actualizar');
 ?>
 <div class="control-restaurantes-update">
 

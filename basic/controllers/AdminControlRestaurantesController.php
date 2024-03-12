@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\ControlRestaurantes;
 use app\models\ControlRestaurantesSearch;
 use yii\web\Controller;
@@ -30,6 +31,22 @@ class AdminControlRestaurantesController extends Controller
             ]
         );
     }
+
+     /**
+     * @inheritDoc
+     */
+    public function beforeAction($action)
+    {
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+        // Verificar si el usuario tiene el rol de administrador y gestor
+        if (!isset($userRoles['administrador']) && !isset($userRoles['gestor']) && !isset($userRoles['propietario'])) {
+            return $this->goHome();
+        }
+
+        return parent::beforeAction($action);
+    }
+
 
     /**
      * Lists all ControlRestaurantes models.
