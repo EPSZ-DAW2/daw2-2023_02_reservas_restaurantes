@@ -33,6 +33,7 @@ class ControlRestaurantes extends \yii\db\ActiveRecord
             [['id_usuario', 'id_restaurante'], 'required'],
             [['id_usuario', 'id_restaurante'], 'integer'],
             [['notas'], 'string'],
+            [['id_usuario', 'id_restaurante'], 'unique', 'targetAttribute' => ['id_usuario', 'id_restaurante']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id_usuario']],
             [['id_restaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurantes::class, 'targetAttribute' => ['id_restaurante' => 'id_restaurante']],
         ];

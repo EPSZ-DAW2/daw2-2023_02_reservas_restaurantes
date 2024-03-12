@@ -84,7 +84,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     $itemsGestion[] = ['label' => 'Categorías', 'url' => ['/admin-categorias']];
                     $itemsGestion[] = ['label' => 'Clientes', 'url' => ['/usuarios','cli'=> True]];
                     $itemsGestion[] = ['label' => 'Configuraciones', 'url' => ['/admin-configuracion']];
-                    $itemsGestion[] = ['label' => 'Control Restaurantes', 'url' => ['/admin-control_restaurantes']];
+                    $itemsGestion[] = ['label' => 'Control Restaurantes', 'url' => ['/admin-ControlRestaurantes']];
                     $itemsGestion[] = ['label' => 'FAQ', 'url' => ['/admin-faq']];
                     $itemsGestion[] = ['label' => 'Incidencias', 'url' => ['/incidencias']];
                     $itemsGestion[] = ['label' => 'Imágenes', 'url' => ['/admin-imagenes']];
